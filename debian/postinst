@@ -1,0 +1,18 @@
+#!/bin/sh
+
+copySetting()
+{
+    newfile=$HOME/.$1
+    username=`stat $HOME --format %U`
+    groupname=`stat $HOME --format %G`
+    mode=`stat $HOME --format %a`
+    cp /tmp/$1 $newfile
+    chmod 644 $newfile
+    chown $username $newfile
+    chgrp $groupname $newfile
+}
+
+copySetting "bashrc"
+copySetting "bash_aliases"
+copySetting "bash_env"
+copySetting "vimrc"

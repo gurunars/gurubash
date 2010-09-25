@@ -1,0 +1,14 @@
+Source: gurubash
+Priority: extra
+Maintainer: Anton Berezin <anton.berezin@gmail.com>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.3
+Section: libs
+
+
+Package: gurubash
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: My bash and vim settings
+ Custom settings for bash and vim

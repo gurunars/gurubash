@@ -1,0 +1,3 @@
+export EMAIL="anton.berezin@gmail.com"
+export DEBEMAIL=$EMAIL
+export DEBFULLNAME="Anton Berezin"
