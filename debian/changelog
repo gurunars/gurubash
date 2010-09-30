@@ -1,3 +1,9 @@
+gurubash (0.0.1ubuntu1) lucid; urgency=low
+
+  * Added several aliases and vim features
+
+ -- Anton Berezin <anton.berezin@gmail.com>  Thu, 30 Sep 2010 22:53:07 +0300
+
 gurubash (0.0.1) unstable; urgency=low
 
     * Init
