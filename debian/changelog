@@ -1,3 +1,9 @@
+gurubash (0.0.3) lucid; urgency=low
+
+  * Added several files
+
+ -- Anton Berezin <anton.berezin@gmail.com>  Thu, 30 Sep 2010 23:03:08 +0300
+
 gurubash (0.0.2) lucid; urgency=low
 
   * Added several aliases and vim features
