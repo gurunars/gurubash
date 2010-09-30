@@ -14,5 +14,7 @@ copySetting()
 
 copySetting "bashrc"
 copySetting "bash_aliases"
-copySetting "bash_env"
 copySetting "vimrc"
+copySetting "pylintrc"
+copySetting "gitconfig"
+copySetting "bash_env"
