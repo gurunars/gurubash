@@ -1,4 +1,4 @@
-alias spack='dpkg--buildpackage -rfakeroot -uc -us -sa -tc -D'
+alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D'
 alias pack='git-buildpackage -rfakeroot -uc -us -sa -tc -D --git-tag'
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
