@@ -8,7 +8,7 @@ Section: libs
 
 Package: gurubash
 Section: libs
-Architecture: any
+Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: My bash and vim settings
  Custom settings for bash and vim
