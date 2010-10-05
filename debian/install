@@ -3,3 +3,4 @@ bash_aliases /tmp
 bashrc /tmp
 gitconfig /tmp
 pylintrc /tmp
+bash_env /tmp
