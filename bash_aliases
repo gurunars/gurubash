@@ -14,3 +14,10 @@ alias clean='find . -name "*.pyc" -or -name "*~" -or -name "*.pyo" -or -name "*.
 alias z='cd ..'
 alias zz='cd ../..'
 alias zzz=cd ../../..'
+
+function col {
+    first="awk '{print "
+    last="}'"
+    cmd="${first}\$${1}${last}"
+    eval $cmd
+}
