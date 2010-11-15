@@ -13,7 +13,8 @@ alias pylint='pylint -f colorized -i y -r n '
 alias clean='find . -name "*.pyc" -or -name "*~" -or -name "*.pyo" -or -name "*.swp" -delete'
 alias z='cd ..'
 alias zz='cd ../..'
-alias zzz=cd ../../..'
+alias zzz='cd ../../..'
+alias cs='mcs -pkg:gtk-sharp-2.0'
 
 function col {
     first="awk '{print "
@@ -21,3 +22,4 @@ function col {
     cmd="${first}\$${1}${last}"
     eval $cmd
 }
+
