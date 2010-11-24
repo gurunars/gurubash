@@ -15,6 +15,8 @@ alias z='cd ..'
 alias zz='cd ../..'
 alias zzz='cd ../../..'
 alias cs='mcs -pkg:gtk-sharp-2.0'
+#Add python application's parent dir to PYTHONPATH
+alias pa='filepath=`pwd`;export PYTHONPATH=$PYTHONPATH:${filepath%/*}'
 
 function col {
     first="awk '{print "
