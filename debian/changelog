@@ -1,3 +1,9 @@
+gurubash (0.0.4) lucid; urgency=low
+
+  * Fixed 80+ lines highlighting.
+
+ -- Anton Berezin <anton.berezin@nokia.com>  Thu, 02 Dec 2010 10:47:42 +0200
+
 gurubash (0.0.3) lucid; urgency=low
 
   * Added several files
