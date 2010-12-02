@@ -57,7 +57,7 @@
 " Misc
 :set scrolloff=3                    " have 3 lines of offset (or buffer) when scrolling
 ":set number                         " enable line numbering
-:set statusline=%F%m%r%h%w\ [TYPE=%Y\ %{&ff}]\ [%l/%L\ (%p%%)] "Informative status line
+:set statusline=%F%m%r%h%w\ [TYPE=%Y]\ [POS=%04l,%04v][%p%%]\ [LEN=%L] "Informative status line
 :set laststatus=2 " make sure that the status line is shown
 :set backspace=indent,eol,start     " Make backspaces more powerfull
 :set ruler                          " show line and column number
