@@ -18,6 +18,7 @@ alias cs='mcs -pkg:gtk-sharp-2.0'
 alias giff='git diff --cached'
 #Add python application's parent dir to PYTHONPATH
 alias pa='filepath=`pwd`;export PYTHONPATH=$PYTHONPATH:${filepath%/*}'
+gtag='git-buildpackage --git-tag-only -d'
 
 function col {
     first="awk '{print "
