@@ -47,7 +47,7 @@ esac
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
-fi   
+fi
 
 # Make bash autocomplete with up arrow from bash history
 bind '"\e[A":history-search-backward'
@@ -55,16 +55,16 @@ bind '"\e[B":history-search-forward'
 
 #Add to the end of the ~/.basrc file
 #Colors the terminal in a nice way and shows git branch in a prompt all the time
-#Adds some additional information to terminal                                   
+#Adds some additional information to terminal
 
 function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}                                                                             
+}
 
 #wrapper for several parser - add hg and svn support in the future
-function branch {                                                 
-  parse_git_branch                                                
-}                                                                 
+function branch {
+  parse_git_branch
+}
 
 function proml {
   local        blue="\[\033[0;34m\]"
@@ -89,7 +89,7 @@ function proml {
 PS1="${TITLEBAR}\
 $RED[$BLUE\$(date +%H:%M)$RED]\
 $RED[$BLUE\u@\h:$cyan\w$green\$(branch)$RED]\
-$WHITE\$ "
+$WHITE "
 PS2='> '
 PS4='+ '
 }
@@ -106,4 +106,4 @@ fi
 # Envireonment variables' definitons
 if [ -f ~/.bash_env ]; then
     . ~/.bash_env
-fi                                                                                                       
+fi
