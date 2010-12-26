@@ -74,5 +74,8 @@
 :hi CursorColumn cterm=NONE ctermbg=DarkBlue ctermfg=white guibg=DarkBlue guifg=white
 :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
+" No f@cking swap file!!!
+:set noswapfile
+
 " Redraw higlighting when exiting insert mode
 :autocmd InsertLeave * redraw!
