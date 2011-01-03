@@ -1,3 +1,5 @@
 export EMAIL="anton.berezin@nokia.com"
 export DEBEMAIL=$EMAIL
 export DEBFULLNAME="Anton Berezin"
+export COLORTERM="gnome-terminal"
+export TERM="xterm"
