@@ -89,7 +89,8 @@ function proml {
 PS1="${TITLEBAR}\
 $RED[$BLUE\$(date +%H:%M)$RED]\
 $RED[$BLUE\u@\h:$cyan\w$green\$(branch)$RED]\
-$WHITE "
+\n\
+$WHITE > "
 PS2='> '
 PS4='+ '
 }
