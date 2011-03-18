@@ -20,6 +20,9 @@ alias giff='git diff --cached'
 #Add python application's parent dir to PYTHONPATH
 alias pa='filepath=`pwd`;export PYTHONPATH=$PYTHONPATH:${filepath%/*}'
 alias gtag='git-buildpackage --git-tag-only -d'
+alias upgrade='sudo apt-get update; sudo apt-get upgrade'
+alias install='sudo apt-get install'
+alias remove='sudo apt-get remove'
 
 function col {
     first="awk '{print "
