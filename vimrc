@@ -79,3 +79,6 @@
 
 " Redraw higlighting when exiting insert mode
 :autocmd InsertLeave * redraw!
+
+" Remove trailing spaces by clicking F5
+:nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
