@@ -3,3 +3,5 @@ export DEBEMAIL=$EMAIL
 export DEBFULLNAME="Anton Berezin"
 export COLORTERM="gnome-terminal"
 export TERM="xterm"
+export VISUAL=vim
+export EDITOR=vim
