@@ -86,9 +86,17 @@ function proml {
     ;;
   esac
 
+  local username=`eval whoami`
+  if [ "$username" == "root" ]
+  then
+      local usercolor=$GREEN
+  else
+      local usercolor=$BLUE
+  fi
+
 PS1="${TITLEBAR}\
 $RED[$BLUE\$(date +%H:%M)$RED]\
-$RED[$BLUE\u@\h:$cyan\w$green\$(branch)$RED]\
+$RED[$usercolor\u$BLUE@\h$RED][$cyan\w$green\$(branch)$RED]\
 \n\
 $WHITE > "
 PS2='> '
