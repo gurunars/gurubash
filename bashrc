@@ -58,7 +58,7 @@ bind '"\e[B":history-search-forward'
 #Adds some additional information to terminal
 
 function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
 }
 
 #wrapper for several parser - add hg and svn support in the future
@@ -86,9 +86,17 @@ function proml {
     ;;
   esac
 
+  local username=`eval whoami`
+  if [ "$username" == "root" ]
+  then
+      local usercolor=$GREEN
+  else
+      local usercolor=$BLUE
+  fi
+
 PS1="${TITLEBAR}\
 $RED[$BLUE\$(date +%H:%M)$RED]\
-$RED[$BLUE\u@\h:$cyan\w$green\$(branch)$RED]\
+$RED[$usercolor\u$BLUE@\h$RED][$cyan\w$RED]$green\$(branch)\
 \n\
 $WHITE > "
 PS2='> '
