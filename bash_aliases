@@ -1,6 +1,6 @@
 alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D'
 alias pack='git-buildpackage -rfakeroot -uc -us -sa -tc -D --git-tag --git-ignore-new'
-alias srcobs='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -S -T -R -i.git'
+alias srcobs='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -S -i.git'
 alias ls='ls -h --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
