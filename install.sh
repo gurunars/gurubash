@@ -3,7 +3,7 @@
 # Install all the packages required for proper work
 
 sudo apt-get install -y debhelper git-buildpackage git-core dpkg-dev vim-nox \
-                        ipython pylint python-django
+                        ipython pylint python-django dput
 
 # Install all the settings for home directory
 
@@ -26,5 +26,8 @@ if ! grep $REPO /etc/apt/sources.list > /dev/null; then
     dpkg-scanpackages $REPO /dev/null | gzip -9c > $REPO/Packages.gz
     sudo sh -c 'echo "# Home repo" >> /etc/apt/sources.list'
     sudo sh -c 'echo "deb file:$HOME/deb_repo /" >> /etc/apt/sources.list'
+    sudo sh -c 'echo "deb-src file:$HOME/deb_repo /" >> /etc/apt/sources.list'
     echo "Home repo created."
+    echo "Running apt-get update..."
+    sudo apt-get update
 fi
