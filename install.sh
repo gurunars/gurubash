@@ -1,14 +1,11 @@
 #!/bin/bash
 
-DIR_NAME=$(cd `dirname $0` && pwd)
+DIR_NAME=$(cd `dirname $0` && pwd)/home_settings
 FILES=$DIR_NAME/*
 for old_name in $FILES
 do
-    if [ $old_name != "$DIR_NAME/install.sh" ]; then
-        new_name=.${old_name#$DIR_NAME/}
-        echo "Installed $HOME/$new_name"
-        cp $old_name $HOME/$new_name
-
-    fi
+    new_name=.${old_name#$DIR_NAME/}
+    echo "Installed $HOME/$new_name"
+    cp $old_name $HOME/$new_name
 done
 echo "Personal config files were successfully installed."
