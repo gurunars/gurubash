@@ -26,8 +26,5 @@ if ! grep $REPO /etc/apt/sources.list > /dev/null; then
     dpkg-scanpackages $REPO /dev/null | gzip -9c > $REPO/Packages.gz
     sudo sh -c 'echo "# Home repo" >> /etc/apt/sources.list'
     sudo sh -c 'echo "deb file:$HOME/deb_repo /" >> /etc/apt/sources.list'
-    sudo sh -c 'echo "deb-src file:$HOME/deb_repo /" >> /etc/apt/sources.list'
     echo "Home repo created."
-    echo "Running apt-get update..."
-    sudo apt-get update
 fi

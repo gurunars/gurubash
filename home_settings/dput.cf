@@ -3,3 +3,5 @@ fqdn = localhost
 method = local
 incoming = ~/deb_repo
 allow_unsigned_uploads = 1
+run_dinstall = 0
+post_upload_command = echo "Uploaded ok."
