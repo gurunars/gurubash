@@ -6,3 +6,14 @@ export TERM="xterm"
 export VISUAL=vim
 export EDITOR=vim
 export GIT_EDITOR=vim
+
+# Add all the jars from /usr/share/java
+# java compiler has to know where the extra classes are to be taken
+
+JARS=`find /usr/share/java -name *.jar`
+# Make it equal to the current directory initially
+export CLASSPATH=.
+for jar in $JARS
+do
+    export CLASSPATH=$CLASSPATH:$jar
+done
