@@ -1,8 +1,6 @@
-export EMAIL="anton.berezin@nokia.com"
+export EMAIL="__EMAIL"
 export DEBEMAIL=$EMAIL
-export DEBFULLNAME="Anton Berezin"
-export COLORTERM="gnome-terminal"
-export TERM="xterm"
+export DEBFULLNAME="__NAME"
 export VISUAL=vim
 export EDITOR=vim
 export GIT_EDITOR=vim

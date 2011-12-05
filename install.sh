@@ -11,3 +11,19 @@ do
     cp $old_name $HOME/$new_name
 done
 echo "Personal config files were successfully installed."
+
+# Configure the email and name (only once)
+
+if grep __NAME $HOME/.bash_env 1> /dev/null
+then
+    echo "Type your first name and last named delimited with space."
+    read name
+    sed -i "s/__NAME/$name/g" $HOME/.bash_env
+fi
+
+if grep __EMAIL $HOME/.bash_env 1> /dev/null
+then
+    echo "Type your email"
+    read email
+    sed -i "s/__EMAIL/$email/g" $HOME/.bash_env
+fi
