@@ -23,6 +23,7 @@ alias gtag='git-buildpackage --git-tag-only -d'
 alias up='sudo apt-get update; sudo apt-get upgrade'
 alias in='sudo apt-get install'
 alias re='sudo apt-get remove'
+alias py='python'
 
 function col {
     first="awk '{print "
