@@ -1,6 +1,3 @@
-export EMAIL="__EMAIL"
-export DEBEMAIL=$EMAIL
-export DEBFULLNAME="__NAME"
 export VISUAL=vim
 export EDITOR=vim
 export GIT_EDITOR=vim

@@ -12,18 +12,27 @@ do
 done
 echo "Personal config files were successfully installed."
 
+# If it is root user, remove the cridentials
+
+# TODO:
+if [ `whoami`="root" ]; then
+    echo "Root user. Cridentials are not gonna be set."
+    rm $HOME/.bash_cridentials
+    exit 1
+fi
+
 # Configure the email and name (only once)
 
-if grep __NAME $HOME/.bash_env 1> /dev/null
+if grep __NAME $HOME/.bash_cridentials 1> /dev/null
 then
     echo "Type your first name and last named delimited with space."
     read name
-    sed -i "s/__NAME/$name/g" $HOME/.bash_env
+    sed -i "s/__NAME/$name/g" $HOME/.bash_cridentials
 fi
 
-if grep __EMAIL $HOME/.bash_env 1> /dev/null
+if grep __EMAIL $HOME/.bash_cridentials 1> /dev/null
 then
     echo "Type your email"
     read email
-    sed -i "s/__EMAIL/$email/g" $HOME/.bash_env
+    sed -i "s/__EMAIL/$email/g" $HOME/.bash_cridentials
 fi

@@ -116,3 +116,8 @@ fi
 if [ -f ~/.bash_env ]; then
     . ~/.bash_env
 fi
+
+# Bash cridentials
+if [ -f ~/.bash_cridentials ]; then
+    . ~/.bash_cridentials
+fi
