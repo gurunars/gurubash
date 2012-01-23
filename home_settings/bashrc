@@ -104,6 +104,12 @@ PS4='+ '
 }
 proml
 
+# Add home bin directory if it exists to the path
+DIR=$HOME/bin
+if [ -d "$DIR" ]; then
+    export PATH=$PATH:$DIR
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.

@@ -14,8 +14,7 @@ echo "Personal config files were successfully installed."
 
 # If it is root user, remove the cridentials
 
-# TODO:
-if [ `whoami`="root" ]; then
+if [ `whoami` = "root" ]; then
     echo "Root user. Cridentials are not gonna be set."
     rm $HOME/.bash_cridentials
     exit 1
