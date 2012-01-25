@@ -82,3 +82,7 @@
 
 " Remove trailing spaces by clicking F5
 :nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+" Custom aliases
+cnoreabbrev W w
+cnoreabbrev Wq wq
