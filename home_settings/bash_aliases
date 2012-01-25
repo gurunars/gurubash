@@ -1,4 +1,4 @@
-alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D'
+alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -i.git'
 alias pack='git-buildpackage -rfakeroot -uc -us -sa -tc -D --git-tag --git-ignore-new'
 alias srcobs='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -S -i.git'
 alias dput='dput -u'
