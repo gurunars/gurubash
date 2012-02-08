@@ -168,7 +168,7 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# Envireonment variables' definitons
+# Environment variables' definitons
 if [ -f ~/.bash_env ]; then
     . ~/.bash_env
 fi
@@ -176,4 +176,9 @@ fi
 # Bash cridentials
 if [ -f ~/.bash_cridentials ]; then
     . ~/.bash_cridentials
+fi
+
+# ls command colorization
+if [ -f ~/.dir_colors ]; then
+    eval "`dircolors -b ~/.dir_colors`"
 fi
