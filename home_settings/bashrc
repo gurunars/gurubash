@@ -83,7 +83,7 @@ fi
 # Adds some additional information to terminal
 
 function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
 
 # Wrapper for several parser - add hg and svn support in the future
@@ -95,7 +95,7 @@ function branch {
 # Configure terminal colors
 PS1="$BLUE[$YELLOW\$(date +%H:%M)$BLUE]\
 $BLUE[$usercolor\u$RED@$YELLOW\h$BLUE][$YELLOW\w$BLUE]\
-\$(branch)\
+$CYAN\$(branch)\
 \n\
 $WHITE > "
 PS2='> '
