@@ -145,8 +145,9 @@ function branch {
 
 # Show surprise smile if command returned error exit code
 function surprise {
-  if [ $? != 0 ]; then
-    echo -e "$IRed O_O \n$Color_Off"
+  status=$?
+  if [ $status != 0 ]; then
+    echo -e "$IRed O_O $IGreen->$IRed $status \n$Color_Off"
   else
     echo ""
   fi
