@@ -119,7 +119,7 @@ On_IWhite='\e[0;107m'   # White
 
 username=`eval whoami`
 if [ "$username" == "root" ];then
-  usercolor=$BGreen
+  usercolor=$URed
 else
   usercolor=$BYellow
 fi
@@ -144,7 +144,7 @@ function branch {
 
 # Configure terminal colors
 PS1="\[$BBlue\][\[$BYellow\]\$(date +%H:%M)\[$BBlue\]]\
-\[$BBlue\][\[$usercolor\]\u\[$BRed\]@\[$BYellow\]\h\[$BBlue\]][\[$BYellow\]\w\[$BBlue\]]\
+\[$BBlue\][\[$usercolor\]\u\[$Color_Off\]\[$BGreen\]@\[$BYellow\]\h\[$BBlue\]][\[$BYellow\]\w\[$BBlue\]]\
 \$(branch)\
 \n\
 \[$BWhite\] > \[$Color_Off\]"
