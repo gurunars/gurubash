@@ -73,7 +73,7 @@ WHITE="\[\033[1;37m\]"
 
 username=`eval whoami`
 if [ "$username" == "root" ];then
-  usercolor=$RED
+  usercolor=$GREEN
 else
   usercolor=$YELLOW
 fi
@@ -93,8 +93,8 @@ function branch {
 }
 
 # Configure terminal colors
-PS1="$PURPLE[$YELLOW\$(date +%H:%M)$PURPLE]\
-$PURPLE[$usercolor\u$YELLOW@\h$PURPLE][$YELLOW\w$PURPLE]\
+PS1="$BLUE[$YELLOW\$(date +%H:%M)$BLUE]\
+$BLUE[$usercolor\u$RED@$YELLOW\h$BLUE][$YELLOW\w$BLUE]\
 \$(branch)\
 \n\
 $WHITE > "
