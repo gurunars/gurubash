@@ -133,6 +133,7 @@ function parse_git_branch {
 }
 
 # Wrapper for several parser - add hg and svn support in the future
+# TODO: show smile only once - just after command execution
 function branch {
   a=`parse_git_branch`
   if [ -n "$a" ]; then
@@ -142,8 +143,18 @@ function branch {
   fi
 }
 
+# Show surprise smile if command returned error exit code
+function surprise {
+  if [ $? != 0 ]; then
+    echo -e "$IRed O_O \n$Color_Off"
+  else
+    echo ""
+  fi
+}
+
 # Configure terminal colors
-PS1="\[$BBlue\][\[$BYellow\]\$(date +%H:%M)\[$BBlue\]]\
+PS1="\$(surprise)\
+\[$BBlue\][\[$BYellow\]\$(date +%H:%M)\[$BBlue\]]\
 \[$BBlue\][\[$usercolor\]\u\[$Color_Off\]\[$BGreen\]@\[$BYellow\]\h\[$BBlue\]][\[$BYellow\]\w\[$BBlue\]]\
 \$(branch)\
 \n\
