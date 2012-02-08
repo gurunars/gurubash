@@ -47,3 +47,7 @@ then
     read email
     sed -i "s/__EMAIL/$email/g" $HOME/.bash_cridentials
 fi
+
+# Update bashrc
+
+. $HOME/.bashrc
