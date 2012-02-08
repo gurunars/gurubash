@@ -93,8 +93,7 @@ function branch {
 }
 
 # Configure terminal colors
-PS1="${TITLEBAR}\
-$PURPLE[$YELLOW\$(date +%H:%M)$PURPLE]\
+PS1="$PURPLE[$YELLOW\$(date +%H:%M)$PURPLE]\
 $PURPLE[$usercolor\u$YELLOW@\h$PURPLE][$YELLOW\w$PURPLE]\
 \$(branch)\
 \n\
