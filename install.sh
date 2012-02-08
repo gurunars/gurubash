@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Backup cridentials
+
+if [ -e $HOME/.bash_cridentials ]; then
+    mv $HOME/.bash_cridentials $HOME/.bash_cridentials.old
+fi
+
 # Install all the settings for home directory
 
 DIR_NAME=$(cd `dirname $0` && pwd)/home_settings
@@ -18,6 +24,12 @@ if [ `whoami` = "root" ]; then
     echo "Root user. Cridentials are not gonna be set."
     rm $HOME/.bash_cridentials
     exit 1
+fi
+
+# Restore cridentials
+
+if [ -e $HOME/.bash_cridentials.old ]; then
+    mv $HOME/.bash_cridentials.old $HOME/.bash_cridentials
 fi
 
 # Configure the email and name (only once)
