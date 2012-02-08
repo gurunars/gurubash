@@ -147,7 +147,7 @@ PS1="\[$BBlue\][\[$BYellow\]\$(date +%H:%M)\[$BBlue\]]\
 \[$BBlue\][\[$usercolor\]\u\[$BRed\]@\[$BYellow\]\h\[$BBlue\]][\[$BYellow\]\w\[$BBlue\]]\
 \$(branch)\
 \n\
-\[$BWhite\] > "
+\[$BWhite\] > \[$Color_Off\]"
 PS2='> '
 PS4='+ '
 
