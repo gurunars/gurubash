@@ -24,6 +24,7 @@ alias up='sudo apt-get update; sudo apt-get upgrade'
 alias in='sudo apt-get install'
 alias re='sudo apt-get remove'
 alias py='python'
+alias ssh='ssh -A' # fewer passwords
 
 function col {
     first="awk '{print "

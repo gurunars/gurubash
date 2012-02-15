@@ -46,10 +46,10 @@
 :nnoremap <leader><space> :noh<cr>
 
 " Handline line lengths
-:set textwidth=80
+:set textwidth=120
 :set formatoptions=qrn1
-:let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-:au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+:let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
+:au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>120v.\+', -1)
 
 " Shortcut for toggling paste mode TODO: automate it
 :set pastetoggle=<F3>
