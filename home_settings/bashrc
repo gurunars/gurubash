@@ -132,12 +132,23 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
 
+# Configure terminal colors
+ctime=$BYellow # time when command was executed
+cbracket=$BBlue # [ and ]
+cdog=$BGreen # @ char
+chost=$BYellow # PC name
+cpath=$BYellow # file path = `pwd`
+ccursor=$BWhite # > char marking a command line
+cbranch=$BCyan # git branch
+cstatus=$IRed # command smile and error code
+carrow=$IGreen # separator for smile between error code
+
 # Wrapper for several parser - add hg and svn support in the future
 # TODO: show smile only once - just after command execution
 function branch {
   a=`parse_git_branch`
   if [ -n "$a" ]; then
-    echo -e "$BBlue[$BCyan$a$BBlue]"
+    echo -e "$cbracket[$cbranch$a$cbracket]"
   else
     echo ""
   fi
@@ -147,19 +158,18 @@ function branch {
 function surprise {
   status=$?
   if [ $status != 0 ]; then
-    echo -e "$IRed O_O $IGreen->$IRed $status \n$Color_Off"
+    echo -e "$cstatus O_O $carrow->$cstatus $status \n$Color_Off"
   else
     echo ""
   fi
 }
 
-# Configure terminal colors
 PS1="\$(surprise)\
-\[$BBlue\][\[$BYellow\]\$(date +%H:%M)\[$BBlue\]]\
-\[$BBlue\][\[$usercolor\]\u\[$Color_Off\]\[$BGreen\]@\[$BYellow\]\h\[$BBlue\]][\[$BYellow\]\w\[$BBlue\]]\
+\[$cbracket\][\[$ctime\]\$(date +%H:%M)\[$cbracket\]]\
+\[$cbracket\][\[$usercolor\]\u\[$cdog\]@\[$chost\]\h\[$cbracket\]][\[$cpath\]\w\[$cbracket\]]\
 \$(branch)\
 \n\
-\[$BWhite\] > \[$Color_Off\]"
+\[$ccursor\] > \[$Color_Off\]"
 PS2='> '
 PS4='+ '
 
