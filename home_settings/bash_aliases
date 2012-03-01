@@ -25,7 +25,7 @@ alias in='sudo apt-get install'
 alias re='sudo apt-get remove'
 alias py='python'
 alias ssh='ssh -A' # fewer passwords
-alias clean='git clean -fdx'
+alias cl='git clean -fdx'
 
 function col {
     first="awk '{print "
