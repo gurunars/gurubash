@@ -1,6 +1,6 @@
-alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -i.git'
+alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -I.git'
 alias pack='git-buildpackage -rfakeroot -uc -us -sa -tc -D --git-tag --git-ignore-new'
-alias srcobs='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -S -i.git'
+alias srcobs='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -S -I.git'
 alias dput='dput -u'
 alias ls='ls -h --color=auto'
 alias dir='dir --color=auto'
@@ -25,6 +25,7 @@ alias in='sudo apt-get install'
 alias re='sudo apt-get remove'
 alias py='python'
 alias ssh='ssh -A' # fewer passwords
+alias clean='git clean -fdx'
 
 function col {
     first="awk '{print "
