@@ -134,7 +134,7 @@ function parse_git_branch {
 
 # Configure terminal colors
 ctime=$BYellow # time when command was executed
-cbracket=$BBlue # [ and ]
+cbracket=$BPurple # [ and ]
 cdog=$BGreen # @ char
 chost=$BYellow # PC name
 cpath=$BYellow # file path = `pwd`
