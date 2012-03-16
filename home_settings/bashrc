@@ -166,7 +166,7 @@ function surprise {
 
 PS1="\$(surprise)\
 \[$cbracket\][\[$ctime\]\$(date +%H:%M)\[$cbracket\]]\
-\[$cbracket\][\[$usercolor\]\u\[$cdog\]@\[$chost\]\h\[$cbracket\]][\[$cpath\]\w\[$cbracket\]]\
+\[$cbracket\][\[$usercolor\]\u$Color_Off\[$cdog\]@\[$chost\]\h\[$cbracket\]][\[$cpath\]\w\[$cbracket\]]\
 \$(branch)\
 \n\
 \[$ccursor\] > \[$Color_Off\]"
