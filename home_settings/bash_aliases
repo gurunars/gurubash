@@ -26,6 +26,8 @@ alias re='sudo apt-get remove'
 alias py='python'
 alias ssh='ssh -A' # fewer passwords
 alias cl='git clean -fdx'
+alias android-connect="mtpfs -o allow_other /media/GalaxyNexus"
+alias android-disconnect="fusermount -u /media/GalaxyNexus"
 
 function col {
     first="awk '{print "
