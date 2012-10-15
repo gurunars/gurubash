@@ -117,13 +117,6 @@ On_IPurple='\e[10;95m'  # Purple
 On_ICyan='\e[0;106m'    # Cyan
 On_IWhite='\e[0;107m'   # White
 
-username=`eval whoami`
-if [ "$username" == "root" ];then
-  usercolor=$URed
-else
-  usercolor=$BYellow
-fi
-
 # Add to the end of the ~/.basrc file
 # Colors the terminal in a nice way and shows git branch in a prompt all the time
 # Adds some additional information to terminal
@@ -143,6 +136,13 @@ function parse_git_branch {
 #cstatus=$IRed # command smile and error code
 #carrow=$IGreen # separator for smile between error code
 
+#username=`eval whoami`
+#if [ "$username" == "root" ];then
+#  usercolor=$URed
+#else
+#  usercolor=$BYellow
+#fi
+
 # Configure terminal colors (blue theme)
 ctime=$BCyan # time when command was executed
 cbracket=$BPurple # [ and ]
@@ -153,6 +153,13 @@ ccursor=$BWhite # > char marking a command line
 cbranch=$BGreen # git branch
 cstatus=$IRed # command smile and error code
 carrow=$IGreen # separator for smile between error code
+
+username=`eval whoami`
+if [ "$username" == "root" ];then
+  usercolor=$URed
+else
+  usercolor=$BCyan
+fi
 
 # Wrapper for several parser - add hg and svn support in the future
 # TODO: show smile only once - just after command execution
