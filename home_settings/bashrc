@@ -132,14 +132,25 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
 
-# Configure terminal colors
-ctime=$BYellow # time when command was executed
+# Configure terminal colors (yellow theme)
+#ctime=$BYellow # time when command was executed
+#cbracket=$BPurple # [ and ]
+#cdog=$BGreen # @ char
+#chost=$BYellow # PC name
+#cpath=$BYellow # file path = `pwd`
+#ccursor=$BWhite # > char marking a command line
+#cbranch=$BCyan # git branch
+#cstatus=$IRed # command smile and error code
+#carrow=$IGreen # separator for smile between error code
+
+# Configure terminal colors (blue theme)
+ctime=$BCyan # time when command was executed
 cbracket=$BPurple # [ and ]
-cdog=$BGreen # @ char
-chost=$BYellow # PC name
-cpath=$BYellow # file path = `pwd`
+cdog=$BYellow # @ char
+chost=$BCyan # PC name
+cpath=$BCyan # file path = `pwd`
 ccursor=$BWhite # > char marking a command line
-cbranch=$BCyan # git branch
+cbranch=$BGreen # git branch
 cstatus=$IRed # command smile and error code
 carrow=$IGreen # separator for smile between error code
 
