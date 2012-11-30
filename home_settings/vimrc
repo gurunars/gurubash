@@ -86,6 +86,7 @@
 " Custom aliases
 cnoreabbrev W w
 cnoreabbrev Wq wq
+cnoreabbrev Q q
 
 " Line swapping
 noremap <c-up> ddkP
