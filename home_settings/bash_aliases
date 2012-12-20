@@ -28,6 +28,7 @@ alias ssh='ssh -A' # fewer passwords
 alias cl='git clean -fdx'
 alias android-connect="mtpfs -o allow_other /media/GalaxyNexus"
 alias android-disconnect="fusermount -u /media/GalaxyNexus"
+alias pep8="pep8 --max-line-length=120"
 
 function col {
     first="awk '{print "
