@@ -106,3 +106,6 @@ augroup END
 
 " For git rebase interactive (fixup the commit on a current line)
 :nnoremap f :s/pick/f/<CR>
+
+" Toggle numbers
+:nnoremap <silent> <F6> :set number!<CR>
