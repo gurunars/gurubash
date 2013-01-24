@@ -84,12 +84,12 @@
 :nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 " Custom aliases
-cnoreabbrev W w
-cnoreabbrev Wq wq
+:cnoreabbrev W w
+:cnoreabbrev Wq wq
 
 " Line swapping
-noremap <c-up> ddkP
-noremap <c-down> ddp
+:noremap <c-up> ddkP
+:noremap <c-down> ddp
 
 " Disable replace mode (tired of it)
 function s:ForbidReplace()
@@ -102,3 +102,6 @@ augroup ForbidReplaceMode
     autocmd InsertEnter  * call s:ForbidReplace()
     autocmd InsertChange * call s:ForbidReplace()
 augroup END
+
+" For git rebase interactive (fixup the commit on a current line)
+:nnoremap f :s/pick/f/<CR>
