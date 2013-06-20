@@ -1,0 +1,7 @@
+Setup bash settings
+
+    ./install.sh
+
+Recursively replace *STRING* with *OTHER_STRING*
+
+    find . -type f -print0 | xargs -0 sed -i 's/STRING/OTHER_STRING/g'
