@@ -39,6 +39,8 @@ then
     echo "Type your first name and last named delimited with space."
     read name
     sed -i "s/__NAME/$name/g" $HOME/.bash_cridentials
+else
+    name=$DEBFULLNAME
 fi
 
 if grep __EMAIL $HOME/.bash_cridentials 1> /dev/null
@@ -46,4 +48,9 @@ then
     echo "Type your email"
     read email
     sed -i "s/__EMAIL/$email/g" $HOME/.bash_cridentials
+else
+    email=$DEBEMAIL
 fi
+
+git config --global user.name "$name"
+git config --global user.email "$email"
