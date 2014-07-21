@@ -4,6 +4,60 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+
+# Loaders
+#########
+
+# Add home bin directory if it exists to the path
+DIR=$HOME/bin
+if [ -d "$DIR" ]; then
+    export PATH=$PATH:$DIR
+fi
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# Environment variables' definitons
+if [ -f ~/.bash_env ]; then
+    . ~/.bash_env
+fi
+
+# Bash cridentials
+if [ -f ~/.bash_cridentials ]; then
+    . ~/.bash_cridentials
+fi
+
+# ls command colorization
+if [ -f ~/.dir_colors ]; then
+    eval "`dircolors -b ~/.dir_colors`"
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+
+# Load color definitions
+if [ -f ~/.bash_color_definitions ]; then
+    . ~/.bash_color_definitions
+fi
+
+# Load the theme
+if [ -f ~/.bash_theme.$BASH_THEME ]; then
+    . ~/.bash_theme.$BASH_THEME
+fi
+
+
+# Settings
+##########
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
 HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
@@ -27,29 +81,9 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
-fi
-
 # Make bash autocomplete with up arrow from bash history
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
-
-# Load color definitions
-# Environment variables' definitons
-if [ -f ~/.bash_color_definitions ]; then
-    . ~/.bash_color_definitions
-fi
-
-theme=blue # change theme here
-
-# Load the theme
-if [ -f ~/.bash_theme.$theme ]; then
-    . ~/.bash_theme.$theme
-fi
 
 username=`eval whoami`
 if [ "$username" == "root" ];then
@@ -90,35 +124,3 @@ PS1="\$(surprise)\
 \[$ccursor\] > \[$Color_Off\]"
 PS2='> '
 PS4='+ '
-
-# Loader
-########
-
-# Add home bin directory if it exists to the path
-DIR=$HOME/bin
-if [ -d "$DIR" ]; then
-    export PATH=$PATH:$DIR
-fi
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# Environment variables' definitons
-if [ -f ~/.bash_env ]; then
-    . ~/.bash_env
-fi
-
-# Bash cridentials
-if [ -f ~/.bash_cridentials ]; then
-    . ~/.bash_cridentials
-fi
-
-# ls command colorization
-if [ -f ~/.dir_colors ]; then
-    eval "`dircolors -b ~/.dir_colors`"
-fi
