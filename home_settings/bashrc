@@ -117,13 +117,6 @@ On_IPurple='\e[10;95m'  # Purple
 On_ICyan='\e[0;106m'    # Cyan
 On_IWhite='\e[0;107m'   # White
 
-# Add to the end of the ~/.basrc file
-# Colors the terminal in a nice way and shows git branch in a prompt all the time
-# Adds some additional information to terminal
-
-function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
-}
 
 # Configure terminal colors (yellow theme)
 #ctime=$BYellow # time when command was executed
@@ -135,13 +128,8 @@ function parse_git_branch {
 #cbranch=$BCyan # git branch
 #cstatus=$IRed # command smile and error code
 #carrow=$IGreen # separator for smile between error code
-
-#username=`eval whoami`
-#if [ "$username" == "root" ];then
-#  usercolor=$URed
-#else
-#  usercolor=$BYellow
-#fi
+#croot=$URed # root username color
+#cuser=$BYellow # normal username color
 
 # Configure terminal colors (blue theme)
 ctime=$BCyan # time when command was executed
@@ -153,16 +141,21 @@ ccursor=$BWhite # > char marking a command line
 cbranch=$BGreen # git branch
 cstatus=$IRed # command smile and error code
 carrow=$IGreen # separator for smile between error code
+croot=$URed # root username color
+cuser=$BCyan # normal username color
 
 username=`eval whoami`
 if [ "$username" == "root" ];then
-  usercolor=$URed
+  usercolor=$croot
 else
-  usercolor=$BCyan
+  usercolor=$cuser
 fi
 
-# Wrapper for several parser - add hg and svn support in the future
-# TODO: show smile only once - just after command execution
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+# Colors the terminal in a nice way and shows git branch in a prompt all the time
 function branch {
   a=`parse_git_branch`
   if [ -n "$a" ]; then
@@ -191,8 +184,8 @@ PS1="\$(surprise)\
 PS2='> '
 PS4='+ '
 
-# Sweet things
-##############
+# Loader
+########
 
 # Add home bin directory if it exists to the path
 DIR=$HOME/bin
