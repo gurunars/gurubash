@@ -1,4 +1,4 @@
-alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -I.git'
+alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -A -I.git'
 alias ls='ls -h --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
