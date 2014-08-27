@@ -5,7 +5,11 @@ Setup bash settings
 Recursively replace *STRING* with *OTHER_STRING*
 
     find . -type f -print0 | xargs -0 sed -i 's/STRING/OTHER_STRING/g'
-    
+
 Start static server in a current directory
 
     python -m SimpleHTTPServer 8080
+
+Dput debs to launchpad (add id_rsa.pub on launchpad side first):
+
+    dput -u ppa:gurunars/default *.changes
