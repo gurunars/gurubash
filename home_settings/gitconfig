@@ -28,3 +28,6 @@
   lg = log -p
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+[merge "dpkg-mergechangelogs"]
+  name = debian/changelog merge driver
+  driver = dpkg-mergechangelogs -m %O %A %B %A
