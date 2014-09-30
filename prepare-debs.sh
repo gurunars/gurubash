@@ -6,4 +6,4 @@ apt-get install vim-nox pylint debhelper devscripts python-setuptools ipython ya
 apt-get autoremove
 apt-get upgrade
 
-pip install nose mock rednose virtualenv
+pip install nose mock rednose virtualenv githooks
