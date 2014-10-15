@@ -1,10 +1,3 @@
-# Exiter
-########
-
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
-
-
 # Loaders
 #########
 
@@ -30,11 +23,6 @@ fi
 # Bash cridentials
 if [ -f ~/.bash_cridentials ]; then
     . ~/.bash_cridentials
-fi
-
-# ls command colorization
-if [ -f ~/.dir_colors ]; then
-    eval "`dircolors -b ~/.dir_colors`"
 fi
 
 # enable programmable completion features (you don't need to enable
