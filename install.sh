@@ -54,3 +54,6 @@ fi
 
 git config --global user.name "$name"
 git config --global user.email "$email"
+
+# In MacOs bash settings are in .profile
+ln -s $HOME/.bashrc $HOME/.profile
