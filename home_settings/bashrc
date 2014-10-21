@@ -50,8 +50,8 @@ if [ -f ~/.bash_color_definitions ]; then
 fi
 
 # Load the theme
-if [ -f ~/.bash_theme.$BASH_THEME ]; then
-    . ~/.bash_theme.$BASH_THEME
+if [ -f ~/.bash_themes/$BASH_THEME ]; then
+    . ~/.bash_themes/$BASH_THEME
 fi
 
 

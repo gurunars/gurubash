@@ -1,7 +1,4 @@
 export VISUAL=vim
 export EDITOR=vim
 export GIT_EDITOR=vim
-export NSS_SSL_CBC_RANDOM_IV=0  # for pidgin
-export DEB_REPO_DIR=$HOME/Dropbox/debrepo
-export NOSE_REDNOSE=1
 export BASH_THEME=blue
