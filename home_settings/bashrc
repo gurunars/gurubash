@@ -37,6 +37,11 @@ if [ -f ~/.dir_colors ]; then
     eval "`dircolors -b ~/.dir_colors`"
 fi
 
+# Load status face
+if [ -f ~/.bash_statusface ]; then
+    . ~/.bash_statusface
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -110,7 +115,7 @@ function branch {
 function surprise {
   status=$?
   if [ $status != 0 ]; then
-    echo -e "$cstatus O_O $carrow->$cstatus $status \n$Color_Off"
+    echo -e "$cstatus $statusface $carrow$statusarrow$cstatus $status \n$Color_Off"
   else
     echo ""
   fi
