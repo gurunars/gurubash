@@ -1,4 +1,4 @@
-# Configure terminal colors (blue theme)
+# Configure terminal colors (white theme)
 ctime=$IWhite # time when command was executed
 cbracket=$Purple # [ and ]
 cdog=$IWhite # @ char
