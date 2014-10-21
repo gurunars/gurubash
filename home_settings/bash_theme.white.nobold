@@ -1,0 +1,12 @@
+# Configure terminal colors (blue theme)
+ctime=$IWhite # time when command was executed
+cbracket=$Purple # [ and ]
+cdog=$IWhite # @ char
+chost=$IWhite # PC name
+cpath=$IWhite # file path = `pwd`
+ccursor=$IWhite # > char marking a command line
+cbranch=$IWhite # git branch
+cstatus=$IRed # command smile and error code
+carrow=$IWhite # separator for smile between error code
+croot=$URed # root username color
+cuser=$IWhite # normal username color
