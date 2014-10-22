@@ -1,6 +1,5 @@
 . ~/.gurubash/settings
 . ~/.gurubash/aliases
 . ~/.gurubash/functions
-. ~/.gurubash/dir_colors
 . ~/.gurubash/bash_color_definitions
 . ~/.gurubash/themes/$BASH_THEME

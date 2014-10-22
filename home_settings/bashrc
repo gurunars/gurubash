@@ -1,16 +1,10 @@
-. ~/.gurubash/core
-
-# Add home bin directory if it exists to the path
-DIR=$HOME/bin
-if [ -d "$DIR" ]; then
-    export PATH=$PATH:$DIR
-fi
-
 export VISUAL=vim
 export EDITOR=vim
 export GIT_EDITOR=vim
-export BASH_THEME=blue
+export BASH_THEME=dual-line.blue
 export EMAIL="__EMAIL"
 export NAME="__NAME"
 export DEBEMAIL=$EMAIL
 export DEBFULLNAME=$NAME
+
+. ~/.gurubash/core
