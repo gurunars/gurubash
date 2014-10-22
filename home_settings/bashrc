@@ -7,4 +7,4 @@ export NAME="__NAME"
 export DEBEMAIL=$EMAIL
 export DEBFULLNAME=$NAME
 
-. ~/.gurubash/core
+. ~/.gurubash/loader
