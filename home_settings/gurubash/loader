@@ -1,5 +1,4 @@
-. ~/.gurubash/settings
-. ~/.gurubash/aliases
-. ~/.gurubash/functions
-. ~/.gurubash/bash_color_definitions
-. ~/.gurubash/themes/$BASH_THEME
+. ~/.gurubash/history/loader
+. ~/.gurubash/aliases/loader
+. ~/.gurubash/functions/loader
+. ~/.gurubash/theming/loader
