@@ -6,7 +6,6 @@ alias egrep='egrep --color=auto'
 alias ll='ls -hl'
 alias la='ls -hA'
 alias l='ls -hCF'
-alias dch='dch --no-auto-nmu -q'
 alias pylint='pylint -f colorized -i y -r n '
 alias z='cd ..'
 alias zz='cd ../..'
@@ -19,11 +18,3 @@ alias up='sudo apt-get update; sudo apt-get upgrade'
 
 #Add python application's parent dir to PYTHONPATH
 alias pa='filepath=`pwd`;export PYTHONPATH=$PYTHONPATH:${filepath%/*}'
-
-function col {
-    first="awk '{print "
-    last="}'"
-    cmd="${first}\$${1}${last}"
-    eval $cmd
-}
-
