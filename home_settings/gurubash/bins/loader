@@ -1,0 +1,12 @@
+# Add home bin or bins directory if it exists to the path
+DIR=$HOME/bin
+if [ -d "$DIR" ]; then
+    export PATH=$PATH:$DIR
+    exit 0
+fi
+
+DIR=$HOME/bins
+if [ -d "$DIR" ]; then
+    export PATH=$PATH:$DIR
+    exit 0
+fi

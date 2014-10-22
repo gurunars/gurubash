@@ -2,3 +2,4 @@
 . ~/.gurubash/aliases/loader
 . ~/.gurubash/functions/loader
 . ~/.gurubash/theming/loader
+. ~/.gurubash/bins/loader
