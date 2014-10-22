@@ -6,22 +6,11 @@ if [ -d "$DIR" ]; then
     export PATH=$PATH:$DIR
 fi
 
-# Alias definitions.
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# Environment variables' definitons
-if [ -f ~/.bash_env ]; then
-    . ~/.bash_env
-fi
-
-# Bash cridentials
-if [ -f ~/.bash_cridentials ]; then
-    . ~/.bash_cridentials
-fi
-
-# ls command colorization
-if [ -f ~/.dir_colors ]; then
-    eval "`dircolors -b ~/.dir_colors`"
-fi
+export VISUAL=vim
+export EDITOR=vim
+export GIT_EDITOR=vim
+export BASH_THEME=blue
+export EMAIL="__EMAIL"
+export NAME="__NAME"
+export DEBEMAIL=$EMAIL
+export DEBFULLNAME=$NAME

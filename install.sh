@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Backup cridentials
+# Backup user config
 
-if [ -e $HOME/.bash_cridentials ]; then
-    mv $HOME/.bash_cridentials $HOME/.bash_cridentials.old
+if [ -e $HOME/.bashrc ]; then
+    mv $HOME/.bashrc $HOME/.bashrc.old
 fi
 
 # Install all the settings for home directory
@@ -18,23 +18,15 @@ do
 done
 echo "Personal config files were successfully installed."
 
-# If it is root user, remove the cridentials
-
-if [ `whoami` = "root" ]; then
-    echo "Root user. Cridentials are not gonna be set."
-    rm $HOME/.bash_cridentials
-    exit 1
-fi
-
 # Restore cridentials
 
-if [ -e $HOME/.bash_cridentials.old ]; then
-    mv $HOME/.bash_cridentials.old $HOME/.bash_cridentials
+if [ -e $HOME/.bashrc.old ]; then
+    mv $HOME/.bashrc.old $HOME/.bashrc
 fi
 
 # Configure the email and name (only once)
 
-if grep __NAME $HOME/.bash_cridentials 1> /dev/null
+if grep __NAME $HOME/.bashrc 1> /dev/null
 then
     echo "Type your first name and last named delimited with space."
     read name
@@ -43,7 +35,7 @@ else
     name=$DEBFULLNAME
 fi
 
-if grep __EMAIL $HOME/.bash_cridentials 1> /dev/null
+if grep __EMAIL $HOME/.bashrc 1> /dev/null
 then
     echo "Type your email"
     read email

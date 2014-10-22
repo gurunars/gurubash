@@ -1,3 +1,0 @@
-export EMAIL="__EMAIL"
-export DEBEMAIL=$EMAIL
-export DEBFULLNAME="__NAME"
