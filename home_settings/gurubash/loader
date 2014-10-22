@@ -3,3 +3,4 @@
 . ~/.gurubash/functions/loader
 . ~/.gurubash/theming/loader
 . ~/.gurubash/bins/loader
+. ~/.gurubash/ls-beauty/loader

@@ -1,0 +1,1 @@
+eval "`dircolors -b ~/.gurubash/ls-beauty/dir_colors`"
