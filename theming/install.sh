@@ -1,5 +1,5 @@
 #!/bin/bash
-theming_file=$HOME/.bash_env/cridentials
+theming_file=$HOME/.personal/theming
 
 if [ -f $theming_file ]; then
     return

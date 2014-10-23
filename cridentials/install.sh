@@ -1,5 +1,5 @@
 #!/bin/bash
-cred_file=$HOME/.bash_env/cridentials
+cred_file=$HOME/.personal/cridentials
 
 if [ -f $cred_file ]; then
     return

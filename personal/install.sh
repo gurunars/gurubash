@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mkdir $HOME/.personal
+mkdir -p $HOME/.personal
