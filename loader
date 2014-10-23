@@ -1,3 +1,5 @@
+#!/bin/bash
+
 . ~/.gurubash/history/loader
 . ~/.gurubash/aliases/loader
 . ~/.gurubash/functions/loader
