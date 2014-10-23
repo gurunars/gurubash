@@ -2,11 +2,11 @@
 DIR=$HOME/bin
 if [ -d "$DIR" ]; then
     export PATH=$PATH:$DIR
-    exit 0
+    return
 fi
 
 DIR=$HOME/bins
 if [ -d "$DIR" ]; then
     export PATH=$PATH:$DIR
-    exit 0
+    return
 fi
