@@ -1,0 +1,7 @@
+#!/bin/bash
+
+FILES=$HOME/.personal/*
+for name in $FILES
+do
+    . $name
+done

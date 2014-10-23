@@ -1,11 +1,11 @@
 #!/bin/bash
-cred_file=$HOME/.bash_cridentials
+cred_file=$HOME/.bash_env/cridentials
 
 if [ -f $cred_file ]; then
     return
 fi
 
-cp ~/.gurubash/cridentials/bash_cridentials $cred_file
+cp ~/.gurubash/cridentials/cridentials $cred_file
 
 # Configure the email and name (only once)
 
