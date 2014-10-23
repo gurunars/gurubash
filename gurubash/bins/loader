@@ -1,3 +1,4 @@
+#!/bin/bash
 # Add home bin or bins directory if it exists to the path
 DIR=$HOME/bin
 if [ -d "$DIR" ]; then
