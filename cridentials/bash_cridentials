@@ -1,0 +1,5 @@
+#!/bin/bash
+export EMAIL="__EMAIL"
+export NAME="__NAME"
+export DEBEMAIL=$EMAIL
+export DEBFULLNAME=$NAME

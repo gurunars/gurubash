@@ -1,0 +1,8 @@
+. ~/.gurubash/history/loader
+. ~/.gurubash/aliases/loader
+. ~/.gurubash/functions/loader
+. ~/.gurubash/theming/loader
+. ~/.gurubash/bins/loader
+. ~/.gurubash/vim/loader
+. ~/.gurubash/ls-beauty/loader
+. ~/.gurubash/cridentials/loader

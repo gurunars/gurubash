@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Show specific column from tabular output
+function col {
+    first="awk '{print "
+    last="}'"
+    cmd="${first}\$${1}${last}"
+    eval $cmd
+}

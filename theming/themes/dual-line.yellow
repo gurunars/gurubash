@@ -1,0 +1,26 @@
+# Configure terminal colors (yellow theme)
+ctime=$BYellow # time when command was executed
+cbracket=$BPurple # [ and ]
+cdog=$BGreen # @ char
+chost=$BYellow # PC name
+cpath=$BYellow # file path = `pwd`
+ccursor=$BWhite # > char marking a command line
+cbranch=$BCyan # git branch
+cstatus=$IRed # command smile and error code
+carrow=$IGreen # separator for smile between error code
+croot=$URed # root username color
+cuser=$BYellow # normal username color
+
+username=`eval whoami`
+if [ "$username" == "root" ];then
+  usercolor=$croot
+else
+  usercolor=$cuser
+fi
+
+PS1="\$(surprise)\
+\[$cbracket\][\[$ctime\]\$(date +%H:%M)\[$cbracket\]]\
+\[$cbracket\][\[$usercolor\]\u$Color_Off\[$cdog\]@\[$chost\]\h\[$cbracket\]][\[$cpath\]\w\[$cbracket\]]\
+\$(branch)\
+\n\
+\[$ccursor\] > \[$Color_Off\]"

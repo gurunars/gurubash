@@ -1,0 +1,21 @@
+#!/bin/bash
+alias spack='dpkg-buildpackage -rfakeroot -uc -us -sa -tc -D -A -I.git'
+alias ls='ls -h --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ll='ls -hl'
+alias la='ls -hA'
+alias l='ls -hCF'
+alias pylint='pylint -f colorized -i y -r n '
+alias z='cd ..'
+alias zz='cd ../..'
+alias zzz='cd ../../..'
+alias zzzz='cd ../../../..'
+alias ssh='ssh -A' # fewer passwords
+alias cl='git clean -fdx'
+alias pep8="pep8 --max-line-length=120"
+alias up='sudo apt-get update; sudo apt-get upgrade'
+
+#Add python application's parent dir to PYTHONPATH
+alias pa='filepath=`pwd`;export PYTHONPATH=$PYTHONPATH:${filepath%/*}'
