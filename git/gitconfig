@@ -25,4 +25,4 @@
   br = branch
   co = checkout
   df = diff
-  lg = log --pretty=format:'%Cblue %cd %Creset | %Cgreen %h %Creset | %s%d | %Cred %cn' --date=short
+  lg = log --pretty=format:'%Cblue %cd %Creset | %Cgreen %h %Creset | %s%d | %Cred %cn' --date=short --stat
