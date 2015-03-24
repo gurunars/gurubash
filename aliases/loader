@@ -18,5 +18,6 @@ alias pep8="pep8 --max-line-length=120"
 alias up='sudo apt-get update; sudo apt-get upgrade'
 alias uiautomatorviewer='adb kill-server;adb start-server;uiautomatorviewer'
 
+
 #Add python application's parent dir to PYTHONPATH
 alias pa='filepath=`pwd`;export PYTHONPATH=$PYTHONPATH:${filepath%/*}'
