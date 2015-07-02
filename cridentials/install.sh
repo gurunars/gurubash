@@ -1,6 +1,11 @@
 #!/bin/bash
 cred_file=$HOME/.personal/cridentials
 
+username=`eval whoami`
+if [ "$username" == "root" ];then
+    return
+fi
+
 if [ -f $cred_file ]; then
     return
 fi
