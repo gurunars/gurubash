@@ -20,6 +20,7 @@
 [core]
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [alias]
+  cl = clean -fdx
   st = status
   ci = commit
   br = branch

@@ -1,3 +1,3 @@
 #!/bin/bash
-cp ~/.gurubash/defaults/bashrc ~/.bashrc
-cp ~/.gurubash/defaults/profile ~/.profile
+ln -s ~/.gurubash/defaults/bashrc ~/.bashrc
+ln -s ~/.gurubash/defaults/profile ~/.profile

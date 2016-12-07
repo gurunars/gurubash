@@ -1,2 +1,2 @@
 #!/bin/bash
-cp ~/.gurubash/vim/vimrc ~/.vimrc
+ln -s ~/.gurubash/vim/vimrc ~/.vimrc
