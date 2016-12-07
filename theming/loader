@@ -1,4 +1,4 @@
 #!/bin/bash
 . ~/.gurubash/theming/util_functions
 . ~/.gurubash/theming/bash_color_definitions
-. ~/.gurubash/theming/themes/$BASH_THEME
+. ~/.gurubash/theming/themes/${BASH_THEME}
