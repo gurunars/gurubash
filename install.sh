@@ -1,8 +1,5 @@
 #!/bin/bash
 
-. defaults/install.sh
-. personal/install.sh
-. cridentials/install.sh
-. theming/install.sh
-. git/install.sh
-. vim/install.sh
+for loader in ${HOME}/.gurubash/*/install.sh; do
+    . ${loader}
+done
