@@ -23,7 +23,13 @@
   cl = clean -fdx
   st = status
   ci = commit
-  br = branch
-  co = checkout
-  df = diff
-  lg = log --pretty=format:'%Cgreen%h%Creset %s%d %Cred%cn @ %cd ' --date=short
+  br = branch -l
+  ch = checkout
+  df = diff --color-words
+  lg = log --pretty=format:'%Cgreen%h%Creset %s%d %Cred%cn @ %cd ' --date=short --color-words
+[core]
+  whitespace = trailing-space,space-before-tab
+[apply]
+  whitespace = fix
+[credential]
+  helper = cache
