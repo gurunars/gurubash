@@ -1,8 +1,7 @@
 #!/bin/bash
 bash ~/.gurubash/personal/install.sh
 
-cp ~/.gurubash/git/gitconfig ~/.personal/gitconfig
-ln -s ~/.personal/gitconfig ~/.gitconfig
+ln -s ~/.gurubash/git/gitconfig ~/.gitconfig
 
 . ~/.gurubash/personal/loader
 
