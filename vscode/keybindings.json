@@ -1,0 +1,6 @@
+[
+    {
+        "key": "f10",
+        "command": "multiCommand.split"
+    }
+]

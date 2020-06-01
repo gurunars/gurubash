@@ -1,0 +1,13 @@
+{
+    "multiCommand.commands": [
+        {
+            "command": "multiCommand.split",
+            "sequence": [
+                "workbench.action.splitEditorRight",
+                "workbench.action.navigateLeft",
+                "workbench.action.closeActiveEditor",
+                "workbench.action.navigateRight"
+            ]
+        }
+    ]
+}
