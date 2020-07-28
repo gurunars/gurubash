@@ -1,5 +1,5 @@
 #!/bin/bash
-ln -s ~/.gurubash/git/gitconfig ~/.gitconfig
+ln -f -s ~/.gurubash/git/gitconfig ~/.gitconfig
 
 . ~/.gurubash/personal/loader
 

@@ -3,11 +3,11 @@ cred_file=${HOME}/.personal/credentials
 
 username=`eval whoami`
 if [ "${username}" == "root" ];then
-    return
+    exit 0
 fi
 
 if [ -f ${cred_file} ]; then
-    return
+    exit 0
 fi
 cp ~/.gurubash/credentials/credentials ${cred_file}
 

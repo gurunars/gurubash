@@ -1,5 +1,0 @@
- ✔ add install.sh script for each plugin @done (14-10-23 11:48)
- ✔ global install.sh has to call each plugin's install.sh @done (14-10-23 11:48)
- ☐ think about plugin dependencies
- ✔ some plugins may contain only install.sh files @done (14-10-23 11:48)
- ✔ plugins may create non bash related configs @done (14-10-23 11:48)
