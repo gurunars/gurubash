@@ -1,4 +1,7 @@
 #!/bin/bash
+
+sudo apt install git
+
 ln -f -s ~/.gurubash/git/gitconfig ~/.gitconfig
 
 . ~/.gurubash/personal/loader
