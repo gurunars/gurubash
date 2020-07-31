@@ -9,5 +9,8 @@
                 "workbench.action.navigateRight"
             ]
         }
-    ]
+    ],
+    "workbench.startupEditor": "none",
+    "update.showReleaseNotes": false,
+    "python.showStartPage": false
 }
