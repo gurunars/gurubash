@@ -36,6 +36,3 @@
   helper = cache
 [includeIf "gitdir:~/work/"]
   path = ~/work/gitconfig
-[user]
-	name = Anton Berezin
-	email = gurunars@gmail.com
