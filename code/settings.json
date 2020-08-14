@@ -12,5 +12,6 @@
     ],
     "workbench.startupEditor": "none",
     "update.showReleaseNotes": false,
-    "python.showStartPage": false
+    "python.showStartPage": false,
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }
