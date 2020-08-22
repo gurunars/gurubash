@@ -1,5 +1,13 @@
 #!/bin/bash
 # Add home bin or bins directory if it exists to the path
+
+DIR=${HOME}/.gurubash/bins/dist
+if [ -d "${DIR}" ]; then
+    export PATH=${PATH}:${DIR}
+    return
+fi
+
+
 DIR=${HOME}/bin
 if [ -d "${DIR}" ]; then
     export PATH=${PATH}:${DIR}
