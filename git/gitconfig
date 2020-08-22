@@ -37,5 +37,5 @@
 [includeIf "gitdir:~/work/"]
   path = ~/work/gitconfig
 [user]
-	name = Anton Berezin
-	email = gurunars@gmail.com
+	name = __NAME
+	email = __EMAIL

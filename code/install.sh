@@ -1,15 +1,19 @@
 #!/bin/bash
 
+wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+
 echo "deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
 
-sudo apt install code
+sudo apt update -y
+
+sudo apt install -y code
 
 VS_PATH=${HOME}/.config/Code/User
 
 mkdir -p ${VS_PATH}
 
-ln -f -s ~/.gurubash/vscode/keybindings.json ${VS_PATH}/keybindings.json
-ln -f -s ~/.gurubash/vscode/settings.json ${VS_PATH}/settings.json
+ln -f -s ~/.gurubash/code/keybindings.json ${VS_PATH}/keybindings.json
+ln -f -s ~/.gurubash/code/settings.json ${VS_PATH}/settings.json
 
 # extensions
 

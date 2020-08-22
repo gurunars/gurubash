@@ -1,6 +1,5 @@
-#!/bin/bash
-
-sudo apt update
-sudo apt upgrade
-sudo apt dist-upgrade
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt dist-upgrade -y
+sudo apt install -y software-properties-common apt-transport-https wget
 mkdir -p /etc/apt/sources.list.d
