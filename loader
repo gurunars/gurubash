@@ -3,3 +3,7 @@
 for loader in ${HOME}/.gurubash/*/loader; do
     . ${loader}
 done
+
+for bins in ${HOME}/.gurubash/*/bins; do
+    export PATH=${PATH}:${bins}
+done

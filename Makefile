@@ -12,5 +12,5 @@ aws.install: python.install
 %.install: apt.install
 	if [ -f $*/install.sh ]; then \
 		bash $*/install.sh; \
-	fi 
+	fi
 	echo "Installed $*"
