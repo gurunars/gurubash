@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+AWS_ASSUMED_ROLE=$1
+
+if [ -z "${AWS_ASSUMED_ROLE}" ]; then
+  echo "No role is specified"
+  exit 1
+fi
+
+export AWS_ASSUMED_ROLE
+
+/bin/bash

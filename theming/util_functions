@@ -13,6 +13,14 @@ function branch {
   fi
 }
 
+function aws_assumed_role {
+  if [ -z "${AWS_ASSUMED_ROLE}" ]; then
+    echo ""
+  else
+    echo -e "${cdog} ?? ${crole}${AWS_ASSUMED_ROLE}${Color_Off}"
+  fi
+}
+
 # Show surprise smile if command returned error exit code
 function surprise {
   status=$?
