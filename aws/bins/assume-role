@@ -30,9 +30,11 @@ KST=$(
     --output text
 )
 
-export AWS_ACCESS_KEY_ID=${KST[0]}
-export AWS_SECRET_ACCESS_KEY=${KST[1]}
-export AWS_SESSION_TOKEN=${KST[2]}
+args=($KST)
+
+export AWS_ACCESS_KEY_ID=${args[0]}
+export AWS_SECRET_ACCESS_KEY=${args[1]}
+export AWS_SESSION_TOKEN=${args[2]}
 export AWS_ASSUMED_ROLE
 
 /bin/bash
