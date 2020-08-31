@@ -14,5 +14,6 @@
     "update.showReleaseNotes": false,
     "python.showStartPage": false,
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "editor.mouseWheelZoom": true
+    "editor.mouseWheelZoom": true,
+    "explorer.confirmDelete": false
 }
