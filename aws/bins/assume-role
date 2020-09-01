@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e
+
+AWS_ACCOUNT=$1
+AWS_ROLE=$2
+
+if [ -z "${AWS_ACCOUNT}" ]; then
+  echo "No AWS_ACCOUNT (1)"
+  echo "assume-role ACCOUNT_ID ROLE_NAME"
+  exit 1
+fi
+
+if [ -z "${AWS_ROLE}" ]; then
+  echo "No AWS_ROLE (2)"
+  echo "assume-role ACCOUNT_ID ROLE_NAME"
+  exit 1
+fi
+
+AWS_ASSUMED_ROLE="${AWS_ACCOUNT}/${AWS_ROLE}"
+
+# Clear out existing AWS session environment, or the awscli call will fail
+unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+
+KST=$(
+  aws sts assume-role \
+    --role-arn arn:aws:iam::${AWS_ACCOUNT}:role/${AWS_ROLE} \
+    --role-session-name Personal-assumed-${USER}-role \
+    --query '[Credentials.AccessKeyId,Credentials.SecretAccessKey,Credentials.SessionToken]' \
+    --output text
+)
+
+args=($KST)
+
+export AWS_ACCESS_KEY_ID=${args[0]}
+export AWS_SECRET_ACCESS_KEY=${args[1]}
+export AWS_SESSION_TOKEN=${args[2]}
+export AWS_ASSUMED_ROLE
+
+/bin/bash

@@ -21,12 +21,29 @@ function ext {
     code --install-extension $1
 }
 
+# Docker
 ext ms-azuretools.vscode-docker
+# Eslint
 ext dbaeumer.vscode-eslint
+# Typescript
 ext ms-vscode.vscode-typescript-next
+# For multi-keybindings
 ext ryuta46.multi-command
+# Pyright
 ext ms-pyright.pyright
+# Python
 ext ms-python.python
+# React native
 ext msjsdiag.vscode-react-native
+# PDF preview
 ext tomoki1207.pdf
-ext shd101wyy.markdown-preview-enhanced
+# Markdown support
+ext docsmsft.docs-markdown
+# Vue
+ext octref.vetur
+# Jest
+ext orta.vscode-jest
+# Markdown lint
+ext davidanson.vscode-markdownlint
+# Style lint
+ext stylelint.vscode-stylelint

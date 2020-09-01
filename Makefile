@@ -7,8 +7,10 @@ install: $(shell ls -d */ | sed -e 's/\//.install/')
 
 git.install credentials.install theming.install: personal.install
 
+aws.install: python.install
+
 %.install: apt.install
 	if [ -f $*/install.sh ]; then \
 		bash $*/install.sh; \
-	fi 
+	fi
 	echo "Installed $*"
