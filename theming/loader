@@ -1,5 +1,9 @@
 #!/bin/bash
+
+DEFAULT_THEME=dual-line.blue
+DEFAULT_SHAPE=multiline
+
 . ~/.gurubash/theming/util_functions
 . ~/.gurubash/theming/bash_color_definitions
-. ~/.gurubash/theming/themes/${BASH_THEME}
-. ~/.gurubash/theming/shapes/${BASH_SHAPE}
+. ~/.gurubash/theming/themes/${BASH_THEME:-${DEFAULT_THEME}}
+. ~/.gurubash/theming/shapes/${BASH_SHAPE:-${DEFAULT_SHAPE}}
