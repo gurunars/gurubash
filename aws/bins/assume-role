@@ -51,9 +51,9 @@ function assume_with_cli_args {
 }
 
 if [ "$#" -eq 1 ]; then
-  assume_with_csv_args
+  assume_with_csv_args $1
 elif [ "$#" -eq 2 ]; then
-  assume_with_cli_args
+  assume_with_cli_args $1 $2
 else
   echo "Use either:"
   echo "assume-role CREDS_CSV_FILE"
