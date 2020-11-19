@@ -2,5 +2,9 @@
     {
         "key": "f10",
         "command": "multiCommand.split"
+    },
+    {
+      "key": "ctrl+shift+s",
+      "command": "workbench.action.files.saveAll"
     }
 ]

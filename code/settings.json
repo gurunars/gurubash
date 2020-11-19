@@ -18,5 +18,14 @@
     "explorer.confirmDelete": false,
     "css.validate": true,
     "less.validate": true,
-    "scss.validate": true
+    "scss.validate": true,
+    "files.hotExit": "off",
+    "window.zoomLevel": 0,
+    "jest.enableInlineErrorMessages": true,
+    "jest.pathToConfig": "./unit.jest.conf.js",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "timeline.excludeSources": [
+        "git-history"
+    ],
+    "extensions.ignoreRecommendations": true
 }

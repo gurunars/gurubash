@@ -23,7 +23,7 @@
   cl = clean -fdx
   st = status
   tree = log --oneline --decorate --all --graph
-  ci = commit
+  ci = commit --no-verify
   br = branch -l
   ch = checkout
   df = diff --color-words
