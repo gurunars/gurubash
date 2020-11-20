@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import csv
 import os
 import subprocess
 import sys
@@ -14,8 +13,10 @@ def set_env(assumed_role_name, access_key_id, secret_access_key, session_token):
     ))
 
 
-def get_creds_from_csv(args):
-    return 'title', ['1', '2', '3']
+def get_creds_from_csv(path):
+    with open(path, mode='r') as csv_file:
+        lines = csv_file.read().split("\n")
+        return path, lines[1].split(",")
 
 
 QUERY_PARAMS = ["AccessKeyId", "SecretAccessKey", "SessionToken"]
@@ -62,7 +63,7 @@ def main():
     if not args:
         exit(1)
     if len(args) == 1 and os.path.exists(_pt(args[0])):
-        title, results = get_creds_from_csv(args)
+        title, results = get_creds_from_csv(_pt(args[0]))
     else:
         title, results = get_creds_from_role_and_external_id(args)
     set_env(title, *results)
