@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import argparse
+import csv
 import os
 import subprocess
 import sys
@@ -14,8 +14,8 @@ def set_env(assumed_role_name, access_key_id, secret_access_key, session_token):
     ))
 
 
-def assume_with_csv_args():
-    pass
+def get_creds_from_csv(args):
+    return 'title', ['1', '2', '3']
 
 
 QUERY_PARAMS = ["AccessKeyId", "SecretAccessKey", "SessionToken"]
@@ -53,11 +53,18 @@ def get_creds_from_role_and_external_id(args):
     ).decode("utf-8").replace("\n", "").split("\t")
 
 
+def _pt(path):
+    return os.path.abspath(os.path.expanduser(path))
+
+
 def main():
     args = sys.argv[1:]
     if not args:
         exit(1)
-    title, results = get_creds_from_role_and_external_id(args)
+    if len(args) == 1 and os.path.exists(_pt(args[0])):
+        title, results = get_creds_from_csv(args)
+    else:
+        title, results = get_creds_from_role_and_external_id(args)
     set_env(title, *results)
     subprocess.call([os.environ["SHELL"]])
 
