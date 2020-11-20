@@ -54,14 +54,12 @@ def get_creds_from_role_and_external_id(args):
 
 
 def main():
-    #subprocess.call(['/bin/bash'])
     args = sys.argv[1:]
     if not args:
         exit(1)
     title, results = get_creds_from_role_and_external_id(args)
     set_env(title, *results)
-
-
+    subprocess.call([os.environ["SHELL"]])
 
 
 if __name__ == "__main__":
