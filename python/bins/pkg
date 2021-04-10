@@ -1,15 +1,21 @@
 #!/usr/bin/env python
 
-
 import argparse
+import os
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser("Create Python package")
     parser.add_argument("name")
     args = parser.parse_args()
 
-    print(args.name)
+    print(f"Creating Python package {args.name}")
+    os.makedirs(args.name, exist_ok=True)
+    os.mkdir(args.name)
+    with open(os.path.join(args.name, "__init__.py")) as fil:
+        fil.write("")
+    with open(os.path.join(args.name, "tests.py")) as fil:
+        fil.write("")
 
 
 if __name__ == "__main__":
