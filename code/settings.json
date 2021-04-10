@@ -27,5 +27,13 @@
     "timeline.excludeSources": [
         "git-history"
     ],
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+    "python.languageServer": "Pylance",
+    "workbench.statusBar.visible": true,
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ]
 }

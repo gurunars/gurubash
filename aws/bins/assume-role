@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 
-def set_env(assumed_role_name, access_key_id, secret_access_key, session_token):
+def set_env(assumed_role_name, access_key_id, secret_access_key, session_token=""):
     os.environ.update(dict(
         AWS_ACCESS_KEY_ID=access_key_id,
         AWS_SECRET_ACCESS_KEY=secret_access_key,
