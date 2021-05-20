@@ -22,7 +22,6 @@
     "files.hotExit": "off",
     "window.zoomLevel": 0,
     "jest.enableInlineErrorMessages": true,
-    "jest.pathToConfig": "./unit.jest.conf.js",
     "javascript.updateImportsOnFileMove.enabled": "always",
     "timeline.excludeSources": [
         "git-history"
@@ -33,5 +32,7 @@
             "viewType": "jupyter.notebook.ipynb",
             "filenamePattern": "*.ipynb"
         }
-    ]
+    ],
+    "update.mode": "manual",
+    "files.insertFinalNewline": true
 }
