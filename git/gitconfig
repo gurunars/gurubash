@@ -34,5 +34,7 @@
   whitespace = fix
 [credential]
   helper = cache
+[includeIf "gitdir:~/repo/"]
+  path = ~/repo/gitconfig
 [includeIf "gitdir:~/work/"]
   path = ~/work/gitconfig
