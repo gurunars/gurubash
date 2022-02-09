@@ -20,20 +20,18 @@
     "less.validate": true,
     "scss.validate": true,
     "files.hotExit": "off",
+    "python.languageServer": "Pylance",
+    "workbench.statusBar.visible": true,
     "window.zoomLevel": 0,
     "jest.enableInlineErrorMessages": true,
-    "jest.pathToConfig": "./unit.jest.conf.js",
     "javascript.updateImportsOnFileMove.enabled": "always",
     "timeline.excludeSources": [
         "git-history"
     ],
     "extensions.ignoreRecommendations": true,
-    "python.languageServer": "Pylance",
-    "workbench.statusBar.visible": true,
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ]
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "update.mode": "manual",
+    "files.insertFinalNewline": true
 }

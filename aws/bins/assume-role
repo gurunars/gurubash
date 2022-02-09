@@ -6,13 +6,13 @@ import subprocess
 import sys
 
 
-def set_env(assumed_role_name, access_key_id, secret_access_key, session_token=""):
-    os.environ.update(dict(
+def set_env(assumed_role_name, access_key_id, secret_access_key, session_token=None):
+    os.environ.update({key: value for key, value in dict(
         AWS_ACCESS_KEY_ID=access_key_id,
         AWS_SECRET_ACCESS_KEY=secret_access_key,
         AWS_SESSION_TOKEN=session_token,
         AWS_ASSUMED_ROLE=assumed_role_name
-    ))
+    ).items() if value is not None})
 
 
 def get_creds_from_csv(path):
