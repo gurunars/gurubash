@@ -5,6 +5,8 @@ MAKEFLAGS += --silent
 install: $(shell ls -d */ | sed -e 's/\//.install/')
 	echo "DONE"
 
+python.install: personal.install
+
 git.install credentials.install theming.install: personal.install
 
 aws.install: python.install

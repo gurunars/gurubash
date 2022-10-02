@@ -25,9 +25,6 @@
     "window.zoomLevel": 0,
     "jest.enableInlineErrorMessages": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
-    "timeline.excludeSources": [
-        "git-history"
-    ],
     "extensions.ignoreRecommendations": true,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter.notebook.ipynb"
