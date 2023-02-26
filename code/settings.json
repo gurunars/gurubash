@@ -22,7 +22,6 @@
     "files.hotExit": "off",
     "python.languageServer": "Pylance",
     "workbench.statusBar.visible": true,
-    "window.zoomLevel": 0,
     "jest.enableInlineErrorMessages": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "extensions.ignoreRecommendations": true,

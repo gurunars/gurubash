@@ -1,4 +1,5 @@
 SDK=$HOME/Android/Sdk
+export ANDROID_HOME=$SDK
 export ANDROID_SDK=$SDK
 export PATH=$PATH:$SDK/platform-tools:$SDK/tools
 
