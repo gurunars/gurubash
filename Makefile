@@ -1,9 +1,14 @@
 MAKEFLAGS += --silent
 
+OS=$(shell ./pkg-manager/get-os.sh)
+
 .PHONY: install upgrade $(MAKECMDGOALS)
 
-install: $(shell ls -d */ | sed -e 's/\//.install/')
+install: check-os $(shell ls -d */ | sed -e 's/\//.install/')
 	echo "DONE"
+
+check-os:
+	bash ./pkg-manager/get-os.sh
 
 python.install: personal.install
 
@@ -11,8 +16,8 @@ git.install credentials.install theming.install: personal.install
 
 aws.install: python.install
 
-%.install: apt.install
-	if [ -f $*/install.sh ]; then \
-		bash $*/install.sh; \
+%.install: pkg-manager.install
+	if [ -f $*/install.$(OS).sh ]; then \
+		bash $*/install.$(OS).sh; \
 	fi
 	echo "Installed $*"
