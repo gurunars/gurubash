@@ -1,9 +1,20 @@
 #!/bin/bash
 
+DIR=$(cd $(dirname -- "$0") && pwd)
+OS=$(bash $DIR/pkg-manager/get-os.sh)
+
 for loader in ${HOME}/.gurubash/*/loader; do
     . ${loader}
 done
 
+for loader in ${HOME}/.gurubash/*/loader.$OS; do
+    . ${loader}
+done
+
 for bins in ${HOME}/.gurubash/*/bins; do
+    export PATH=${PATH}:${bins}
+done
+
+for bins in ${HOME}/.gurubash/*/bins/$OS; do
     export PATH=${PATH}:${bins}
 done
