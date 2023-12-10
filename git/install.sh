@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ln -f -s ~/.gurubash/git/gitconfig ~/.gitconfig
+ln -f -s $HOME/.gurubash/git/gitconfig $HOME/.gitconfig
 
-. ~/.gurubash/personal/loader
+. $HOME/.gurubash/personal/loader
 
 mkdir -p $HOME/repo
 git config -f $HOME/repo/gitconfig user.name "${NAME}"

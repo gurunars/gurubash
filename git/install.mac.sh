@@ -7,7 +7,3 @@ if [ -z "$CMD" ]; then
 else
     echo "GIT is already installed"
 fi
-
-echo $DIR/install.sh
-
-bash $DIR/install.sh

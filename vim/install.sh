@@ -1,5 +1,1 @@
-#!/bin/bash
-
-sudo apt install vim
-
-ln -f -s ~/.gurubash/vim/vimrc ~/.vimrc
+ln -f -s $HOME/.gurubash/vim/vimrc $HOME/.vimrc

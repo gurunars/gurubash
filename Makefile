@@ -24,4 +24,7 @@ aws.install: python.install
 	if [ -f $*/install.$(OS).sh ]; then \
 		/bin/bash $*/install.$(OS).sh; \
 	fi
+	if [ -f $*/install.sh ]; then \
+		/bin/bash $*/install.sh; \
+	fi
 	echo "Installed $*"
