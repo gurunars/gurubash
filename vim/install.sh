@@ -1,1 +1,3 @@
-ln -f -s $HOME/.gurubash/vim/vimrc $HOME/.vimrc
+$INSTALL vim
+
+ln -f -s ${ROOT}/vim/vimrc ${HOME}/.vimrc

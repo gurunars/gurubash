@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ln -f -s ~/.gurubash/defaults/bashrc ~/.bashrc
-ln -f -s ~/.gurubash/defaults/profile ~/.profile
+ln -f -s ${ROOT}/defaults/bashrc ~/.bashrc
+ln -f -s ${ROOT}/defaults/profile ~/.profile
