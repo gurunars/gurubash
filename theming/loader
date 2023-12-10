@@ -3,7 +3,7 @@
 DEFAULT_THEME=dual-line.blue
 DEFAULT_SHAPE=multiline
 
-. ~/.gurubash/theming/util_functions
-. ~/.gurubash/theming/bash_color_definitions
-. ~/.gurubash/theming/themes/${BASH_THEME:-${DEFAULT_THEME}}
-. ~/.gurubash/theming/shapes/${BASH_SHAPE:-${DEFAULT_SHAPE}}
+. ${GURUBASH}/theming/util_functions
+. ${GURUBASH}/theming/bash_color_definitions
+. ${GURUBASH}/theming/themes/${BASH_THEME:-${DEFAULT_THEME}}
+. ${GURUBASH}/theming/shapes/${BASH_SHAPE:-${DEFAULT_SHAPE}}

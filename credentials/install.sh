@@ -9,7 +9,7 @@ fi
 if [ -f ${cred_file} ]; then
     exit 0
 fi
-cp ${ROOT}/credentials/credentials ${cred_file}
+cp ${GURUBASH}/credentials/credentials ${cred_file}
 
 # Configure the email and name (only once)
 

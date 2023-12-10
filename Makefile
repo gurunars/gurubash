@@ -1,8 +1,8 @@
 MAKEFLAGS += --silent
 
 OS=$(shell ./pkg-manager/get-os.sh)
-ROOT=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
-INSTALL=$(ROOT)/pkg-manager/install-if-missing.$(OS).sh
+GURUBASH=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+INSTALL=$(GURUBASH)/pkg-manager/install-if-missing.$(OS).sh
 
 .PHONY: install upgrade $(MAKECMDGOALS)
 .EXPORT_ALL_VARIABLES: install upgrade $(MAKECMDGOALS)

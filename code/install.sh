@@ -2,8 +2,8 @@ VS_PATH=${HOME}/.config/Code/User
 
 mkdir -p ${VS_PATH}
 
-ln -f -s ${ROOT}/code/keybindings.json ${VS_PATH}/keybindings.json
-ln -f -s ${ROOT}/code/settings.json ${VS_PATH}/settings.json
+ln -f -s ${GURUBASH}/code/keybindings.json ${VS_PATH}/keybindings.json
+ln -f -s ${GURUBASH}/code/settings.json ${VS_PATH}/settings.json
 
 # extensions
 

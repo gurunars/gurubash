@@ -1,2 +1,2 @@
 #!/bin/bash
-eval "`dircolors -b ~/.gurubash/ls-beauty/dir_colors`"
+eval "`dircolors -b ${GURUBASH}/ls-beauty/dir_colors`"
