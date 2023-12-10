@@ -1,5 +1,7 @@
 #!/bin/bash
 
+APP_NAME=git $INSTALL
+
 ln -f -s ${GURUBASH}/git/gitconfig $HOME/.gitconfig
 
 . ${GURUBASH}/personal/loader
