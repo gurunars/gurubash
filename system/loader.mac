@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# To remove ZSH usage recommendation on newest MacOS
+export BASH_SILENCE_DEPRECATION_WARNING=1
