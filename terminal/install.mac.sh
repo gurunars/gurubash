@@ -1,0 +1,1 @@
+APP_NAME=iterm2 $INSTALL

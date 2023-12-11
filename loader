@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export GURUBASH=$(cd $(dirname -- "$0") && pwd)
 OS=$(bash ${GURUBASH}/pkg-manager/get-os.sh)
 
 for loader in ${GURUBASH}/*/loader; do
