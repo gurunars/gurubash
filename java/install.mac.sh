@@ -1,1 +1,1 @@
-$INSTALL java
+APP_NAME=java $INSTALL

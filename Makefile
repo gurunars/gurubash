@@ -32,4 +32,4 @@ aws.install: python.install
 	fi
 	echo "Installed $*"
 
-test: defaults.install
+test: java.install
