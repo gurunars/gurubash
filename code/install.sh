@@ -11,6 +11,12 @@ function ext {
     code --install-extension $1
 }
 
+# Makefile
+ext ms-vscode.makefile-tools
+# TOML
+ext tamasfe.even-better-toml
+# restuctured text
+ext lextudio.restructuredtext
 # Docker
 ext ms-azuretools.vscode-docker
 # Eslint
@@ -29,8 +35,6 @@ ext msjsdiag.vscode-react-native
 ext tomoki1207.pdf
 # Markdown support
 ext docsmsft.docs-markdown
-# Vue
-ext octref.vetur
 # Jest
 ext orta.vscode-jest
 # Markdown lint
