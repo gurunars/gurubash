@@ -38,3 +38,5 @@
   path = ~/repo/gitconfig
 [includeIf "gitdir:~/work/"]
   path = ~/work/gitconfig
+[init]
+	defaultBranch = master

@@ -1,6 +1,92 @@
-#!/bin/sh
+#!/usr/bin/env python3
+"""ff — stage everything, generate a commit message via Ollama, and commit."""
 
-set -e
+import json
+import os
+import subprocess
+import sys
+import urllib.request
 
-git add .
-git ci --no-verify -am ff
+OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+MODEL       = os.environ.get("COMMIT_MSG_MODEL", "qwen2.5-coder:7b")
+MAX_DIFF    = 12000
+
+
+def run(cmd, **kwargs):
+    return subprocess.run(cmd, check=True, text=True, **kwargs)
+
+
+def git(*args, capture=False):
+    result = run(["git", *args], stdout=subprocess.PIPE if capture else None)
+    return result.stdout if capture else None
+
+
+def main():
+    # ensure we're in a repo
+    try:
+        run(["git", "rev-parse", "--is-inside-work-tree"],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except subprocess.CalledProcessError:
+        sys.exit("Error: not inside a git repository.")
+
+    # stage everything
+    git("add", ".")
+
+    # collect diff (already staged now)
+    diff      = git("diff", "--cached", capture=True)
+    untracked = git("ls-files", "--others", "--exclude-standard", capture=True)
+
+    if not diff and not untracked:
+        sys.exit("Nothing to commit after staging.")
+
+    if len(diff) > MAX_DIFF:
+        diff = diff[:MAX_DIFF] + "\n... [diff truncated]"
+
+    prompt = "\n".join([
+        "You are a senior software engineer writing a git commit message.",
+        "Analyse the diff and produce a single commit message following the Conventional Commits spec.",
+        "",
+        "Rules:",
+        "- First line: <type>(<optional scope>): <short imperative summary> — max 72 chars",
+        "- Types: feat, fix, refactor, chore, docs, test, style, perf, ci, build",
+        "- Optionally add a blank line + short body (bullet points, max 4 lines) explaining WHY",
+        "- Output ONLY the commit message — no backticks, no quotes, no explanation",
+        "",
+        ("New untracked files: " + untracked.strip()) if untracked.strip() else "",
+        "",
+        "Git diff:",
+        diff,
+    ])
+
+    payload = json.dumps({
+        "model":   MODEL,
+        "prompt":  prompt,
+        "stream":  False,
+        "options": {"temperature": 0.2},
+    }).encode()
+
+    req = urllib.request.Request(
+        f"{OLLAMA_HOST}/api/generate",
+        data=payload,
+        headers={"Content-Type": "application/json"},
+    )
+
+    try:
+        with urllib.request.urlopen(req) as resp:
+            data = json.loads(resp.read())
+            msg = data["response"].strip()
+    except Exception as e:
+        sys.exit(f"Error calling Ollama: {e}")
+
+    if not msg:
+        sys.exit("Error: empty response from Ollama.")
+
+    print(msg)
+
+    # commit with the generated message, skipping hooks
+    git("commit", "--no-verify", "-am", msg)
+
+
+if __name__ == "__main__":
+    main()
+
