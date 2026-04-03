@@ -19,11 +19,13 @@ pkg-manager.install:
 
 python.install: personal.install
 
+ai.install: python.install
+
 git.install credentials.install theming.install: personal.install
 
 aws.install: python.install
 
-git.install: ollama.install
+git.install: ai.install
 
 %.install: pkg-manager.install
 	if [ -f $*/install.$(OS).sh ]; then \

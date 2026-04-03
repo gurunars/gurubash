@@ -1,0 +1,4 @@
+export AIDER_MODEL=ollama_chat/gemma4:26b
+export AIDER_DARK_MODE=true
+export OLLAMA_CONTEXT_LENGTH=8192
+export OLLAMA_API_BASE=http://127.0.0.1:11434
