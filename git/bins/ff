@@ -8,7 +8,7 @@ import sys
 import urllib.request
 
 OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-MODEL       = os.environ.get("COMMIT_MSG_MODEL", "qwen2.5-coder:7b")
+MODEL       = os.environ.get("COMMIT_MSG_MODEL", "gemma4")
 MAX_DIFF    = 12000
 
 
