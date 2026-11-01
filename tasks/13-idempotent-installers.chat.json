@@ -55,6 +55,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Still blocked on #22: the podman VM's disk is full, so `make_snapshot` and the sandbox both fail with `no space left on device` before they check any code. Nothing is committed, and the rebase is unfinished: `java/install.mac.sh` and `python/install.mac.sh` are resolved in the files, but git still lists them as unmerged.\n\nDecided: not calling `ready` and not working around the check (because the code is uncommitted and unchecked, and the failure is the VM's). Re-launching me before #22 is done will only fail the same way, so hold this task until then."
+    },
+    {
+      "id": 9,
+      "at": "2026-11-01T12:18:23Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: landing `c53937963a0a`, check green, rebased with master's `python/install.mac.sh` kept (because the installers now skip what is installed and the three small calls were accepted earlier). The Done when's second `make` making no network call was not run (no Bash in the session); the user's next `make` is the real check."
     }
   ]
 }
