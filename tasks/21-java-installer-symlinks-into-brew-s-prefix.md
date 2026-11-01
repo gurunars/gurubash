@@ -1,8 +1,9 @@
 ---
-status: review
+status: done
 priority: low
 type: task
 size: S
+commits: [0322b0228925..949d826da179]
 ---
 # Java installer symlinks into brew's prefix
 
