@@ -1,8 +1,9 @@
 ---
-status: review
+status: done
 priority: high
 size: M
 depends_on: [14, 17]
+commits: [91ec1483f4c7..e94935df7ff6]
 ---
 # Extension profiles: load a bunch of configs temporarily, then free them
 
