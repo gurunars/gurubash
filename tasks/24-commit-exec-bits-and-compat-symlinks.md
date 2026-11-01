@@ -1,6 +1,5 @@
 ---
-status: planned
-type: human
+status: done
 priority: high
 size: S
 depends_on: [17]
@@ -15,7 +14,7 @@ An agent's tools can only write plain files, with no `chmod`, `ln` or `git mv`. 
 ## TODO
 Run these from the repo root, after 17 lands.
 
-- [ ] Set the exec bit on the six files that had it before the move:
+- [x] Set the exec bit on the six files that had it before the move:
 ```
 chmod +x \
   core/pkg-manager/bins/ubuntu/up \
@@ -25,7 +24,7 @@ chmod +x \
   extensions/aws/bins/assume-role \
   extensions/python/bins/pkg
 ```
-- [ ] Replace the copies with symlinks:
+- [x] Replace the copies with symlinks:
 ```
 ln -sf ../core/defaults/profile defaults/profile
 ln -sf ../core/git/gitconfig git/gitconfig
@@ -33,11 +32,11 @@ ln -sf ../core/vim/vimrc vim/vimrc
 ln -sf ../extensions/code/settings.json code/settings.json
 ln -sf ../extensions/code/keybindings.json code/keybindings.json
 ```
-- [ ] Commit:
+- [x] Commit:
 ```
 git add -A core extensions defaults git vim code && git commit -m "Restore exec bits; old config paths become symlinks"
 ```
-- [ ] `task check`
+- [x] `task check`
 
 ## Done when
 `git ls-files -s core extensions | grep 100755` lists those six files, `git ls-files -s defaults git vim code` shows five entries of mode 120000, and `task check` is green.

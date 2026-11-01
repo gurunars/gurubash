@@ -1,5 +1,6 @@
 ---
-status: planned
+status: rejected
+rejection_reason: task 25 runs make install in real debian:13 and ubuntu:latest containers
 priority: medium
 type: human
 size: S
