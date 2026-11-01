@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `d94f6f7` does not replay onto master (tasks 3, 4, 5, 7 and 9 landed since your base: the Makefile's install rule, the python shebangs and the mac installer, `scripts/inside.sh`). Call `rebase`, resolve keeping both sides (7's `wildcard */install*.sh` install rule stays, your idempotence on top), run `task check`, `make_snapshot`, and tell me the head in one line; I land it then."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T09:40:29Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "Task 13 is blocked by the podman VM disk, not by the code. `task check` fails with \"no space left on device\" while pulling mirror.gcr.io/library/busybox:1.37. The rebase conflicts in java/install.mac.sh and python/install.mac.sh are resolved in the files, but `make_snapshot` refuses to commit while the check is red, so the rebase is unfinished. I have no tool that prunes podman. Free space in the podman VM (e.g. `podman system prune`) and re-run me; the next step is `make_snapshot`."
     }
   ]
 }
