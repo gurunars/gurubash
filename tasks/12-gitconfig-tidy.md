@@ -1,5 +1,5 @@
 ---
-status: active
+status: review
 priority: low
 size: S
 depends_on: [2]
