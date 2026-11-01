@@ -1,8 +1,9 @@
 ---
-status: review
+status: done
 priority: low
 size: S
 depends_on: [2]
+commits: [81a1a02f4190..63e86996f090]
 ---
 # Tidy `git/gitconfig` without changing behaviour
 
