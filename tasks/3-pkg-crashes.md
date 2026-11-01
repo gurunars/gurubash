@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: medium
 size: S
 depends_on: [2]
+commits: [bb2de7bb8df8..95b446a236e3]
 ---
 # `pkg demo` crashes and creates no package
 
