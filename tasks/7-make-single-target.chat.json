@@ -6,6 +6,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Decided: keep `theming.install: personal.install` and the unused `INSTALL=` line as they are (because they are outside this task's scope; theming now simply is not in `make install`, since it has no installer). Decided: `make <name>.install` for a name with no installer still echoes \"Installed <name>\" and does not fail (because `make install` on mac/ubuntu includes dirs that have an installer for only one OS, e.g. java, and failing there would break it)."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T09:30:36Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: accepted the executor's two calls, `theming.install: personal.install` and the unused `INSTALL=` line left alone (out of scope), and `make <name>.install` not failing for a name with no installer (java has one for one OS only); with the message changed from \"Installed <name>\" to one that says there was no installer, since nothing was installed."
     }
   ]
 }
