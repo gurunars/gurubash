@@ -6,6 +6,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Decided: `aws` stderr no longer merged into stdout (because merged stderr would be split on tabs and parsed as credentials; it now reaches the terminal). Decided: the regression check lives in `scripts/inside.sh` beside the pkg demo check, following task 3's precedent, with a stub `aws` on a scratch PATH."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T09:38:00Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: landing `78fe598b2ea7`, check green (because the fix is the reported crash: the external id is `nargs='?'`, a string, not a list; the `aws sts assume-role` call is an argv list with no `shell=True`; `anonymous` spelled right; a regression check with a stub `aws` asserts the exact argv with and without an external id and the anonymous session name). Accepted: stderr left on the terminal rather than parsed as credentials. Not run against the old script."
     }
   ]
 }
