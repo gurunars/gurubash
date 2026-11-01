@@ -1,5 +1,5 @@
 ---
-status: active
+status: review
 priority: low
 type: task
 size: S
