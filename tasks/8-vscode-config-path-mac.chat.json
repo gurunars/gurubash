@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T09:31:07Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "Decided: the seven live settings keys get my best-guess values (podman, podman-compose, true, EU, false, true, true) (because the live file on the Mac is unreadable from here; task 16 must compare against the real file before applying). Also: install.sh branches on $OS, falls back to get-os.sh, and skips extensions when `code` is absent."
+    }
+  ]
+}
