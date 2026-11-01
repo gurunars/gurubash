@@ -1,0 +1,7 @@
+version: "3"
+
+tasks:
+  check:
+    desc: "The whole of am-I-done: every check in scripts/check.sh, in containers"
+    cmds:
+      - bash scripts/check.sh
