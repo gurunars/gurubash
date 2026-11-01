@@ -6,6 +6,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `c59497f1511d`, check green (because conda and dotnet are gone, nothing loads by default, the Done when is tested in the container: a new shell has `ANDROID_HOME`, `AI_MODEL` and `JAVA_HOME` unset, and naming `android` and `ai` in `default-extensions` loads them with no PATH growth). The `make install` and re-link after landing are the user's, as the task says."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T12:35:33Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed by the queue as `51f120f` before my own call."
     }
   ]
 }
