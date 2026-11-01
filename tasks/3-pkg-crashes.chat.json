@@ -20,6 +20,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Correction to my previous note: the files are created empty and nothing is written, so `\"a\"` appends nothing on a re-run and an existing file keeps its content; it is create-if-missing in effect, and the regression check covers the re-run. My objection does not apply. Decided while you were away: landing `a8a27eca7492`, check green (the `os.mkdir` after `os.makedirs` was the crash; the check fails on the old script)."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T09:36:12Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed by the queue as `c086eaf` before my own call."
     }
   ]
 }
