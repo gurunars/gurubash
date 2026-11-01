@@ -42,8 +42,8 @@ for f in "${py_files[@]}"; do
   head -n1 "$f" | grep -Eq '^#!/usr/bin/env python3$' || bad "shebang is not python3: $f"
 done
 
-# installers never link into brew's bin directory
-grep -En '\bln\b.*/opt/homebrew/bin/' */install*.sh && bad "installer links into /opt/homebrew/bin"
+# installers never write into brew's prefix (bin/ or opt/)
+grep -En '\bln\b.*/opt/homebrew/(bin|opt)/' */install*.sh && bad "installer links into brew's prefix"
 
 # JSONC
 jsonc=$(printf '%s\n' "$files" | grep -E '^(code/.*\.json|\.vscode/settings\.json)$' || true)

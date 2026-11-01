@@ -1,0 +1,4 @@
+# openjdk is keg-only: point JAVA_HOME at its bundle in place, with no link and no write into brew's prefix.
+if [ -d /opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home ]; then
+    export JAVA_HOME=/opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home
+fi
