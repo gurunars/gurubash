@@ -1,0 +1,31 @@
+# AGENTS.md
+
+Shell/dotfile setup, installed with `make`. Read this before changing anything.
+
+## Never touch the real `$HOME`
+
+- Installers (`*/install*.sh`) and `make install` never run against the real
+  `$HOME`. They write dotfiles, link configs and install packages.
+- Allowed: `make -n install` (dry run), or running inside a container with a
+  throwaway `HOME`.
+- `make` remains the installer. `Taskfile.yml` holds checks only.
+
+## Check
+
+`task check` from the repo root is the gate: exit 0 when clean, non-zero naming
+file and line otherwise. It needs only `task` and podman, and runs every tool in
+a container with the repo mounted read-only. It covers shellcheck
+(`--severity=error`) and `bash -n`, Python syntax, JSONC parsing, the gitconfig,
+vim's `vimrc`, the loopback rules and `make -n install`.
+
+## Rules of the tree
+
+- `code/settings.json` (and the other `code/*.json`, `.vscode/settings.json`) is
+  JSONC: comments and trailing commas are legal. Do not parse with strict JSON.
+- Every directory with a `loader` (or `loader.<os>`) is sourced by every shell.
+  Loaders stay fast and silent: no forks you can avoid, no output, no network.
+- `scripts/` and `tasks/` hold no `install*` or `loader`. Until task 7 lands,
+  the `*/` targets in the `Makefile` must tolerate those directories.
+- Loopback only: never `0.0.0.0`, `::`, `localhost` as a URL host, or an
+  unpublished-host `-p N:N`. Use `127.0.0.1`. The check fails on these.
+- Never run `npm`, `pip` or a dev server on the host; use the repo's runner.
