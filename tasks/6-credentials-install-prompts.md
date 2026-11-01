@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: high
 size: S
 depends_on: [2]
+commits: [5cd2755e70f5..557f2e63054a]
 ---
 # First-run credentials: a full name fails and the email loses its `@`
 
