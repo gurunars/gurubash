@@ -328,6 +328,22 @@ grep -q 'NOT REACHED' <<<"$ex_out" && bad "ext off did not leave the shell"
 grep -q 'make missing.install' "$ex_dir/err" || bad "ext use refusal does not name make missing.install"
 rm -rf "$ex_dir"
 
+# get-os.sh: Ubuntu, Debian and their derivatives are the one apt family, named ubuntu;
+# any other Linux is refused. Each case reads a fixture as /etc/os-release.
+osr_dir=$(mktemp -d /tmp/os-release.XXXXXX)
+osr() { printf '%b' "$1" >"$osr_dir/os-release"; OS_RELEASE="$osr_dir/os-release" bash /repo/core/pkg-manager/get-os.sh 2>/dev/null; }
+[ "$(osr 'ID=debian\n')" = ubuntu ] || bad "get-os.sh: Debian is not the ubuntu apt family"
+[ "$(osr 'ID=ubuntu\nID_LIKE=debian\n')" = ubuntu ] || bad "get-os.sh: Ubuntu is not the ubuntu apt family"
+[ "$(osr 'ID=linuxmint\nID_LIKE="ubuntu debian"\n')" = ubuntu ] || bad "get-os.sh: a Debian derivative is not the ubuntu apt family"
+osr 'ID=alpine\n' >/dev/null && bad "get-os.sh: alpine was taken for the apt family"
+osr 'ID=fedora\nID_LIKE="rhel fedora"\n' >/dev/null && bad "get-os.sh: fedora was taken for the apt family"
+OS_RELEASE="$osr_dir/none" bash /repo/core/pkg-manager/get-os.sh >/dev/null 2>&1 && bad "get-os.sh: a missing os-release was accepted"
+rm -rf "$osr_dir"
+# The make checks below run in this Alpine container, so they read an Ubuntu fixture.
+make_release=$(mktemp -d /tmp/make-release.XXXXXX)
+printf 'ID=ubuntu\nID_LIKE=debian\n' >"$make_release/os-release"
+export OS_RELEASE="$make_release/os-release"
+
 # make -n install
 make -n install >/dev/null || bad "make -n install"
 
@@ -357,13 +373,17 @@ done
 make -n nosuch.install >/dev/null 2>&1 && bad "make nosuch.install should fail: there is no such component"
 
 # `make` always failed on Ubuntu. A full `make install`, core and every extension, down
-# the Ubuntu path, in a throwaway HOME, with no network: everything that touches the
-# system or downloads is a stub, and sudo runs nothing but records what it was asked.
-# As root, so core/credentials/install.sh leaves ~/.personal empty.
-ub_dir=$(mktemp -d /tmp/ubuntu-make.XXXXXX)
+# the apt path, once as Ubuntu and once as Debian, in a throwaway HOME, with no network:
+# everything that touches the system or downloads is a stub, and sudo runs nothing but
+# records what it was asked. As root, so core/credentials/install.sh leaves ~/.personal empty.
+ub_extensions=$(cd extensions && for e in */; do printf '%s.install ' "${e%/}"; done)
+for distro in ubuntu debian; do
+ub_dir=$(mktemp -d /tmp/apt-make.XXXXXX)
 ub_bin="$ub_dir/bin"
 ub_log="$ub_dir/sudo.log"
 mkdir -p "$ub_bin" "$ub_dir/home"
+printf 'ID=%s\n' "$distro" >"$ub_dir/os-release"
+[ "$distro" = ubuntu ] && printf 'ID_LIKE=debian\n' >>"$ub_dir/os-release"
 cat >"$ub_bin/sudo" <<'STUB'
 #!/bin/sh
 echo "$*" >>"$UB_LOG"
@@ -383,12 +403,12 @@ chmod +x "$ub_bin"/*
 # A copy without .git: a worktree's .git points outside the mount, and git refuses it.
 cp -a /repo "$ub_dir/repo"
 rm -rf "$ub_dir/repo/.git"
-ub_extensions=$(cd extensions && for e in */; do printf '%s.install ' "${e%/}"; done)
-env HOME="$ub_dir/home" PATH="$ub_bin:$PATH" UB_LOG="$ub_log" make -C "$ub_dir/repo" install $ub_extensions </dev/null >"$ub_dir/out" 2>&1 ||
-  bad "make install fails on Ubuntu: $(tail -n 5 "$ub_dir/out")"
-[ ! -e "$ub_dir/home/.config/gurubash/default-extensions" ] || bad "an install created default-extensions"
+env HOME="$ub_dir/home" PATH="$ub_bin:$PATH" UB_LOG="$ub_log" OS_RELEASE="$ub_dir/os-release" \
+  make -C "$ub_dir/repo" install $ub_extensions </dev/null >"$ub_dir/out" 2>&1 ||
+  bad "make install fails on $distro: $(tail -n 5 "$ub_dir/out")"
+[ ! -e "$ub_dir/home/.config/gurubash/default-extensions" ] || bad "$distro: an install created default-extensions"
 for b in core/pkg-manager/bins/ubuntu/up extensions/aws/bins/assume-role extensions/python/bins/pkg; do
-  [ -x "$ub_dir/repo/$b" ] || bad "$b is not executable after an install"
+  [ -x "$ub_dir/repo/$b" ] || bad "$distro: $b is not executable after an install"
 done
 for want in \
   'apt install -y python3' \
@@ -396,10 +416,12 @@ for want in \
   'tee /etc/apt/keyrings/code.asc' \
   'deb [arch=arm64 signed-by=/etc/apt/keyrings/code.asc] https://packages.microsoft.com/repos/code stable main' \
   'deb [arch=arm64 signed-by=/etc/apt/keyrings/google-chrome-stable.asc] https://dl.google.com/linux/chrome/deb/ stable main'; do
-  grep -qxF -- "$want" "$ub_log" 2>/dev/null || bad "make install on Ubuntu: sudo was never asked for '$want'"
+  grep -qxF -- "$want" "$ub_log" 2>/dev/null || bad "make install on $distro: sudo was never asked for '$want'"
 done
-grep -q 'apt-key' "$ub_log" 2>/dev/null && bad "make install on Ubuntu uses apt-key, which is gone"
+grep -q 'apt-key' "$ub_log" 2>/dev/null && bad "make install on $distro uses apt-key, which is gone"
 rm -rf "$ub_dir"
+done
+rm -rf "$make_release"
 
 if [ "$fail" -ne 0 ]; then echo "task check: RED" >&2; exit 1; fi
 echo "task check: green"
