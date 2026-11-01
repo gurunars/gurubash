@@ -6,6 +6,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Decided: the seven live settings keys get my best-guess values (podman, podman-compose, true, EU, false, true, true) (because the live file on the Mac is unreadable from here; task 16 must compare against the real file before applying). Also: install.sh branches on $OS, falls back to get-os.sh, and skips extensions when `code` is absent."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T09:33:03Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: the seven live settings keys take the executor's best-guess values, marked to be confirmed against the Mac's real file in task 16 before anything is applied (because the live file is unreadable from a worktree and task 16 is the apply step). `install.sh` branches on `$OS` with the `get-os.sh` fallback and skips extensions when `code` is absent."
     }
   ]
 }
