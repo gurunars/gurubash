@@ -37,6 +37,14 @@ for f in "${py_files[@]}"; do
     || bad "python $f"
 done
 
+# python bins start with python3: a clean PATH has no bare `python`
+for f in "${py_files[@]}"; do
+  head -n1 "$f" | grep -Eq '^#!/usr/bin/env python3$' || bad "shebang is not python3: $f"
+done
+
+# installers never link into brew's bin directory
+grep -En '\bln\b.*/opt/homebrew/bin/' */install*.sh && bad "installer links into /opt/homebrew/bin"
+
 # JSONC
 jsonc=$(printf '%s\n' "$files" | grep -E '^(code/.*\.json|\.vscode/settings\.json)$' || true)
 for f in $jsonc; do
