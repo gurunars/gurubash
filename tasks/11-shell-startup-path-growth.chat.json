@@ -20,6 +20,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `90ff414` does not replay onto master (tasks 3, 4, 5, 7, 8, 9, 13 and 21 landed since your base: the Makefile, the installers, the python shebangs, `pkg`, `assume-role`, `vim/vimrc`, `code/install.sh`, `scripts/inside.sh`). Call `rebase`, resolve keeping both sides (their checks in `scripts/inside.sh` stay beside yours), run `task check`, `make_snapshot`, and tell me the head in one line; I land it then. The VM has room again."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T12:21:34Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed as `c055b7c`, head `cba3cd8071c7`: rebased over the week's gurubash landings with `AGENTS.md` and `scripts/inside.sh` conflicts resolved keeping both sides; `path_add`, the nested-shell regression test, interactive-only guards and the shared `ssh-agent` socket are on master. The regression test was not run against the old loaders."
     }
   ]
 }
