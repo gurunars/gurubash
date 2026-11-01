@@ -1,8 +1,9 @@
 ---
-status: review
+status: done
 priority: medium
 size: M
 depends_on: [7]
+commits: [9469a8e504a4..52ec199d50b5]
 ---
 # Re-running `make` is quick and downloads nothing it already has
 
