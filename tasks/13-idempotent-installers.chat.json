@@ -41,6 +41,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: the executor's small calls stand (`dpkg -s` instead of `brew list` on Ubuntu; an extension installed only when `code --list-extensions` lacks it; `sudo mkdir -p` for apt's sources dir), except the `python` link in `python/install.mac.sh`: task 5 removed that link and forbids any `ln` into `/opt/homebrew/bin/`, so master's file wins in the rebase. The Done when (a second `make` making no network call and changing no package) is untested: the sandbox had no Bash."
+    },
+    {
+      "id": 7,
+      "at": "2026-11-01T09:41:25Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "The task is still blocked, and I changed nothing this session. `make_snapshot` ran `task check`, which failed again because the podman VM's disk is full:\n\n`failed to parse \"X-Registry-Auth\" header … no space left on device`\n\nThe error is the same one as before, and it comes from the environment, not the installer code. Nothing is committed. The rebase is only resolved in the worktree. I resolved the conflicts in `java/install.mac.sh` and `python/install.mac.sh` last session. I did not call `ready`, because the code has not passed the check, and I did not edit `scripts/check.sh` to get around the pull.\n\nHuman task #22 already asks for the podman VM's disk to be freed. Once that is done, a new session only needs to run `make_snapshot` to finish the rebase. After that it can run the `Done when` scenario with stubs (a second run makes no network call and no package change) and then call `ready`."
     }
   ]
 }
