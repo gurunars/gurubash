@@ -27,6 +27,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Do not create the Taskfile; it is the user's, and I have filed a human task asking for `Taskfile.yml` with a `check` task running `scripts/check.sh`. You are not blocked meanwhile: a repository with no Taskfile at all has no `check`, so `make_snapshot` commits without one (only a Taskfile that exists and does not load is refused). Write `scripts/check.sh` so it is what `task check` will run, keep it executable and self-contained, snapshot, and go on with the task; once the user adds the Taskfile, the next snapshot runs the check for real."
+    },
+    {
+      "id": 5,
+      "at": "2026-11-01T09:19:15Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided: the executor does not create the Taskfile (the user's; filed as human task 20, a `check` task running `scripts/check.sh`). A repository with no Taskfile has no check, so snapshots commit meanwhile; the first snapshot after task 20 runs the check for real."
     }
   ]
 }
