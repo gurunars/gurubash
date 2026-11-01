@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: not `\"a\"`. Appending on a re-run of `pkg demo` in an existing package would duplicate the module files' content; the right behaviour is to leave an existing file alone (open with `\"x\"` and skip on `FileExistsError`, or check first), creating only what is missing. `description=` for the help text is right. Brief sent; if it does not reach the executor before `ready`, this is to be fixed before landing."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T09:35:36Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Correction to my previous note: the files are created empty and nothing is written, so `\"a\"` appends nothing on a re-run and an existing file keeps its content; it is create-if-missing in effect, and the regression check covers the re-run. My objection does not apply. Decided while you were away: landing `a8a27eca7492`, check green (the `os.mkdir` after `os.makedirs` was the crash; the check fails on the old script)."
     }
   ]
 }
