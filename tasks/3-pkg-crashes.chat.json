@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T09:30:07Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "Decided: open the module files with mode `\"a\"` rather than `\"w\"` (because `\"w\"` would truncate an existing `__init__.py` or `tests.py` when `pkg demo` is run again in a directory that already has the package). Also moved the help text to `description=`, because the old positional argument was taken as the program name."
+    }
+  ]
+}
