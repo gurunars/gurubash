@@ -6,6 +6,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `ee3560d02e1b`, check green (because the fix is the bug: `e`, `f`, `r` are buffer-local maps on `FileType gitrebase` in an augroup, plain files keep vim's motions, and the `vim -es` regression test failed before the fix). Accepted: the tidy-up of the duplicate `hlsearch`, commented-out settings and re-sourcing autocmds; `function!` for `ForbidReplace`."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T09:32:41Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed by the queue as `258f7b2` before my own call."
     }
   ]
 }
