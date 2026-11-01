@@ -6,6 +6,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `3c6c9c78316d`, check green (because `ext use`, `ext ls`, `ext off` in `core/ext/loader`, a nested `bash --rcfile core/ext/rcfile -i`, profiles with the user's `~/.config/gurubash/profiles` winning over the repo's, a refusal naming `make <name>.install` for an uninstalled extension, the prompt showing active names, completion, and a container test over use/nesting/refusal/off). Accepted: the rcfile over touching the root loader; `GURUBASH_EXT` holding resolved extension names; an unexported layer marker; a profile winning a name clash. Gap: `java` has no `installed` test (macOS's `/usr/bin/java` stub), so it counts as installed."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T12:37:44Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed by the queue as `1087c17` before my own call."
     }
   ]
 }
