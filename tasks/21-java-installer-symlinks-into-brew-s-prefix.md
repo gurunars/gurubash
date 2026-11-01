@@ -1,5 +1,5 @@
 ---
-status: planned
+status: active
 priority: low
 type: task
 size: S
