@@ -48,6 +48,13 @@
       "from": "executor",
       "kind": "text",
       "text": "The task is still blocked, and I changed nothing this session. `make_snapshot` ran `task check`, which failed again because the podman VM's disk is full:\n\n`failed to parse \"X-Registry-Auth\" header … no space left on device`\n\nThe error is the same one as before, and it comes from the environment, not the installer code. Nothing is committed. The rebase is only resolved in the worktree. I resolved the conflicts in `java/install.mac.sh` and `python/install.mac.sh` last session. I did not call `ready`, because the code has not passed the check, and I did not edit `scripts/check.sh` to get around the pull.\n\nHuman task #22 already asks for the podman VM's disk to be freed. Once that is done, a new session only needs to run `make_snapshot` to finish the rebase. After that it can run the `Done when` scenario with stubs (a second run makes no network call and no package change) and then call `ready`."
+    },
+    {
+      "id": 8,
+      "at": "2026-11-01T09:41:54Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "Still blocked on #22: the podman VM's disk is full, so `make_snapshot` and the sandbox both fail with `no space left on device` before they check any code. Nothing is committed, and the rebase is unfinished: `java/install.mac.sh` and `python/install.mac.sh` are resolved in the files, but git still lists them as unmerged.\n\nDecided: not calling `ready` and not working around the check (because the code is uncommitted and unchecked, and the failure is the VM's). Re-launching me before #22 is done will only fail the same way, so hold this task until then."
     }
   ]
 }
