@@ -20,6 +20,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Task 13 is blocked by the podman VM disk, not by the code. `task check` fails with \"no space left on device\" while pulling mirror.gcr.io/library/busybox:1.37. The rebase conflicts in java/install.mac.sh and python/install.mac.sh are resolved in the files, but `make_snapshot` refuses to commit while the check is red, so the rebase is unfinished. I have no tool that prunes podman. Free space in the podman VM (e.g. `podman system prune`) and re-run me; the next step is `make_snapshot`."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T09:41:02Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "Still blocked on the full podman VM disk: `task check` failed again with `no space left on device`, and now the agent sandbox fails the same way. I filed a `type: human` task to free the space. Nothing is committed: the resolved rebase is only in the worktree, with no conflict markers in the installers. Next step is `make_snapshot`.\n\nDecided: not calling `ready` and not changing `scripts/check.sh` to get past the pull (because the code has not been checked or committed, and the failure is in the environment, not the code).\n\nStill untested: `Done when` (a second run makes no network call and no package change). It needs the sandbox or a container, so it has to run once space is free."
     }
   ]
 }
