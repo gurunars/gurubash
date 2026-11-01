@@ -6,6 +6,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Task 2 needs a `Taskfile.yml`, which doesn't exist, and my rules say I never change the Taskfile. I can't run `task check` or `make_snapshot` without it. Can you add a minimal `Taskfile.yml` with a `check` task that runs `scripts/check.sh`, or allow me to create it this once? I've written `AGENTS.md` and am writing `scripts/check.sh` meanwhile."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T09:18:11Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "I've written `AGENTS.md` and the check scripts, but I can't run any of it yet. There is no `Taskfile.yml`, and my rules say I never change the Taskfile.\n\nBecause of that, there is no `task check` for me to run or for `make_snapshot` to snapshot, and I have no `run_*` tools. Nothing is verified or committed. I also left the task's TODO steps unticked, since none of them is checked yet.\n\n**Written, uncommitted:**\n- **`AGENTS.md`:** the rules from the task: the installers and `make install` never run against the real `$HOME`, `code/settings.json` is JSONC, loaders stay fast and silent, `scripts/` and `tasks/` hold no `install*` or `loader`, and the loopback rule.\n- **`scripts/Containerfile`:** one small Alpine image with bash, git, make, vim, python3 and shellcheck. It is pulled through `mirror.gcr.io`.\n- **`scripts/check.sh`:** the host side. It builds the image once, removes the one it replaces, and runs the checks in a `podman run --rm --network none` container with the repo mounted read-only.\n- **`scripts/inside.sh`:** all the checks:\n  - shellcheck at `--severity=error` plus `bash -n`, on the shell files the task lists\n  - Python syntax\n  - the JSONC files\n  - the gitconfig\n  - vim loading `vim/vimrc`\n  - the loopback patterns\n  - `make -n install`\n\n**Things I decided on my own:**\n- The task says `bins/*`, but the repo's scripts live in `*/bins/*` (for example `python/bins/pkg` and `aws/bins/assume-role`), so I check those.\n- Both `python/bins/pkg` and `aws/bins/assume-role` use `#!/usr/bin/env python`, so they're checked as Python. Task 5 is about that shebang.\n\n**Decision for you:** I asked on the board for you to add a minimal `Taskfile.yml`, or let me create it this once. The `check` task would just run `scripts/check.sh`. Until you answer, I'm stopping here and not calling `ready`."
     }
   ]
 }
