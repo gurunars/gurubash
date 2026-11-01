@@ -1,5 +1,5 @@
 ---
-status: active
+status: review
 type: bug
 priority: high
 size: S
