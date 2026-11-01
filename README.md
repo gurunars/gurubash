@@ -23,7 +23,8 @@ The repository has two kinds of component:
   the prompt and its themes, git, vim, history, `ls` colours, and the package manager.
 - **Extensions** (`extensions/<name>/`) are the tools for one kind of work: `ai`,
   `android`, `aws`, `chrome`, `code`, `go`, `java`, `python`, `terminal`. Nothing is installed or
-  loaded for them until you ask.
+  loaded for them until you ask, except that `make` installs `terminal` on a machine with a
+  desktop: a Mac, or Linux that boots to `graphical.target`. `make GUI=no` or `GUI=yes` overrides.
 
 Install one with `make <name>.install`. An extension's `requires` file lists the
 extensions it needs (one per line); those install first, so `make aws.install` also

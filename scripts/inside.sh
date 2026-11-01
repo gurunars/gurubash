@@ -17,7 +17,7 @@ shell_files=() py_files=()
 while IFS= read -r f; do
   [ -f "$f" ] || continue
   case "$f" in
-    */install*.sh | install*.sh | loader | */loader | */loader.* | core/pkg-manager/get-os.sh | core/theming/* | core/ext/rcfile)
+    */install*.sh | install*.sh | loader | */loader | */loader.* | core/pkg-manager/has-gui.sh | core/pkg-manager/get-os.sh | core/theming/* | core/ext/rcfile)
       shell_files+=("$f") ;;
     bins/* | */bins/*)
       if is_python "$f"; then py_files+=("$f")
@@ -355,6 +355,14 @@ osr() { printf '%b' "$1" >"$osr_dir/os-release"; OS_RELEASE="$osr_dir/os-release
 [ "$(osr 'ID=linuxmint\nID_LIKE="ubuntu debian"\n')" = ubuntu ] || bad "get-os.sh: a Debian derivative is not the ubuntu apt family"
 osr 'ID=alpine\n' >/dev/null && bad "get-os.sh: alpine was taken for the apt family"
 osr 'ID=fedora\nID_LIKE="rhel fedora"\n' >/dev/null && bad "get-os.sh: fedora was taken for the apt family"
+
+# has-gui.sh and `make`: a desktop adds the graphical extensions, a server installs none of them.
+gui() { GUI_TARGET="$1" bash /repo/core/pkg-manager/has-gui.sh; }
+[ "$(gui graphical.target)" = yes ] || bad "has-gui.sh: a graphical boot target is no desktop"
+[ "$(gui multi-user.target)" = no ] || bad "has-gui.sh: a server was taken for a desktop"
+[ "$(GUI_TARGET='' PATH=/nonexistent /bin/bash /repo/core/pkg-manager/has-gui.sh 2>/dev/null)" = no ] || bad "has-gui.sh: no systemd was taken for a desktop"
+make -n -C /repo GUI=no 2>/dev/null | grep -q 'extensions/terminal' && bad "make: a server installs terminal"
+make -n -C /repo GUI=yes 2>/dev/null | grep -q 'extensions/terminal' || bad "make: a desktop does not install terminal"
 OS_RELEASE="$osr_dir/none" bash /repo/core/pkg-manager/get-os.sh >/dev/null 2>&1 && bad "get-os.sh: a missing os-release was accepted"
 rm -rf "$osr_dir"
 # The make checks below run in this Alpine container, so they read an Ubuntu fixture.

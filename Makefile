@@ -2,10 +2,13 @@
 MAKEFLAGS += --silent
 
 OS=$(shell /bin/bash ./core/pkg-manager/get-os.sh)
+# A desktop adds the extensions that only make sense on one; `make GUI=no` or `GUI=yes` overrides.
+GUI?=$(shell /bin/bash ./core/pkg-manager/has-gui.sh)
+GUI_EXTENSIONS=$(if $(filter yes,$(GUI)),terminal)
 GURUBASH=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 INSTALL=$(GURUBASH)/core/pkg-manager/install-if-missing.$(OS).sh
 
-# `make` installs the core: its directories holding an install*.sh.
+# `make` installs the core: its directories holding an install*.sh. And, with a desktop, GUI_EXTENSIONS.
 # Goals are not phony: a phony goal skips the %.install pattern rule.
 CORE=$(patsubst core/%/,%,$(sort $(dir $(wildcard core/*/install*.sh))))
 
@@ -14,7 +17,7 @@ component_dir=$(patsubst %/,%,$(firstword $(wildcard core/$(1)/ extensions/$(1)/
 .PHONY: install check-os pkg-manager.install
 .EXPORT_ALL_VARIABLES:
 
-install: check-os $(addsuffix .install,$(CORE))
+install: check-os $(addsuffix .install,$(CORE) $(GUI_EXTENSIONS))
 	echo "DONE"
 
 check-os:
