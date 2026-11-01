@@ -20,6 +20,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `69001af36476`, check green (because the cause is found and fixed: `.PHONY` listed `$(MAKECMDGOALS)`, so pattern rules were skipped; `install` now comes from `wildcard */install*.sh`, so `tasks/` and `scripts/` are no longer installed; regression checks in `task check` failed on the old code). The \"Installed <name>\" message for a name with no installer is left as is, cosmetic; change it when that Makefile is next touched."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T09:31:07Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed as `5b8e3a4`."
     }
   ]
 }
