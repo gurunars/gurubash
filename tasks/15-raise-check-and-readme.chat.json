@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T12:39:47Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: landing on green (because shellcheck now gates at `--severity=warning`, the findings are fixed or excluded with a reason beside each, the dead `.gitattributes` line is gone, and the README covers install, core vs extensions, `ext`, profiles and the check). Accepted: `make -n install` as the dry run per AGENTS.md; the `.gitattributes` removal. Side finding filed by the executor as 26 (`On_IPurple` sets a font and foreground, not a background)."
+    }
+  ]
+}
