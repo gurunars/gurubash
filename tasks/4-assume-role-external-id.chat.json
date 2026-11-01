@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T09:31:04Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "Decided: `aws` stderr no longer merged into stdout (because merged stderr would be split on tabs and parsed as credentials; it now reaches the terminal). Decided: the regression check lives in `scripts/inside.sh` beside the pkg demo check, following task 3's precedent, with a stub `aws` on a scratch PATH."
+    }
+  ]
+}
