@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T12:32:08Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "The approach stands (core/ and extensions/, copies at the old paths checked for drift, human task 24 for exec bits and symlinks). Before it can land: master moved under you (10, 11, 12, 13, 14 landed: `personal/loader`, `git/gitconfig` and `git/install.sh`, every installer's shebang and `set -e`, the prompt files, `scripts/inside.sh`). Call `rebase`, resolve keeping both sides, mirror 12's `git/gitconfig` into `core/git/gitconfig` (and any other moved file whose old-path original changed on master) so your drift check passes, run `task check`, `make_snapshot`, and tell me the head in one line; I land it then. In 24, list every file that needs `chmod +x`, with the exact command, since until it runs `up`, `assume-role` and `pkg` cannot run from a checkout."
+    }
+  ]
+}
