@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: high
 size: M
 depends_on: [2]
+commits: [ce068b41d538..cba3cd8071c7]
 ---
 # `PATH` grows with every nested shell
 
