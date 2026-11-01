@@ -20,6 +20,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: on the replay, the new warning-level gate trips on 25's `get-os.sh` (SC1090, the `$OS_RELEASE` source), landed after this branch's base. Executor rebasing and adding the directive with its reason; landing on its next head."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T12:41:17Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed as `3f83211`, head `6763f8b4c495`: shellcheck at `--severity=warning` in the gate, every exclusion with its reason (now including 25's `get-os.sh` source), `.gitattributes` gone, the README written."
     }
   ]
 }
