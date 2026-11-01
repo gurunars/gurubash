@@ -1,2 +1,5 @@
-APP_NAME=awscli \
-$INSTALL
+#!/bin/bash
+
+set -e
+
+APP_NAME=awscli "$INSTALL"

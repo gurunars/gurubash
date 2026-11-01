@@ -1,14 +1,24 @@
+#!/bin/bash
+
+set -e
+
 VS_PATH=${HOME}/.config/Code/User
 
-mkdir -p ${VS_PATH}
+mkdir -p "${VS_PATH}"
 
-ln -f -s ${GURUBASH}/code/keybindings.json ${VS_PATH}/keybindings.json
-ln -f -s ${GURUBASH}/code/settings.json ${VS_PATH}/settings.json
+ln -f -s "${GURUBASH}/code/keybindings.json" "${VS_PATH}/keybindings.json"
+ln -f -s "${GURUBASH}/code/settings.json" "${VS_PATH}/settings.json"
 
-# extensions
+# extensions: only the ones missing are fetched
+
+INSTALLED=$(code --list-extensions | tr '[:upper:]' '[:lower:]')
 
 function ext {
-    code --install-extension $1
+    if echo "${INSTALLED}" | grep -qxF "$(echo "$1" | tr '[:upper:]' '[:lower:]')"; then
+        echo "$1 is already installed"
+    else
+        code --install-extension "$1"
+    fi
 }
 
 # Makefile

@@ -29,8 +29,6 @@ git.install credentials.install theming.install: personal.install
 
 aws.install: python.install
 
-git.install: ai.install
-
 %.install: pkg-manager.install
 	if [ -f $*/install.$(OS).sh ]; then \
 		/bin/bash $*/install.$(OS).sh; \

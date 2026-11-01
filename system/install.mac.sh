@@ -1,1 +1,5 @@
-APP_NAME=wget $INSTALL
+#!/bin/bash
+
+set -e
+
+APP_NAME=wget "$INSTALL"

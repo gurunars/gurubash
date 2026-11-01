@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -e
+
 cred_file="${HOME}/.personal/credentials"
 
 username=$(id -un)
