@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: high
 size: S
 depends_on: [2]
+commits: [66c4c2184aab..17d5d88b0c03]
 ---
 # `make vim.install` silently does nothing
 
