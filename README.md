@@ -22,7 +22,7 @@ The repository has two kinds of component:
 - **Core** (`core/<name>/`) is what `make` installs and every shell loads: aliases,
   the prompt and its themes, git, vim, history, `ls` colours, and the package manager.
 - **Extensions** (`extensions/<name>/`) are the tools for one kind of work: `ai`,
-  `android`, `aws`, `chrome`, `code`, `go`, `java`, `python`. Nothing is installed or
+  `android`, `aws`, `chrome`, `code`, `go`, `java`, `python`, `terminal`. Nothing is installed or
   loaded for them until you ask.
 
 Install one with `make <name>.install`. An extension's `requires` file lists the
