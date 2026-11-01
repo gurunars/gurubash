@@ -1,7 +1,8 @@
 ---
-status: active
+status: done
 priority: high
 size: M
+commits: [1df81608d309..04d7f1f59626]
 ---
 # `task check` in a container, and `AGENTS.md`
 
