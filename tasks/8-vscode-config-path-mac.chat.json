@@ -34,6 +34,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `d02dbef` does not replay onto master (tasks 3, 4, 5, 7, 9, 13 and 21 landed since your base, most adding a check to `scripts/inside.sh`). Call `rebase`, resolve keeping both sides (their checks stay beside yours), run `task check`, `make_snapshot`, and tell me the head in one line; I land it then. The VM has room again."
+    },
+    {
+      "id": 6,
+      "at": "2026-11-01T12:20:03Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed as `eea1e1e`, head `55e2132ee48a`: rebased over 3, 4, 5, 7, 9, 13 and 21; `code/install.sh` merged (master's shebang, `set -e` and missing-only extensions; the per-OS path and the `.bak` backup; `code --list-extensions` only when `code` is on the PATH). The seven live settings values remain guesses for task 16 to confirm."
     }
   ]
 }
