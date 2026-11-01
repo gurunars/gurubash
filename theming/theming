@@ -1,3 +1,0 @@
-#!/bin/bash
-export BASH_THEME=dual-line.blue
-export BASH_SHAPE=multiline

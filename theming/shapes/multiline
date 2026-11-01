@@ -1,14 +1,13 @@
 #!/bin/bash
 
-username=`eval whoami`
-if [ "$username" == "root" ];then
+if [ "$EUID" -eq 0 ];then
   usercolor=$croot
 else
   usercolor=$cuser
 fi
 
 PS1="\$(surprise)\
-\[$cbracket\][\[$ctime\]\$(date +%H:%M)\[$cbracket\]]\
+\[$cbracket\][\[$ctime\]\A\[$cbracket\]]\
 \[$cbracket\][\[$usercolor\]\u$Color_Off\[$cdog\]@\[$chost\]\h\[$cbracket\]][\[$cpath\]\w\[$cbracket\]]\
 \$(branch)\
 \$(aws_assumed_role)\

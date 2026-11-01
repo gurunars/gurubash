@@ -1,6 +1,6 @@
 #!/bin/bash
 function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+  git symbolic-ref --short -q HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null
 }
 
 # Colors the terminal in a nice way and shows git branch in a prompt all the time
@@ -17,7 +17,7 @@ function aws_assumed_role {
   if [ -z "${AWS_ASSUMED_ROLE}" ]; then
     echo ""
   else
-    echo -e "${cdog} ?? ${crole}${AWS_ASSUMED_ROLE}${Color_Off}"
+    echo -e "${cdog} AWS: ${crole}${AWS_ASSUMED_ROLE}${Color_Off}"
   fi
 }
 
