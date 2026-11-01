@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eo pipefail
 
 if [ -z "$APP_NAME" ]; then
     echo "APP_NAME is not set"
@@ -18,8 +18,14 @@ if [ -n "$REMOTE_SOURCE_LIST" ]; then
         exit 1
     fi
 
-    wget -q -O - "$REPO_KEY" | sudo apt-key add -
-    echo "deb [arch=amd64] $REMOTE_SOURCE_LIST stable main" | sudo tee "/etc/apt/sources.list.d/$APP_NAME.list"
+    ARCH=$(dpkg --print-architecture)
+    # An armored key: apt reads `.asc` itself, so gnupg is not needed.
+    KEYRING="/etc/apt/keyrings/$APP_NAME.asc"
+
+    sudo mkdir -p /etc/apt/keyrings
+    wget -q -O - "$REPO_KEY" | sudo tee "$KEYRING" >/dev/null
+    sudo chmod 644 "$KEYRING"
+    echo "deb [arch=$ARCH signed-by=$KEYRING] $REMOTE_SOURCE_LIST stable main" | sudo tee "/etc/apt/sources.list.d/$APP_NAME.list"
     sudo apt update -y
 fi
 

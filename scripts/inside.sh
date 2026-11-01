@@ -225,5 +225,45 @@ for d in tasks scripts; do
   grep -q "Installed $d" <<<"$install_plan" && bad "make -n install installs $d/"
 done
 
+# `make` always failed on Ubuntu. A full `make install` down the Ubuntu path, in a
+# throwaway HOME, with no network: everything that touches the system or downloads is
+# a stub, and sudo runs nothing but records what it was asked. As root, so
+# credentials/install.sh leaves ~/.personal empty.
+ub_dir=$(mktemp -d /tmp/ubuntu-make.XXXXXX)
+ub_bin="$ub_dir/bin"
+ub_log="$ub_dir/sudo.log"
+mkdir -p "$ub_bin" "$ub_dir/home"
+cat >"$ub_bin/sudo" <<'STUB'
+#!/bin/sh
+echo "$*" >>"$UB_LOG"
+if [ "$1" = tee ]; then cat >>"$UB_LOG"; fi
+STUB
+cat >"$ub_bin/dpkg" <<'STUB'
+#!/bin/sh
+if [ "$1" = --print-architecture ]; then echo arm64; exit 0; fi
+exit 1
+STUB
+printf '#!/bin/sh\necho root\n' >"$ub_bin/id"
+printf '#!/bin/sh\necho KEY\n' >"$ub_bin/wget"
+printf '#!/bin/sh\n' >"$ub_bin/curl"
+printf '#!/bin/sh\n' >"$ub_bin/code"
+printf '#!/bin/sh\necho NAME\n' >"$ub_bin/ollama"
+chmod +x "$ub_bin"/*
+# A copy without .git: a worktree's .git points outside the mount, and git refuses it.
+cp -a /repo "$ub_dir/repo"
+rm -rf "$ub_dir/repo/.git"
+env HOME="$ub_dir/home" PATH="$ub_bin:$PATH" UB_LOG="$ub_log" make -C "$ub_dir/repo" install </dev/null >"$ub_dir/out" 2>&1 ||
+  bad "make install fails on Ubuntu: $(tail -n 5 "$ub_dir/out")"
+for want in \
+  'apt install -y python3' \
+  'apt install -y git' \
+  'tee /etc/apt/keyrings/code.asc' \
+  'deb [arch=arm64 signed-by=/etc/apt/keyrings/code.asc] https://packages.microsoft.com/repos/code stable main' \
+  'deb [arch=arm64 signed-by=/etc/apt/keyrings/google-chrome-stable.asc] https://dl.google.com/linux/chrome/deb/ stable main'; do
+  grep -qxF -- "$want" "$ub_log" 2>/dev/null || bad "make install on Ubuntu: sudo was never asked for '$want'"
+done
+grep -q 'apt-key' "$ub_log" 2>/dev/null && bad "make install on Ubuntu uses apt-key, which is gone"
+rm -rf "$ub_dir"
+
 if [ "$fail" -ne 0 ]; then echo "task check: RED" >&2; exit 1; fi
 echo "task check: green"

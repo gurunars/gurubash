@@ -2,6 +2,4 @@
 
 set -e
 
-echo "Python no go yet"
-
-exit 1
+APP_NAME=python3 "$INSTALL"
