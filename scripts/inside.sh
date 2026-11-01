@@ -133,5 +133,14 @@ rm -rf "$pkg_dir"
 # make -n install
 make -n install >/dev/null || bad "make -n install"
 
+# a named component runs its own recipe; tasks/ and scripts/ are not installed.
+# Captured first: grep -q exiting early would SIGPIPE make, and pipefail hides the match.
+vim_plan=$(make -n vim.install)
+grep -q 'Installed vim' <<<"$vim_plan" || bad "make -n vim.install runs nothing"
+install_plan=$(make -n install)
+for d in tasks scripts; do
+  grep -q "Installed $d" <<<"$install_plan" && bad "make -n install installs $d/"
+done
+
 if [ "$fail" -ne 0 ]; then echo "task check: RED" >&2; exit 1; fi
 echo "task check: green"

@@ -24,8 +24,9 @@ vim's `vimrc`, the loopback rules and `make -n install`.
   JSONC: comments and trailing commas are legal. Do not parse with strict JSON.
 - Every directory with a `loader` (or `loader.<os>`) is sourced by every shell.
   Loaders stay fast and silent: no forks you can avoid, no output, no network.
-- `scripts/` and `tasks/` hold no `install*` or `loader`. Until task 7 lands,
-  the `*/` targets in the `Makefile` must tolerate those directories.
+- `scripts/` and `tasks/` hold no `install*` or `loader`. `make install` builds
+  its list only from directories holding an `install*.sh`, so they are never
+  installed.
 - Loopback only: never `0.0.0.0`, `::`, `localhost` as a URL host, or an
   unpublished-host `-p N:N`. Use `127.0.0.1`. The check fails on these.
 - Never run `npm`, `pip` or a dev server on the host; use the repo's runner.

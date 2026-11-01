@@ -4,10 +4,14 @@ OS=$(shell ./pkg-manager/get-os.sh)
 GURUBASH=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 INSTALL=$(GURUBASH)/pkg-manager/install-if-missing.$(OS).sh
 
-.PHONY: install upgrade $(MAKECMDGOALS)
-.EXPORT_ALL_VARIABLES: install upgrade $(MAKECMDGOALS)
+# A component is a directory holding an install*.sh; tasks/ and scripts/ are not one.
+# Goals are not phony: a phony goal skips the %.install pattern rule.
+COMPONENTS=$(patsubst %/,%,$(sort $(dir $(wildcard */install*.sh))))
 
-install: check-os $(shell ls -d */ | sed -e 's/\//.install/')
+.PHONY: install check-os pkg-manager.install
+.EXPORT_ALL_VARIABLES:
+
+install: check-os $(addsuffix .install,$(COMPONENTS))
 	echo "DONE"
 
 check-os:
@@ -36,4 +40,3 @@ git.install: ai.install
 	fi
 	echo "Installed $*"
 
-test: java.install
