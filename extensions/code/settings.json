@@ -1,0 +1,37 @@
+{
+    "multiCommand.commands": [
+        {
+            "command": "multiCommand.split",
+            "sequence": [
+                "workbench.action.splitEditorRight",
+                "workbench.action.navigateLeft",
+                "workbench.action.closeActiveEditor",
+                "workbench.action.navigateRight"
+            ]
+        }
+    ],
+    "workbench.startupEditor": "none",
+    "update.showReleaseNotes": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.mouseWheelZoom": true,
+    "explorer.confirmDelete": false,
+    "css.validate": true,
+    "less.validate": true,
+    "scss.validate": true,
+    "files.hotExit": "off",
+    "python.languageServer": "Pylance",
+    "workbench.statusBar.visible": true,
+    "jest.enableInlineErrorMessages": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "extensions.ignoreRecommendations": true,
+    "update.mode": "manual",
+    "files.insertFinalNewline": true,
+    // Carried over from the settings VS Code wrote on the Mac itself.
+    "dev.containers.dockerPath": "podman",
+    "dev.containers.dockerComposePath": "podman-compose",
+    "js/ts.experimental.useTsgo": true,
+    "intellij.region": "EU",
+    "intellij.dataSharing": false,
+    "git.ignoreMissingGitWarning": true,
+    "makefile.configureOnOpen": true
+}

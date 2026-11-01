@@ -25,19 +25,41 @@ if shopt -q login_shell; then
     . /etc/profile
 fi
 
-OS=$(bash "${GURUBASH}/pkg-manager/get-os.sh")
+OS=$(bash "${GURUBASH}/core/pkg-manager/get-os.sh")
 
-for loader in "${GURUBASH}"/*/loader; do
+for loader in "${GURUBASH}"/core/*/loader; do
     [ -f "${loader}" ] && . "${loader}"
 done
 
-for loader in "${GURUBASH}"/*/loader."${OS}"; do
+for loader in "${GURUBASH}"/core/*/loader."${OS}"; do
     [ -f "${loader}" ] && . "${loader}"
 done
 
-for bins in "${GURUBASH}"/*/bins "${GURUBASH}"/*/bins/"${OS}"; do
+for bins in "${GURUBASH}"/core/*/bins "${GURUBASH}"/core/*/bins/"${OS}"; do
     path_add "${bins}"
 done
 
-unset loader bins
+# Extensions named one per line in default-extensions; absent means none. Read on
+# fd 3, so a loader reading stdin cannot eat the list.
+extensions_file="${HOME}/.config/gurubash/default-extensions"
+if [ -f "${extensions_file}" ]; then
+    while read -r extension <&3 || [ -n "${extension}" ]; do
+        [ -n "${extension}" ] || continue
+        extension_dir="${GURUBASH}/extensions/${extension}"
+        case "${extension}" in
+            */* | . | ..) extension_dir= ;;
+        esac
+        if [ -z "${extension_dir}" ] || [ ! -d "${extension_dir}" ]; then
+            echo "gurubash: unknown extension '${extension}' in ${extensions_file}" >&2
+            continue
+        fi
+        for loader in "${extension_dir}/loader" "${extension_dir}/loader.${OS}"; do
+            [ -f "${loader}" ] && . "${loader}"
+        done
+        path_add "${extension_dir}/bins"
+        path_add "${extension_dir}/bins/${OS}"
+    done 3<"${extensions_file}"
+fi
+
+unset loader bins extensions_file extension extension_dir
 unset -f path_add

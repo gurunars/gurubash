@@ -1,0 +1,6 @@
+#!/bin/bash
+case $- in
+    *i*) ;;
+    *) return 0 ;;
+esac
+command -v dircolors > /dev/null && eval "$(dircolors -b "${GURUBASH}/core/ls-beauty/dir_colors")"

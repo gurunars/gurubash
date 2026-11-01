@@ -20,9 +20,17 @@ vim's `vimrc`, the loopback rules and `make -n install`.
 
 ## Rules of the tree
 
-- `code/settings.json` (and the other `code/*.json`, `.vscode/settings.json`) is
-  JSONC: comments and trailing commas are legal. Do not parse with strict JSON.
-- Every directory with a `loader` (or `loader.<os>`) is sourced by every shell.
+- `core/<name>/` is what `make` installs and every shell loads.
+  `extensions/<name>/` has the same shape plus an optional `requires` (extension
+  names, one per line); `make <name>.install` installs either, `requires` first.
+  A shell loads an extension only if `~/.config/gurubash/default-extensions`
+  names it; no install ever creates that file.
+- `extensions/code/*.json` and `.vscode/settings.json` are JSONC: comments and
+  trailing commas are legal. Do not parse with strict JSON.
+- `defaults/profile`, `git/gitconfig`, `vim/vimrc` and `code/*.json` exist only for
+  links on machines installed before the split. Edit the real file under `core/`
+  or `extensions/`; `task check` fails if the two differ.
+- Every `core/<name>/` with a `loader` (or `loader.<os>`) is sourced by every shell.
   Loaders stay fast and silent: no forks you can avoid, no output, no network.
 - Loaders must be safe to source repeatedly (nested shells inherit `PATH`): add
   directories only with `path_add [-p] DIR` (defined by the root `loader`, skips

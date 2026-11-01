@@ -17,7 +17,7 @@ shell_files=() py_files=()
 while IFS= read -r f; do
   [ -f "$f" ] || continue
   case "$f" in
-    */install*.sh | install*.sh | loader | */loader | */loader.* | pkg-manager/get-os.sh | theming/*)
+    */install*.sh | install*.sh | loader | */loader | */loader.* | core/pkg-manager/get-os.sh | core/theming/*)
       shell_files+=("$f") ;;
     bins/* | */bins/*)
       if is_python "$f"; then py_files+=("$f")
@@ -43,10 +43,18 @@ for f in "${py_files[@]}"; do
 done
 
 # installers never write into brew's prefix (bin/ or opt/)
-grep -En '\bln\b.*/opt/homebrew/(bin|opt)/' */install*.sh && bad "installer links into brew's prefix"
+grep -En '\bln\b.*/opt/homebrew/(bin|opt)/' core/*/install*.sh extensions/*/install*.sh && bad "installer links into brew's prefix"
+
+# Machines installed before the core/extensions split link these old paths until
+# they re-link. Plain copies or symlinks, they must stay the same as the real file.
+for pair in defaults/profile:core/defaults/profile git/gitconfig:core/git/gitconfig \
+  vim/vimrc:core/vim/vimrc code/settings.json:extensions/code/settings.json \
+  code/keybindings.json:extensions/code/keybindings.json; do
+  cmp -s "${pair%%:*}" "${pair##*:}" || bad "${pair%%:*} differs from ${pair##*:}: old links would read stale config"
+done
 
 # JSONC
-jsonc=$(printf '%s\n' "$files" | grep -E '^(code/.*\.json|\.vscode/settings\.json)$' || true)
+jsonc=$(printf '%s\n' "$files" | grep -E '^((extensions/)?code/.*\.json|\.vscode/settings\.json)$' || true)
 for f in $jsonc; do
   python3 -I - "$f" <<'PY' || bad "jsonc $f"
 import json, re, sys
@@ -82,18 +90,18 @@ PY
 done
 
 # gitconfig
-(cd /tmp && git config -f /repo/git/gitconfig --list >/dev/null) || bad "git/gitconfig does not parse"
+(cd /tmp && git config -f /repo/core/git/gitconfig --list >/dev/null) || bad "core/git/gitconfig does not parse"
 
 # vim
-vim -u vim/vimrc -es -V1/tmp/vim.log -c 'qa!' </dev/null >/dev/null 2>&1
-if grep -E '^E[0-9]+' /tmp/vim.log; then bad "vim/vimrc reports errors"; fi
+vim -u core/vim/vimrc -es -V1/tmp/vim.log -c 'qa!' </dev/null >/dev/null 2>&1
+if grep -E '^E[0-9]+' /tmp/vim.log; then bad "core/vim/vimrc reports errors"; fi
 
 # vim: e, f and r are rebase-todo maps only; in any other file they keep vim's own meaning.
 vimtest=$(mktemp -d /tmp/vimtest.XXXXXX)
 printf 'pick abc1234 subject\n' >"$vimtest/git-rebase-todo"
 printf 'pick abc1234 subject\n' >"$vimtest/plain.txt"
 for name in git-rebase-todo plain.txt; do
-  (cd "$vimtest" && vim -u /repo/vim/vimrc -es \
+  (cd "$vimtest" && vim -u /repo/core/vim/vimrc -es \
     -c "redir! > $vimtest/$name.maps | echo &filetype | silent nmap e | silent nmap f | silent nmap r | redir END | q" \
     "$name" </dev/null >/dev/null 2>&1)
 done
@@ -119,7 +127,7 @@ cred_bin=$(mktemp -d /tmp/cred-bin.XXXXXX)
 printf '#!/bin/sh\necho jane\n' >"$cred_bin/id" && chmod +x "$cred_bin/id"
 printf 'Jane Doe\na@example.com\n' |
   env HOME="$cred_home" GURUBASH=/repo PATH="$cred_bin:$PATH" \
-    bash /repo/credentials/install.sh >/dev/null 2>&1 || bad "credentials/install.sh failed on a first run"
+    bash /repo/core/credentials/install.sh >/dev/null 2>&1 || bad "core/credentials/install.sh failed on a first run"
 cred_got=$(env -i HOME="$cred_home" bash -c '. "$HOME/.personal/credentials" && printf "%s|%s" "$NAME" "$EMAIL"' 2>&1)
 [ "$cred_got" = "Jane Doe|a@example.com" ] ||
   bad "credentials: sourced NAME|EMAIL is '$cred_got', want 'Jane Doe|a@example.com'"
@@ -128,13 +136,13 @@ rm -rf "$cred_home" "$cred_bin"
 # pkg demo: creates demo/__init__.py and demo/tests.py, both empty, in a scratch dir.
 # Regression: it crashed with FileExistsError on the second mkdir.
 pkg_dir=$(mktemp -d /tmp/pkg-demo.XXXXXX)
-(cd "$pkg_dir" && python3 -B /repo/python/bins/pkg demo >/dev/null 2>&1) || bad "pkg demo crashed"
+(cd "$pkg_dir" && python3 -B /repo/extensions/python/bins/pkg demo >/dev/null 2>&1) || bad "pkg demo crashed"
 for m in __init__.py tests.py; do
   [ -f "$pkg_dir/demo/$m" ] && [ ! -s "$pkg_dir/demo/$m" ] || bad "pkg demo: demo/$m missing or not empty"
 done
 # A second run keeps what is already there rather than truncating it.
 printf 'x\n' >"$pkg_dir/demo/tests.py"
-(cd "$pkg_dir" && python3 -B /repo/python/bins/pkg demo >/dev/null 2>&1) || bad "pkg demo crashed on a second run"
+(cd "$pkg_dir" && python3 -B /repo/extensions/python/bins/pkg demo >/dev/null 2>&1) || bad "pkg demo crashed on a second run"
 [ "$(cat "$pkg_dir/demo/tests.py")" = "x" ] || bad "pkg demo: second run truncated demo/tests.py"
 rm -rf "$pkg_dir"
 
@@ -157,19 +165,19 @@ ar_want=$(printf '%s\n' sts assume-role --role-arn "$ar_role" --role-session-nam
   '[Credentials.AccessKeyId,Credentials.SecretAccessKey,Credentials.SessionToken]' \
   --output text --external-id ext)
 env -i HOME="$ar_dir/home" PATH="$ar_bin:/usr/bin:/bin" AR_ARGS="$ar_dir/args" SHELL="$ar_true" \
-  python3 -B /repo/aws/bins/assume-role "$ar_role" ext >/dev/null 2>&1 ||
+  python3 -B /repo/extensions/aws/bins/assume-role "$ar_role" ext >/dev/null 2>&1 ||
   bad "assume-role crashes when given an external id"
 ar_got=$(cat "$ar_dir/args" 2>/dev/null || true)
 [ "$ar_got" = "$ar_want" ] || bad "assume-role: aws argv is [$(echo $ar_got)], want [$(echo $ar_want)]"
 # Without an external id, no --external-id is passed.
 rm -f "$ar_dir/args"
 env -i HOME="$ar_dir/home" PATH="$ar_bin:/usr/bin:/bin" AR_ARGS="$ar_dir/args" SHELL="$ar_true" \
-  python3 -B /repo/aws/bins/assume-role "$ar_role" >/dev/null 2>&1 ||
+  python3 -B /repo/extensions/aws/bins/assume-role "$ar_role" >/dev/null 2>&1 ||
   bad "assume-role crashes without an external id"
 grep -qx -- '--external-id' "$ar_dir/args" 2>/dev/null && bad "assume-role: --external-id passed without an external id"
 rm -rf "$ar_dir"
 
-# code/install.sh: on both OS branches the links point at the repo, an existing
+# extensions/code/install.sh: on both OS branches the links point at the repo, an existing
 # regular file survives as .bak, and a second run leaves that .bak intact.
 for os in mac ubuntu; do
   if [ "$os" = mac ]; then rel="Library/Application Support/Code/User"; else rel=".config/Code/User"; fi
@@ -177,15 +185,15 @@ for os in mac ubuntu; do
   vs_dir="$vs_home/$rel"
   mkdir -p "$vs_dir"
   printf 'live\n' >"$vs_dir/settings.json"
-  run_vs() { env HOME="$vs_home" GURUBASH=/repo OS="$os" bash /repo/code/install.sh >/dev/null 2>&1; }
-  run_vs || bad "code/install.sh ($os) failed on a first run"
+  run_vs() { env HOME="$vs_home" GURUBASH=/repo OS="$os" bash /repo/extensions/code/install.sh >/dev/null 2>&1; }
+  run_vs || bad "extensions/code/install.sh ($os) failed on a first run"
   for f in settings.json keybindings.json; do
-    [ "$(readlink "$vs_dir/$f")" = "/repo/code/$f" ] || bad "code ($os): $f is not linked to the repo"
+    [ "$(readlink "$vs_dir/$f")" = "/repo/extensions/code/$f" ] || bad "code ($os): $f is not linked to the repo"
   done
   [ "$(cat "$vs_dir/settings.json.bak" 2>/dev/null)" = live ] || bad "code ($os): existing settings.json did not survive as .bak"
-  run_vs || bad "code/install.sh ($os) failed on a second run"
+  run_vs || bad "extensions/code/install.sh ($os) failed on a second run"
   [ "$(cat "$vs_dir/settings.json.bak" 2>/dev/null)" = live ] || bad "code ($os): second run changed settings.json.bak"
-  [ "$(readlink "$vs_dir/settings.json")" = "/repo/code/settings.json" ] || bad "code ($os): second run broke the settings.json link"
+  [ "$(readlink "$vs_dir/settings.json")" = "/repo/extensions/code/settings.json" ] || bad "code ($os): second run broke the settings.json link"
   rm -rf "$vs_home"
 done
 
@@ -211,6 +219,32 @@ rm -f "$rc_home/agent-started"
 ni_out=$(rc_run bash -c '. "$HOME/.gurubashrc"' 2>&1)
 [ -z "$ni_out" ] || bad "non-interactive shell printed: $ni_out"
 [ ! -e "$rc_home/agent-started" ] || bad "non-interactive shell started ssh-agent"
+
+# A shell loads core only, plus what default-extensions names.
+mkdir -p "$rc_home/go/bin" "$rc_home/.dotnet"
+rc_path() { rc_run bash -c '. "$HOME/.gurubashrc"; echo ":$PATH:"' 2>/dev/null; }
+ext_list="$rc_home/.config/gurubash/default-extensions"
+plain=$(rc_path)
+for e in "$rc_home/go/bin" "$rc_home/.dotnet" /repo/extensions/; do
+  case "$plain" in *":$e"*) bad "a new shell has $e on PATH with no default-extensions" ;; esac
+done
+rc_run bash -c '. "$HOME/.gurubashrc"; command -v aws conda dotnet pkg assume-role' >/dev/null 2>&1 &&
+  bad "a new shell has an extension's command on PATH"
+mkdir -p "$(dirname "$ext_list")"
+printf 'go\n\npython' >"$ext_list"
+named=$(rc_path)
+case "$named" in *":$rc_home/go/bin:"*) ;; *) bad "default-extensions naming go does not add ~/go/bin: $named" ;; esac
+case "$named" in *":/repo/extensions/python/bins:"*) ;; *) bad "default-extensions naming python does not add its bins: $named" ;; esac
+case "$named" in *":$rc_home/.dotnet:"*) bad "dotnet is on PATH though default-extensions does not name it" ;; esac
+d1=$(rc_run bash -lic 'count' 2>&1 | tail -n1)
+d2=$(rc_run bash -lic 'bash -ic count' 2>&1 | tail -n1)
+[ "$d1" = "$d2" ] || bad "PATH grows with nested shells and extensions: depth 1/2 = $d1/$d2 entries"
+# An unknown name, or one climbing out of extensions/: one line each on stderr, and the shell starts.
+printf 'nosuch\n../core/vim\ngo\n' >"$ext_list"
+unk_err=$(rc_run bash -c '. "$HOME/.gurubashrc"; echo started >&2' 2>&1 >/dev/null)
+[ "$(grep -c 'unknown extension' <<<"$unk_err")" = 2 ] && [ "$(wc -l <<<"$unk_err")" = 3 ] && [ "$(tail -n1 <<<"$unk_err")" = started ] ||
+  bad "unknown default-extensions names: stderr is [$unk_err], want one line each, then the shell starts"
+case "$(rc_path)" in *":$rc_home/go/bin:"*) ;; *) bad "an unknown extension name stopped the ones after it" ;; esac
 rm -rf "$rc_home" "$rc_bin"
 
 # make -n install
@@ -225,10 +259,26 @@ for d in tasks scripts; do
   grep -q "Installed $d" <<<"$install_plan" && bad "make -n install installs $d/"
 done
 
-# `make` always failed on Ubuntu. A full `make install` down the Ubuntu path, in a
-# throwaway HOME, with no network: everything that touches the system or downloads is
-# a stub, and sudo runs nothing but records what it was asked. As root, so
-# credentials/install.sh leaves ~/.personal empty.
+# `make` names core only; an extension comes when asked for, with its `requires` first.
+plain_plan=$(make -n)
+for e in extensions/*/; do
+  e=$(basename "$e")
+  grep -qE "Installed $e\b|extensions/$e/" <<<"$plain_plan" && bad "make -n names the extension $e"
+  ext_plan=$(make -n "$e.install") && grep -q "Installed $e" <<<"$ext_plan" || bad "make -n $e.install runs nothing"
+done
+grep -q 'Installed vim' <<<"$plain_plan" || bad "make -n does not install the core"
+for e in aws ai; do
+  req_plan=$(make -n "$e.install")
+  grep -q 'Installed python' <<<"$req_plan" || bad "make -n $e.install does not include python"
+  [ "$(grep -n 'Installed python' <<<"$req_plan" | cut -d: -f1)" -lt "$(grep -n "Installed $e" <<<"$req_plan" | cut -d: -f1)" ] ||
+    bad "make $e.install installs $e before what it requires"
+done
+make -n nosuch.install >/dev/null 2>&1 && bad "make nosuch.install should fail: there is no such component"
+
+# `make` always failed on Ubuntu. A full `make install`, core and every extension, down
+# the Ubuntu path, in a throwaway HOME, with no network: everything that touches the
+# system or downloads is a stub, and sudo runs nothing but records what it was asked.
+# As root, so core/credentials/install.sh leaves ~/.personal empty.
 ub_dir=$(mktemp -d /tmp/ubuntu-make.XXXXXX)
 ub_bin="$ub_dir/bin"
 ub_log="$ub_dir/sudo.log"
@@ -252,8 +302,13 @@ chmod +x "$ub_bin"/*
 # A copy without .git: a worktree's .git points outside the mount, and git refuses it.
 cp -a /repo "$ub_dir/repo"
 rm -rf "$ub_dir/repo/.git"
-env HOME="$ub_dir/home" PATH="$ub_bin:$PATH" UB_LOG="$ub_log" make -C "$ub_dir/repo" install </dev/null >"$ub_dir/out" 2>&1 ||
+ub_extensions=$(cd extensions && for e in */; do printf '%s.install ' "${e%/}"; done)
+env HOME="$ub_dir/home" PATH="$ub_bin:$PATH" UB_LOG="$ub_log" make -C "$ub_dir/repo" install $ub_extensions </dev/null >"$ub_dir/out" 2>&1 ||
   bad "make install fails on Ubuntu: $(tail -n 5 "$ub_dir/out")"
+[ ! -e "$ub_dir/home/.config/gurubash/default-extensions" ] || bad "an install created default-extensions"
+for b in core/pkg-manager/bins/ubuntu/up extensions/aws/bins/assume-role extensions/python/bins/pkg; do
+  [ -x "$ub_dir/repo/$b" ] || bad "$b is not executable after an install"
+done
 for want in \
   'apt install -y python3' \
   'apt install -y git' \

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+case $- in
+    *i*) ;;
+    *) return 0 ;;
+esac
+
+DEFAULT_THEME=dual-line.blue
+DEFAULT_SHAPE=multiline
+
+. ${GURUBASH}/core/theming/util_functions
+. ${GURUBASH}/core/theming/bash_color_definitions
+. ${GURUBASH}/core/theming/themes/${BASH_THEME:-${DEFAULT_THEME}}
+. ${GURUBASH}/core/theming/shapes/${BASH_SHAPE:-${DEFAULT_SHAPE}}
