@@ -80,6 +80,22 @@ done
 vim -u vim/vimrc -es -V1/tmp/vim.log -c 'qa!' </dev/null >/dev/null 2>&1
 if grep -E '^E[0-9]+' /tmp/vim.log; then bad "vim/vimrc reports errors"; fi
 
+# vim: e, f and r are rebase-todo maps only; in any other file they keep vim's own meaning.
+vimtest=$(mktemp -d /tmp/vimtest.XXXXXX)
+printf 'pick abc1234 subject\n' >"$vimtest/git-rebase-todo"
+printf 'pick abc1234 subject\n' >"$vimtest/plain.txt"
+for name in git-rebase-todo plain.txt; do
+  (cd "$vimtest" && vim -u /repo/vim/vimrc -es \
+    -c "redir! > $vimtest/$name.maps | echo &filetype | silent nmap e | silent nmap f | silent nmap r | redir END | q" \
+    "$name" </dev/null >/dev/null 2>&1)
+done
+for k in e f r; do
+  grep -q "^n  $k .*:s/pick/$k/<CR>" "$vimtest/git-rebase-todo.maps" ||
+    bad "vim: '$k' is not the rebase todo map in a git-rebase-todo file: $(cat "$vimtest/git-rebase-todo.maps")"
+  grep -q 'pick/' "$vimtest/plain.txt.maps" && bad "vim: '$k' is overridden in a plain file: $(cat "$vimtest/plain.txt.maps")"
+done
+rm -rf "$vimtest"
+
 # loopback
 loop=$(printf '%s\n' "$files" | grep -Ev '^(AGENTS\.md|scripts/inside\.sh|tasks/.*)$' |
   while IFS= read -r f; do [ -f "$f" ] && grep -nIE \
