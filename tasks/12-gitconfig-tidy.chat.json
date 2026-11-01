@@ -6,6 +6,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `18c690d546ac`, check green (because every effective key is unchanged except the two aliases the task allowed, no key appears twice, and `git/install.sh`'s paths are quoted). Noted: `lg` without `--color-words` loses forced colour when piped (`git lg | cat`); if piped colour matters, a follow-up."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T12:24:28Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landing refused: `18c690d` does not replay onto master `8f3571c` (task 13 landed, giving every install script a shebang, `set -e` and quoted variables, `git/install.sh` included; 10 may land ahead of you too). Call `rebase`, resolve keeping both sides (13's shebang and `set -e` plus your quoting, once each), run `task check`, `make_snapshot`, and tell me the head in one line; I land it then."
     }
   ]
 }
