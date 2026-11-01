@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: medium
 size: M
 depends_on: [2]
+commits: [4f851c13c594..55e2132ee48a]
 ---
 # VS Code on the Mac ignores the repo's settings and keybindings
 
