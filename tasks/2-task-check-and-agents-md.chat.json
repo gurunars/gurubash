@@ -55,6 +55,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing `ebc3d8c20704`, check green: `task check` runs `scripts/check.sh` (one Alpine tools image via the mirror, replaced on rebuild; checks in a `--network none` container with the repo read-only: shellcheck, `bash -n`, Python syntax, JSONC, gitconfig, vim load, loopback patterns, `make -n install`); red cases shown on a planted `0.0.0.0` and a shell syntax error. Accepted: `find` over `git ls-files` inside the container; `*/bins/*` where the task said `bins/*`."
+    },
+    {
+      "id": 9,
+      "at": "2026-11-01T09:20:01Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed as `911dbf7`. If the Taskfile that made `task check` run came from the user, human task 20 is done and theirs to tick."
     }
   ]
 }
