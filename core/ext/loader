@@ -1,0 +1,181 @@
+#!/bin/bash
+# `ext use|ls|off`: load extensions into a nested shell; leaving it frees them.
+# Only functions are defined here, so sourcing is silent, cheap and repeatable.
+
+_ext_user_profiles() { printf '%s' "${HOME}/.config/gurubash/profiles"; }
+
+# _ext_path_add [-p] DIR: same rule as the root loader's path_add, which that
+# loader unsets once it is done.
+_ext_path_add() {
+    local front=0
+    if [ "$1" = "-p" ]; then front=1; shift; fi
+    [ -d "$1" ] || return 0
+    case ":${PATH}:" in
+        *":$1:"*) return 0 ;;
+    esac
+    if [ "$front" = 1 ]; then
+        PATH="$1${PATH:+:${PATH}}"
+    else
+        PATH="${PATH:+${PATH}:}$1"
+    fi
+    export PATH
+}
+
+# _ext_profile_file NAME: the profile file, the user's winning over the repo's.
+_ext_profile_file() {
+    local f
+    for f in "$(_ext_user_profiles)/$1" "${GURUBASH}/profiles/$1"; do
+        if [ -f "$f" ]; then
+            printf '%s' "$f"
+            return 0
+        fi
+    done
+    return 1
+}
+
+# _ext_expand NAME DEPTH: the extensions a profile or extension stands for, one per line.
+_ext_expand() {
+    local name=$1 depth=$2 file line word out
+    case "${name}" in
+        '' | */* | . | ..)
+            echo "ext: bad name '${name}'" >&2
+            return 1
+            ;;
+    esac
+    if file=$(_ext_profile_file "${name}"); then
+        if [ "${depth}" -gt 8 ]; then
+            echo "ext: profile '${name}' nests too deep (a cycle?)" >&2
+            return 1
+        fi
+        while read -r line || [ -n "${line}" ]; do
+            line=${line%%#*}
+            for word in ${line}; do
+                out=$(_ext_expand "${word}" $((depth + 1))) || return 1
+                [ -z "${out}" ] || printf '%s\n' "${out}"
+            done
+        done <"${file}"
+        return 0
+    fi
+    if [ -d "${GURUBASH}/extensions/${name}" ]; then
+        printf '%s\n' "${name}"
+        return 0
+    fi
+    echo "ext: no extension or profile named '${name}'" >&2
+    return 1
+}
+
+# _ext_installed NAME: an extension's optional `installed` file is a command to
+# test; none means installed.
+_ext_installed() {
+    local f="${GURUBASH}/extensions/$1/installed"
+    [ -f "$f" ] || return 0
+    (eval "$(cat "$f")") >/dev/null 2>&1
+}
+
+# _ext_load_active: what the nested shell's rcfile runs, for every name in GURUBASH_EXT.
+_ext_load_active() {
+    local e dir loader
+    path_add() { _ext_path_add "$@"; }
+    for e in ${GURUBASH_EXT}; do
+        dir="${GURUBASH}/extensions/${e}"
+        for loader in "${dir}/loader" "${dir}/loader.${OS}"; do
+            # shellcheck disable=SC1090
+            [ -f "${loader}" ] && . "${loader}"
+        done
+        _ext_path_add "${dir}/bins"
+        _ext_path_add "${dir}/bins/${OS}"
+    done
+    unset -f path_add
+}
+
+_ext_use() {
+    local n e names new= all=
+    if [ $# -eq 0 ]; then
+        echo "usage: ext use <profile|extension>..." >&2
+        return 2
+    fi
+    for n in "$@"; do
+        names=$(_ext_expand "${n}" 0) || return 1
+        all="${all} ${names}"
+    done
+    for e in ${all}; do
+        _ext_installed "${e}" || {
+            echo "ext: '${e}' is not installed: run make ${e}.install" >&2
+            return 1
+        }
+        case " ${GURUBASH_EXT:-} ${new} " in
+            *" ${e} "*) ;;
+            *) new="${new} ${e}" ;;
+        esac
+    done
+    [ -n "${new}" ] || return 0
+    GURUBASH="${GURUBASH}" GURUBASH_EXT="${GURUBASH_EXT:+${GURUBASH_EXT} }${new# }" \
+        bash --rcfile "${GURUBASH}/core/ext/rcfile" -i
+}
+
+_ext_names() {
+    local d f
+    for d in "${GURUBASH}"/extensions/*/; do
+        [ -d "${d}" ] && basename "${d}"
+    done
+    for f in "$(_ext_user_profiles)"/* "${GURUBASH}"/profiles/*; do
+        [ -f "${f}" ] && basename "${f}"
+    done
+}
+
+_ext_ls() {
+    local d f e members line seen=" "
+    echo "extensions:"
+    for d in "${GURUBASH}"/extensions/*/; do
+        [ -d "${d}" ] || continue
+        e=$(basename "${d}")
+        line="  ${e}"
+        case " ${GURUBASH_EXT:-} " in *" ${e} "*) line="${line} *" ;; esac
+        _ext_installed "${e}" || line="${line} (not installed: make ${e}.install)"
+        echo "${line}"
+    done
+    echo "profiles:"
+    for f in "$(_ext_user_profiles)"/* "${GURUBASH}"/profiles/*; do
+        [ -f "${f}" ] || continue
+        e=$(basename "${f}")
+        case "${seen}" in *" ${e} "*) continue ;; esac
+        seen="${seen}${e} "
+        members=$(_ext_expand "${e}" 0 2>/dev/null | tr '\n' ' ')
+        echo "  ${e}: ${members% }"
+    done
+}
+
+_ext_off() {
+    if [ -z "${GURUBASH_EXT_LAYER:-}" ]; then
+        echo "ext: not inside an 'ext use' shell" >&2
+        return 1
+    fi
+    exit 0
+}
+
+ext() {
+    local cmd=${1:-}
+    [ $# -eq 0 ] || shift
+    case "${cmd}" in
+        use) _ext_use "$@" ;;
+        ls) _ext_ls ;;
+        off) _ext_off ;;
+        *)
+            echo "usage: ext use <profile|extension>... | ext ls | ext off" >&2
+            return 2
+            ;;
+    esac
+}
+
+_ext_complete() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    if [ "${COMP_CWORD}" -eq 1 ]; then
+        mapfile -t COMPREPLY < <(compgen -W "use ls off" -- "${cur}")
+    elif [ "${COMP_WORDS[1]}" = use ]; then
+        mapfile -t COMPREPLY < <(compgen -W "$(_ext_names)" -- "${cur}")
+    fi
+}
+
+case $- in
+    *i*) complete -F _ext_complete ext ;;
+esac

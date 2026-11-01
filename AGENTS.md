@@ -27,6 +27,10 @@ vim's `vimrc`, the loopback rules and `make -n install`.
   names it; no install ever creates that file.
 - `extensions/code/*.json` and `.vscode/settings.json` are JSONC: comments and
   trailing commas are legal. Do not parse with strict JSON.
+- `ext use <profile|extension>...` starts a nested shell (`core/ext/`) with extensions
+  loaded; exit frees them. A profile is `profiles/<name>` or
+  `~/.config/gurubash/profiles/<name>` (wins): one name per line, `#` comments. An
+  extension's optional `installed` file is a command to test; none means installed.
 - `defaults/profile`, `git/gitconfig`, `vim/vimrc` and `code/*.json` exist only for
   links on machines installed before the split. Edit the real file under `core/`
   or `extensions/`; `task check` fails if the two differ.

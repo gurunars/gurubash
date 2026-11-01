@@ -21,6 +21,12 @@ function aws_assumed_role {
   fi
 }
 
+function ext_active {
+  if [ -n "${GURUBASH_EXT}" ]; then
+    echo -e "${cdog} (${GURUBASH_EXT})${Color_Off}"
+  fi
+}
+
 # Show surprise smile if command returned error exit code
 function surprise {
   status=$?

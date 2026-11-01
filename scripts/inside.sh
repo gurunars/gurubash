@@ -17,7 +17,7 @@ shell_files=() py_files=()
 while IFS= read -r f; do
   [ -f "$f" ] || continue
   case "$f" in
-    */install*.sh | install*.sh | loader | */loader | */loader.* | core/pkg-manager/get-os.sh | core/theming/*)
+    */install*.sh | install*.sh | loader | */loader | */loader.* | core/pkg-manager/get-os.sh | core/theming/* | core/ext/rcfile)
       shell_files+=("$f") ;;
     bins/* | */bins/*)
       if is_python "$f"; then py_files+=("$f")
@@ -258,6 +258,75 @@ unk_err=$(rc_run bash -c '. "$HOME/.gurubashrc"; echo started >&2' 2>&1 >/dev/nu
   bad "unknown default-extensions names: stderr is [$unk_err], want one line each, then the shell starts"
 case "$(rc_path)" in *":$rc_home/go/bin:"*) ;; *) bad "an unknown extension name stopped the ones after it" ;; esac
 rm -rf "$rc_home" "$rc_bin"
+
+# ext use: a nested shell with extensions loaded; leaving it frees PATH, aliases and
+# functions. Run on a copy of the repo holding a test extension "probe" (an alias, a
+# function, a bins dir) and one holding another alias ("probe2").
+ex_dir=$(mktemp -d /tmp/ext-use.XXXXXX)
+ex_repo="$ex_dir/repo"
+ex_home="$ex_dir/home"
+ex_stub="$ex_dir/stub"
+mkdir -p "$ex_home/.config/gurubash/profiles" "$ex_stub"
+cp -a /repo "$ex_repo"
+rm -rf "$ex_repo/.git"
+mkdir -p "$ex_repo/extensions/probe/bins" "$ex_repo/extensions/probe2" "$ex_repo/extensions/probe3" "$ex_repo/extensions/missing"
+printf 'true\n' >"$ex_repo/extensions/probe3/loader"
+printf 'alias probe_alias="echo probed"\nprobe_fn() { :; }\nexport PROBE=1\n' >"$ex_repo/extensions/probe/loader"
+printf 'alias probe2_alias="echo probed2"\n' >"$ex_repo/extensions/probe2/loader"
+printf 'false\n' >"$ex_repo/extensions/missing/installed"
+printf '# mine\nprobe  # an extension\nprobe2\n' >"$ex_home/.config/gurubash/profiles/both"
+printf 'export GURUBASH=%s\n. ${GURUBASH}/loader\n' "$ex_repo" >"$ex_home/.bashrc"
+printf '#!/bin/sh\n' >"$ex_stub/aws" && chmod +x "$ex_stub/aws"
+ex_run() { env -i HOME="$ex_home" TERM=xterm PATH="$ex_stub:/usr/bin:/bin" "$@"; }
+ex_run EX_REPO="$ex_repo" bash -ic 'ext ls' >"$ex_dir/ls" 2>&1 || bad "ext ls failed: $(cat "$ex_dir/ls")"
+grep -qE '^  aws$' "$ex_dir/ls" && grep -q 'missing (not installed: make missing.install)' "$ex_dir/ls" &&
+  grep -q '^  cloud: aws python$' "$ex_dir/ls" && grep -q '^  both: probe probe2$' "$ex_dir/ls" ||
+  bad "ext ls does not list extensions, profiles and the missing one: $(cat "$ex_dir/ls")"
+
+cat >"$ex_dir/outer.sh" <<'OUTER'
+snap() { echo "$PATH"; alias; declare -F; }
+before=$(snap)
+ext use cloud both <<'L1'
+echo "L1 ext=$GURUBASH_EXT"
+case ":$PATH:" in *":$EX_REPO/extensions/aws/bins:"*) echo "L1 aws-bins";; esac
+alias probe_alias >/dev/null && echo "L1 alias"
+declare -F probe_fn >/dev/null && echo "L1 fn"
+echo "L1 probe=$PROBE"
+ext use cloud probe
+echo "L1 same-name ext=$GURUBASH_EXT"
+ext use probe3 <<'L2'
+echo "L2 ext=$GURUBASH_EXT"
+alias probe_alias >/dev/null && echo "L2 alias-from-outer"
+exit 7
+L2
+echo "L1 after-inner status=$? ext=$GURUBASH_EXT"
+alias probe2_alias >/dev/null && echo "L1 alias2"
+exit 3
+L1
+echo "status=$?"
+after=$(snap)
+[ "$before" = "$after" ] && echo "FREED"
+[ -z "$GURUBASH_EXT" ] && [ -z "$PROBE" ] && echo "CLEAN"
+ext use missing; echo "refused=$?"
+ext use nosuch; echo "unknown=$?"
+ext off; echo "off-outside=$?"
+ext use probe <<'L1'
+ext off
+echo "NOT REACHED"
+L1
+echo "off-status=$?"
+OUTER
+cp "$ex_dir/outer.sh" "$ex_home/outer.sh"
+ex_out=$(ex_run EX_REPO="$ex_repo" bash -ic '. "$HOME/outer.sh"' 2>"$ex_dir/err" </dev/null) || true
+for want in 'L1 ext=aws python probe probe2' 'L1 aws-bins' 'L1 alias' 'L1 fn' 'L1 probe=1' \
+  'L1 same-name ext=aws python probe probe2' 'L2 ext=aws python probe probe2 probe3' 'L2 alias-from-outer' \
+  'L1 after-inner status=7 ext=aws python probe probe2' 'L1 alias2' 'status=3' FREED CLEAN \
+  'refused=1' 'unknown=1' 'off-outside=1' 'off-status=0'; do
+  grep -qxF -- "$want" <<<"$ex_out" || bad "ext use: missing '$want' in: $(echo $ex_out) / $(tail -n 5 "$ex_dir/err")"
+done
+grep -q 'NOT REACHED' <<<"$ex_out" && bad "ext off did not leave the shell"
+grep -q 'make missing.install' "$ex_dir/err" || bad "ext use refusal does not name make missing.install"
+rm -rf "$ex_dir"
 
 # make -n install
 make -n install >/dev/null || bad "make -n install"

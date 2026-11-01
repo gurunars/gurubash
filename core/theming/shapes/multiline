@@ -11,5 +11,6 @@ PS1="\$(surprise)\
 \[$cbracket\][\[$usercolor\]\u$Color_Off\[$cdog\]@\[$chost\]\h\[$cbracket\]][\[$cpath\]\w\[$cbracket\]]\
 \$(branch)\
 \$(aws_assumed_role)\
+\$(ext_active)\
 \n\
 \[$ccursor\] > \[$Color_Off\]"
