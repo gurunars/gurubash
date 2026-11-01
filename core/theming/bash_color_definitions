@@ -67,6 +67,6 @@ On_IRed='\033[0;101m'     # Red
 On_IGreen='\033[0;102m'   # Green
 On_IYellow='\033[0;103m'  # Yellow
 On_IBlue='\033[0;104m'    # Blue
-On_IPurple='\033[10;95m'  # Purple
+On_IPurple='\033[0;105m'  # Purple
 On_ICyan='\033[0;106m'    # Cyan
 On_IWhite='\033[0;107m'   # White
