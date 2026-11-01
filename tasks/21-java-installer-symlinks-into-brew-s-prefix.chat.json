@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T09:33:27Z",
+      "from": "executor",
+      "kind": "text",
+      "text": "Decided: replace the `sudo ln` with a `java/loader.mac` that exports JAVA_HOME from the keg's static path (no fork, no write), instead of keeping a link into /Library/Java (because the loader needs neither root nor a write). Decided: installer package name changed from `java` to `openjdk` (because the old link path `opt/openjdk` only exists when the formula is `openjdk`; `brew install java` could not be verified here). Note: the Actual outcome says the link is created inside /opt/homebrew — it is actually created under /Library/Java and points into brew's prefix. Machines that already ran the old installer keep that root-owned link; it is not removed."
+    }
+  ]
+}
