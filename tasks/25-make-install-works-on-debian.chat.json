@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T12:39:12Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: landing `3b51f02f9759`, check green (because `get-os.sh` now reads `/etc/os-release`, Debian and anything `ID_LIKE` debian take the apt path with no copied files, the stubbed install runs as Ubuntu and as Debian with the same sudo calls, and the Alpine/Fedora refusals fail on the old script). Accepted: the `*.ubuntu.sh` names kept for the apt family (a rename would lose exec bits); other Linux refused with `Unknown OS` rather than falling through to apt. The real `debian:13` run is the user's, beside 23's `ubuntu:latest`; the Debian base image has no `sudo`."
+    }
+  ]
+}
