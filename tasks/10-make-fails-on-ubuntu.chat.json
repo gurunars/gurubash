@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `abb23fe` does not replay onto master (tasks 3, 4, 5, 7, 8, 9, 11, 13, 14 and 21 landed since your base; 11 changed `personal/loader`, 8 and 13 `code/install.sh`, and most of them `scripts/inside.sh`). Call `rebase`, resolve keeping both sides (11's `[ -f ]` guard and quoted glob in `personal/loader` already fixes the empty-`~/.personal` crash; keep one fix, not two), run `task check`, `make_snapshot`, and tell me the head in one line; I land it then."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T12:24:03Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landing refused: `abb23fe` conflicts with the week's gurubash landings (`personal/loader` from 11, `code/install.sh` from 8 and 13, `scripts/inside.sh` from most). Executor rebasing; landing on its next head."
     }
   ]
 }
