@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T12:24:21Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: landing `18c690d546ac`, check green (because every effective key is unchanged except the two aliases the task allowed, no key appears twice, and `git/install.sh`'s paths are quoted). Noted: `lg` without `--color-words` loses forced colour when piped (`git lg | cat`); if piped colour matters, a follow-up."
+    }
+  ]
+}
