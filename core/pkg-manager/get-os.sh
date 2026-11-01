@@ -6,6 +6,7 @@ OS=$(uname -s)
 if [ "$OS" = "Darwin" ]; then
   echo "mac"
 elif [ "$OS" = "Linux" ]; then
+  # shellcheck disable=SC1090 # OS_RELEASE is a test override of /etc/os-release, chosen at run time
   family=$(. "${OS_RELEASE:-/etc/os-release}" 2>/dev/null && printf ' %s %s ' "$ID" "${ID_LIKE:-}")
   case "$family" in
     *" ubuntu "* | *" debian "*) echo "ubuntu" ;;
