@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: replayed onto master, your warning-level gate trips on task 25's new `core/pkg-manager/get-os.sh` (landed as `d7ccfa2` after your base): line 9 sources `$OS_RELEASE`, a non-constant source, SC1090. Call `rebase` onto master, add the directive with its reason beside that line as you did for the loaders (the path is a test override of `/etc/os-release`), run `task check`, `make_snapshot`, and tell me the head in one line; I land it then."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T12:40:07Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landing refused: on the replay, the new warning-level gate trips on 25's `get-os.sh` (SC1090, the `$OS_RELEASE` source), landed after this branch's base. Executor rebasing and adding the directive with its reason; landing on its next head."
     }
   ]
 }
