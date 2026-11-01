@@ -48,6 +48,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Nothing has changed since my last message. The Taskfile you describe already exists, and I didn't create it.\n\n- **Taskfile:** `Taskfile.yml` came in on master in commit `6d69a07`, with a `check` task that runs `bash scripts/check.sh`.\n- **Snapshot:** I ran `task check` against it for real and it was green, so snapshot `ebc3d8c` was made with the check actually run.\n- **`scripts/check.sh`:** it is self-contained and is what `task check` runs. It is not executable, because I have no way to set the file mode here. The Taskfile calls it with `bash`, so that doesn't affect `task check`. If you want it executable, run `chmod +x scripts/*.sh`.\n- **Status:** I already marked the task ready, and nothing is uncommitted."
+    },
+    {
+      "id": 8,
+      "at": "2026-11-01T09:19:50Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landing `ebc3d8c20704`, check green: `task check` runs `scripts/check.sh` (one Alpine tools image via the mirror, replaced on rebuild; checks in a `--network none` container with the repo read-only: shellcheck, `bash -n`, Python syntax, JSONC, gitconfig, vim load, loopback patterns, `make -n install`); red cases shown on a planted `0.0.0.0` and a shell syntax error. Accepted: `find` over `git ls-files` inside the container; `*/bins/*` where the task said `bins/*`."
     }
   ]
 }
