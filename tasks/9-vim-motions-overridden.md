@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: high
 size: S
 depends_on: [2]
+commits: [2ef172898a7d..91605d76d31b]
 ---
 # In vim, `e`, `f` and `r` no longer move or replace, in every file
 
