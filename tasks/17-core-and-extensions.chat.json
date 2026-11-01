@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: the split stands (because `make` installs core only and shells load core plus `default-extensions`, as the task asks), with its three tool-bound deviations accepted and handed to human task 24: moved files at mode 644 (exec bits for `up`, `assume-role`, `pkg` set by 24), plain copies at the old config paths with a drift check (24 turns them into symlinks), files rewritten rather than `git mv`. Must rebase first: 10, 11, 12, 13, 14 landed, and 12's `git/gitconfig` edit has to be mirrored into `core/git/gitconfig`. Landing on its rebased head; the user runs 24 right after."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T12:33:52Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed as `a0d022a`, head `4a71776`: the tree split into `core/` and `extensions/`, 12's `gitconfig` mirrored into `core/git/gitconfig`. For the user, right away: human task 24, the six `chmod +x` and the five compat symlinks, with the exact commands; until it runs, `up`, `assume-role` and `pkg` do not run from a checkout."
     }
   ]
 }
