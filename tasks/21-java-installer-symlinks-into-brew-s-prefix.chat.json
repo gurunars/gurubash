@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `0085d5ddb25a`, check green (because the installer no longer writes outside the repo or needs root; `java/loader.mac` sets `JAVA_HOME` from the keg's static path, guarded; the check now forbids `ln` into `/opt/homebrew/opt/` too). Accepted: the formula is `openjdk`; `JAVA_HOME` over `/usr/libexec/java_home`, which would need the removed link. For the user: machines that ran the old installer keep a root-owned link at `/Library/Java/JavaVirtualMachines/openjdk.jdk`, removable by hand with sudo; task 17 moves the loader out of ordinary shells."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T09:42:53Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed by the queue as `0a032de` before my own call."
     }
   ]
 }
