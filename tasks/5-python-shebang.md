@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: medium
 size: S
 depends_on: [3, 4]
+commits: [670d93cd5e63..337093d2f9a6]
 ---
 # `pkg` and `assume-role` cannot start: no `python` on a clean `PATH`
 
