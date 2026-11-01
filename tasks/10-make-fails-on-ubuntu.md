@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: medium
 size: L
 depends_on: [7, 13]
+commits: [0766b234f681..66a2a7e7f80f]
 ---
 # `make` always fails on Ubuntu
 
