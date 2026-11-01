@@ -117,6 +117,19 @@ cred_got=$(env -i HOME="$cred_home" bash -c '. "$HOME/.personal/credentials" && 
   bad "credentials: sourced NAME|EMAIL is '$cred_got', want 'Jane Doe|a@example.com'"
 rm -rf "$cred_home" "$cred_bin"
 
+# pkg demo: creates demo/__init__.py and demo/tests.py, both empty, in a scratch dir.
+# Regression: it crashed with FileExistsError on the second mkdir.
+pkg_dir=$(mktemp -d /tmp/pkg-demo.XXXXXX)
+(cd "$pkg_dir" && python3 -B /repo/python/bins/pkg demo >/dev/null 2>&1) || bad "pkg demo crashed"
+for m in __init__.py tests.py; do
+  [ -f "$pkg_dir/demo/$m" ] && [ ! -s "$pkg_dir/demo/$m" ] || bad "pkg demo: demo/$m missing or not empty"
+done
+# A second run keeps what is already there rather than truncating it.
+printf 'x\n' >"$pkg_dir/demo/tests.py"
+(cd "$pkg_dir" && python3 -B /repo/python/bins/pkg demo >/dev/null 2>&1) || bad "pkg demo crashed on a second run"
+[ "$(cat "$pkg_dir/demo/tests.py")" = "x" ] || bad "pkg demo: second run truncated demo/tests.py"
+rm -rf "$pkg_dir"
+
 # make -n install
 make -n install >/dev/null || bad "make -n install"
 

@@ -5,17 +5,16 @@ import os
 
 
 def main():
-    parser = argparse.ArgumentParser("Create Python package")
+    parser = argparse.ArgumentParser(description="Create Python package")
     parser.add_argument("name")
     args = parser.parse_args()
 
     print(f"Creating Python package {args.name}")
     os.makedirs(args.name, exist_ok=True)
-    os.mkdir(args.name)
-    with open(os.path.join(args.name, "__init__.py")) as fil:
-        fil.write("")
-    with open(os.path.join(args.name, "tests.py")) as fil:
-        fil.write("")
+    # "a" creates each empty file if missing and never truncates one that exists.
+    for module in ("__init__.py", "tests.py"):
+        with open(os.path.join(args.name, module), "a"):
+            pass
 
 
 if __name__ == "__main__":
