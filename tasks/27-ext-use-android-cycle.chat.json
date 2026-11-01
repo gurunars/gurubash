@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T12:44:48Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: landing `5cf7bedd9640`, check green (because the cause is found and fixed: a profile line naming the profile itself now means the extension of that name, other cycles still hit the depth cap; the regression test asserts `ext ls` shows `android: android java`, `ext use android` starts and exits 0, and every shipped profile starts). Red-before-fix shown on the loader alone, not the full suite; accepted."
+    }
+  ]
+}
