@@ -6,6 +6,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `d94f6f7` conflicts with master `bcfb882` (5, 7, 9 landed). Executor rebasing; landing on its next head."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T09:39:50Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landing refused: `d94f6f7` does not replay onto master (tasks 3, 4, 5, 7 and 9 landed since your base: the Makefile's install rule, the python shebangs and the mac installer, `scripts/inside.sh`). Call `rebase`, resolve keeping both sides (7's `wildcard */install*.sh` install rule stays, your idempotence on top), run `task check`, `make_snapshot`, and tell me the head in one line; I land it then."
     }
   ]
 }
