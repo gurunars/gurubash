@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: accepted the executor's two calls, `theming.install: personal.install` and the unused `INSTALL=` line left alone (out of scope), and `make <name>.install` not failing for a name with no installer (java has one for one OS only); with the message changed from \"Installed <name>\" to one that says there was no installer, since nothing was installed."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T09:30:55Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: landing `69001af36476`, check green (because the cause is found and fixed: `.PHONY` listed `$(MAKECMDGOALS)`, so pattern rules were skipped; `install` now comes from `wildcard */install*.sh`, so `tasks/` and `scripts/` are no longer installed; regression checks in `task check` failed on the old code). The \"Installed <name>\" message for a name with no installer is left as is, cosmetic; change it when that Makefile is next touched."
     }
   ]
 }
