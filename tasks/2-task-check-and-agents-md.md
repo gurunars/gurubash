@@ -30,10 +30,10 @@ Covers:
 - `scripts/` and `tasks/` hold no `install*`/`loader`; `*/` targets must tolerate them until 7 lands.
 
 ## TODO
-- [ ] [M] `Taskfile.yml`, `scripts/check.sh`, tool images
-- [ ] [S] Loopback check
-- [ ] [S] `AGENTS.md`
-- [ ] [S] Fix anything at severity error so the first run is green
+- [x] [M] `Taskfile.yml`, `scripts/check.sh`, tool images
+- [x] [S] Loopback check
+- [x] [S] `AGENTS.md`
+- [x] [S] Fix anything at severity error so the first run is green
 
 ## Done when
 `task check` green on the branch, and red when a `0.0.0.0` is added to any tracked file.
