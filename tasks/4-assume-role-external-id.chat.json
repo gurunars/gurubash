@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `78fe598b2ea7`, check green (because the fix is the reported crash: the external id is `nargs='?'`, a string, not a list; the `aws sts assume-role` call is an argv list with no `shell=True`; `anonymous` spelled right; a regression check with a stub `aws` asserts the exact argv with and without an external id and the anonymous session name). Accepted: stderr left on the terminal rather than parsed as credentials. Not run against the old script."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T09:38:27Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed by the queue as `c93bd70` before my own call."
     }
   ]
 }
