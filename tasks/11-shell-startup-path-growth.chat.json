@@ -6,6 +6,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `90ff414` conflicts with master `bcfb882` (5, 7, 9 landed). Executor rebasing; landing on its next head."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T09:36:49Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Report in: `path_add [-p] DIR` in the root loader, skipping present or missing dirs; nested-shell regression test (same `PATH` length at depth 1–3; a non-interactive shell prints nothing and starts no `ssh-agent`); interactive-only loaders guarded one by one; `/etc/profile` sourced once, first, in login shells only; one shared agent socket at `~/.ssh/agent.sock`; `personal/loader` quoting its glob. Accepted: `ls-beauty/loader.ubuntu` interactive-only and only with `dircolors`; per-loader guards rather than one early return. Not run against the old loaders. Still needs the rebase onto master (3, 5, 7, 9 landed) before it can land; brief pending on a free slot."
     }
   ]
 }
