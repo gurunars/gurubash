@@ -27,7 +27,7 @@ done <<<"$files"
 
 # shell: shellcheck (error severity, always as bash) + bash -n
 for f in "${shell_files[@]}"; do
-  shellcheck --severity=error --shell=bash --format=gcc "$f" || bad "shellcheck $f"
+  shellcheck --severity=warning --shell=bash --format=gcc "$f" || bad "shellcheck $f"
   bash -n "$f" 2>&1 || bad "bash -n $f"
 done
 

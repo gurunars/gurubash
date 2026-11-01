@@ -1,4 +1,5 @@
 # Configure terminal colors (yellow theme)
+# shellcheck disable=SC2034,SC2154 # colour names come from bash_color_definitions; these are read by the shape and util_functions
 ctime=$BYellow # time when command was executed
 cbracket=$BPurple # [ and ]
 cdog=$BGreen # @ char

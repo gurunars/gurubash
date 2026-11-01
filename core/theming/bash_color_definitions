@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034 # every colour name here is read by the theme and prompt that source this file
 # Reset
 Color_Off='\033[0m'       # Text Reset
 

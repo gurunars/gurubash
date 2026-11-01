@@ -6,5 +6,6 @@
 [ -n "${OS:-}" ] || OS=$(bash "${GURUBASH}/core/pkg-manager/get-os.sh")
 . "${GURUBASH}/core/ext/loader"
 _ext_load_active
+# shellcheck disable=SC2034 # read by _ext_off in core/ext/loader
 GURUBASH_EXT_LAYER=1   # not exported: only this shell is a layer, its children are not
 export GURUBASH_EXT

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# shellcheck disable=SC2154 # colours are set by bash_color_definitions and the theme, sourced first
 if [ "$EUID" -eq 0 ];then
   usercolor=$croot
 else

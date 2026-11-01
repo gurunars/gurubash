@@ -89,7 +89,7 @@ _ext_load_active() {
 }
 
 _ext_use() {
-    local n e names new= all=
+    local n e names new='' all=''
     if [ $# -eq 0 ]; then
         echo "usage: ext use <profile|extension>..." >&2
         return 2
@@ -109,8 +109,12 @@ _ext_use() {
         esac
     done
     [ -n "${new}" ] || return 0
-    GURUBASH="${GURUBASH}" GURUBASH_EXT="${GURUBASH_EXT:+${GURUBASH_EXT} }${new# }" \
-        bash --rcfile "${GURUBASH}/core/ext/rcfile" -i
+    # A subshell, so GURUBASH_EXT reaches the nested shell only; exec makes the nested
+    # shell's exit status this one's, which `ext use` returns.
+    (
+        export GURUBASH_EXT="${GURUBASH_EXT:+${GURUBASH_EXT} }${new# }"
+        exec bash --rcfile "${GURUBASH}/core/ext/rcfile" -i
+    )
 }
 
 _ext_names() {

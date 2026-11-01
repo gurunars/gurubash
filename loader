@@ -28,10 +28,12 @@ fi
 OS=$(bash "${GURUBASH}/core/pkg-manager/get-os.sh")
 
 for loader in "${GURUBASH}"/core/*/loader; do
+    # shellcheck disable=SC1090 # each loader is found by glob, at run time
     [ -f "${loader}" ] && . "${loader}"
 done
 
 for loader in "${GURUBASH}"/core/*/loader."${OS}"; do
+    # shellcheck disable=SC1090 # each loader is found by glob, at run time
     [ -f "${loader}" ] && . "${loader}"
 done
 
@@ -54,6 +56,7 @@ if [ -f "${extensions_file}" ]; then
             continue
         fi
         for loader in "${extension_dir}/loader" "${extension_dir}/loader.${OS}"; do
+            # shellcheck disable=SC1090 # the extension's loader, found by name at run time
             [ -f "${loader}" ] && . "${loader}"
         done
         path_add "${extension_dir}/bins"
