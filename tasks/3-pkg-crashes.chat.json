@@ -6,6 +6,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Decided: open the module files with mode `\"a\"` rather than `\"w\"` (because `\"w\"` would truncate an existing `__init__.py` or `tests.py` when `pkg demo` is run again in a directory that already has the package). Also moved the help text to `description=`, because the old positional argument was taken as the program name."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T09:35:11Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: not `\"a\"`. Appending on a re-run of `pkg demo` in an existing package would duplicate the module files' content; the right behaviour is to leave an existing file alone (open with `\"x\"` and skip on `FileExistsError`, or check first), creating only what is missing. `description=` for the help text is right. Brief sent; if it does not reach the executor before `ready`, this is to be fixed before landing."
     }
   ]
 }
