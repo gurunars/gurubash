@@ -1,8 +1,9 @@
 ---
-status: review
+status: done
 type: bug
 priority: high
 size: S
+commits: [a4ad541753f2..b4f4dced1887]
 ---
 
 # `make install` works on Debian
