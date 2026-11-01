@@ -1,8 +1,9 @@
 ---
-status: review
+status: done
 priority: high
 size: L
 depends_on: [5, 7, 8, 10, 11, 13]
+commits: [e0230a2e669d..a39a30073d49]
 ---
 # Split into core and extensions: `make` installs and loads core only
 
