@@ -27,6 +27,13 @@
       "from": "executor",
       "kind": "text",
       "text": "Still blocked on the full podman VM disk: `task check` failed again with `no space left on device`, and now the agent sandbox fails the same way. I filed a `type: human` task to free the space. Nothing is committed: the resolved rebase is only in the worktree, with no conflict markers in the installers. Next step is `make_snapshot`.\n\nDecided: not calling `ready` and not changing `scripts/check.sh` to get past the pull (because the code has not been checked or committed, and the failure is in the environment, not the code).\n\nStill untested: `Done when` (a second run makes no network call and no package change). It needs the sandbox or a container, so it has to run once space is free."
+    },
+    {
+      "id": 5,
+      "at": "2026-11-01T09:41:20Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "One thing to drop in the rebase: your `python/install.mac.sh` change (`ln -sfn` for the `python` link). Task 5 landed on master and removed that link entirely, with a check in `scripts/inside.sh` forbidding any `ln` into `/opt/homebrew/bin/`; keep master's version of that file. Your other decisions stand: `dpkg -s` in `install-if-missing.ubuntu.sh`, `code --list-extensions` before installing, `sudo mkdir -p` for apt's sources dir. The VM is out of disk right now, so `task check` may fail on that until the user frees it; that is not your branch."
     }
   ]
 }
