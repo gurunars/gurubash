@@ -50,6 +50,12 @@ _ext_expand() {
         while read -r line || [ -n "${line}" ]; do
             line=${line%%#*}
             for word in ${line}; do
+                # A profile line naming the profile itself means the extension of that name
+                # (profiles/android lists android); any other cycle still runs into the depth cap.
+                if [ "${word}" = "${name}" ] && [ -d "${GURUBASH}/extensions/${name}" ]; then
+                    printf '%s\n' "${name}"
+                    continue
+                fi
                 out=$(_ext_expand "${word}" $((depth + 1))) || return 1
                 [ -z "${out}" ] || printf '%s\n' "${out}"
             done

@@ -278,10 +278,28 @@ printf '# mine\nprobe  # an extension\nprobe2\n' >"$ex_home/.config/gurubash/pro
 printf 'export GURUBASH=%s\n. ${GURUBASH}/loader\n' "$ex_repo" >"$ex_home/.bashrc"
 printf '#!/bin/sh\n' >"$ex_stub/aws" && chmod +x "$ex_stub/aws"
 ex_run() { env -i HOME="$ex_home" TERM=xterm PATH="$ex_stub:/usr/bin:/bin" "$@"; }
+mkdir -p "$ex_home/Library/Android/sdk"
 ex_run EX_REPO="$ex_repo" bash -ic 'ext ls' >"$ex_dir/ls" 2>&1 || bad "ext ls failed: $(cat "$ex_dir/ls")"
 grep -qE '^  aws$' "$ex_dir/ls" && grep -q 'missing (not installed: make missing.install)' "$ex_dir/ls" &&
   grep -q '^  cloud: aws python$' "$ex_dir/ls" && grep -q '^  both: probe probe2$' "$ex_dir/ls" ||
   bad "ext ls does not list extensions, profiles and the missing one: $(cat "$ex_dir/ls")"
+# A shipped profile naming an extension of its own name (profiles/android lists android) means
+# that extension: android and java load, and every shipped profile starts without a cycle.
+grep -q '^  android: android java$' "$ex_dir/ls" || bad "ext ls: profile android is not 'android java': $(cat "$ex_dir/ls")"
+cat >"$ex_home/android.sh" <<'ANDROID'
+ext use android <<'A'
+echo "A ext=$GURUBASH_EXT"
+A
+echo "A status=$?"
+ANDROID
+ex_android=$(ex_run EX_REPO="$ex_repo" bash -ic '. "$HOME/android.sh"' 2>"$ex_dir/android.err" </dev/null) || true
+grep -qxF 'A ext=android java' <<<"$ex_android" && grep -qxF 'A status=0' <<<"$ex_android" ||
+  bad "ext use android: want a shell with android java, got: [$ex_android] / $(cat "$ex_dir/android.err")"
+for p in "$ex_repo"/profiles/*; do
+  n=$(basename "$p")
+  ex_run EX_REPO="$ex_repo" bash -ic "ext use $n" </dev/null >/dev/null 2>"$ex_dir/profile.err" ||
+    bad "shipped profile '$n' does not start: $(cat "$ex_dir/profile.err")"
+done
 
 cat >"$ex_dir/outer.sh" <<'OUTER'
 snap() { echo "$PATH"; alias; declare -F; }
