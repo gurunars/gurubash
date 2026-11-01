@@ -1,8 +1,9 @@
 ---
-status: review
+status: done
 priority: medium
 size: S
 depends_on: [17]
+commits: [73c107c39d97..3cbfb12db553]
 ---
 # Remove conda and dotnet, keep the rest as extensions
 
