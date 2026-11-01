@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `18c690d` does not replay onto master `8f3571c` (task 13 landed, giving every install script a shebang, `set -e` and quoted variables, `git/install.sh` included; 10 may land ahead of you too). Call `rebase`, resolve keeping both sides (13's shebang and `set -e` plus your quoting, once each), run `task check`, `make_snapshot`, and tell me the head in one line; I land it then."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T12:24:29Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landing refused: `18c690d` conflicts with master `8f3571c` (13's `git/install.sh` changes). Executor rebasing; landing on its next head."
     }
   ]
 }
