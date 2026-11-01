@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: high
 size: S
 depends_on: [18]
+commits: [dc1c6f00033a..dc6749c3743f]
 ---
 # `ext use android` refuses to start: "nests too deep"
 
