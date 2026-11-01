@@ -1,30 +1,28 @@
 #!/bin/bash
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# Interactive-only: nothing here belongs in a script's shell.
+case $- in
+    *i*) ;;
+    *) return 0 ;;
+esac
+
+# programmable completion
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
+elif [ -r /opt/homebrew/etc/profile.d/bash_completion.sh ]; then
+    . /opt/homebrew/etc/profile.d/bash_completion.sh
+elif [ -r /usr/local/etc/profile.d/bash_completion.sh ]; then
+    . /usr/local/etc/profile.d/bash_completion.sh
 fi
 
-# don't put duplicate lines in the history. See bash(1) for more options
-# don't overwrite GNU Midnight Commander's setting of `ignorespace'.
-HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
-# ... or force ignoredups and ignorespace
 HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
+HISTSIZE=100000
+HISTFILESIZE=100000
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Make bash autocomplete with up arrow from bash history
+# Complete from history with the up/down arrows
 bind '"\e[A":history-search-backward' 2> /dev/null
 bind '"\e[B":history-search-forward' 2> /dev/null

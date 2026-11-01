@@ -1,5 +1,10 @@
 #!/bin/bash
 
+case $- in
+    *i*) ;;
+    *) return 0 ;;
+esac
+
 DEFAULT_THEME=dual-line.blue
 DEFAULT_SHAPE=multiline
 

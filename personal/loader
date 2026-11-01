@@ -1,5 +1,6 @@
 #!/bin/bash
 
-for name in ${HOME}/.personal/*; do
-    . ${name}
+for name in "${HOME}"/.personal/*; do
+    [ -f "${name}" ] && . "${name}"
 done
+unset name

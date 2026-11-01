@@ -1,9 +1,21 @@
 #!/bin/bash
 
-. /etc/profile
+path_add "$HOME/bins"
+path_add "$HOME/.local/bin"
 
-if [ -z "${SSH_AUTH_SOCK}" ] ; then
-    eval $(ssh-agent -s) > /dev/null
-fi
-
-export PATH=$PATH:$HOME/bins:$HOME/.local/bin
+# Interactive shells share one ssh-agent through a fixed socket.
+case $- in
+    *i*)
+        if [ -z "${SSH_AUTH_SOCK}" ]; then
+            sock="${HOME}/.ssh/agent.sock"
+            SSH_AUTH_SOCK="${sock}" ssh-add -l > /dev/null 2>&1
+            if [ $? -ge 2 ]; then
+                mkdir -p "${HOME}/.ssh"
+                rm -f "${sock}"
+                ssh-agent -a "${sock}" > /dev/null 2>&1
+            fi
+            export SSH_AUTH_SOCK="${sock}"
+            unset sock
+        fi
+        ;;
+esac

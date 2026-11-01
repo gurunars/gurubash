@@ -1,1 +1,1 @@
-export PATH=$PATH:$HOME/go/bin
+path_add "$HOME/go/bin"

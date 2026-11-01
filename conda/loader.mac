@@ -1,2 +1,2 @@
-export PATH="/usr/local/anaconda3/bin:$PATH"
-export PATH="/opt/homebrew/anaconda3/bin:$PATH"
+path_add /usr/local/anaconda3/bin
+path_add /opt/homebrew/anaconda3/bin

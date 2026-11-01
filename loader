@@ -1,19 +1,43 @@
 #!/bin/bash
+# Sourced by every shell, repeatedly (nested shells inherit PATH). Everything
+# here must be idempotent: path_add skips what is already on PATH.
 
-OS=$(bash ${GURUBASH}/pkg-manager/get-os.sh)
+# path_add [-p] DIR: append DIR to PATH (prepend with -p); only if it is a
+# directory and not already present.
+path_add() {
+    local front=0
+    if [ "$1" = "-p" ]; then front=1; shift; fi
+    [ -d "$1" ] || return 0
+    case ":${PATH}:" in
+        *":$1:"*) return 0 ;;
+    esac
+    if [ "$front" = 1 ]; then
+        PATH="$1${PATH:+:${PATH}}"
+    else
+        PATH="${PATH:+${PATH}:}$1"
+    fi
+    export PATH
+}
 
-for loader in ${GURUBASH}/*/loader; do
-    . ${loader}
+# Only a login shell needs /etc/profile; macOS's path_helper reorders PATH on
+# it, so it goes first, before anything is added.
+if shopt -q login_shell; then
+    . /etc/profile
+fi
+
+OS=$(bash "${GURUBASH}/pkg-manager/get-os.sh")
+
+for loader in "${GURUBASH}"/*/loader; do
+    [ -f "${loader}" ] && . "${loader}"
 done
 
-for loader in ${GURUBASH}/*/loader.$OS; do
-    . ${loader}
+for loader in "${GURUBASH}"/*/loader."${OS}"; do
+    [ -f "${loader}" ] && . "${loader}"
 done
 
-for bins in ${GURUBASH}/*/bins; do
-    export PATH=${PATH}:${bins}
+for bins in "${GURUBASH}"/*/bins "${GURUBASH}"/*/bins/"${OS}"; do
+    path_add "${bins}"
 done
 
-for bins in ${GURUBASH}/*/bins/$OS; do
-    export PATH=${PATH}:${bins}
-done
+unset loader bins
+unset -f path_add

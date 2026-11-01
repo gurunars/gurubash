@@ -1,5 +1,3 @@
-SDK=$HOME/Library/Android/sdk
-export ANDROID_HOME=$SDK
-export ANDROID_SDK=$SDK
-export PATH=$PATH:$SDK/platform-tools:$SDK/tools
-export PATH=$PATH:$SDK/cmdline-tools/latest/bin
+export ANDROID_HOME=$HOME/Library/Android/sdk
+path_add "$ANDROID_HOME/platform-tools"
+path_add "$ANDROID_HOME/cmdline-tools/latest/bin"

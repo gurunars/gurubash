@@ -1,1 +1,1 @@
-export PATH=/opt/homebrew/bin:$PATH
+path_add -p /opt/homebrew/bin

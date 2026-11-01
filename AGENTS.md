@@ -24,6 +24,11 @@ vim's `vimrc`, the loopback rules and `make -n install`.
   JSONC: comments and trailing commas are legal. Do not parse with strict JSON.
 - Every directory with a `loader` (or `loader.<os>`) is sourced by every shell.
   Loaders stay fast and silent: no forks you can avoid, no output, no network.
+- Loaders must be safe to source repeatedly (nested shells inherit `PATH`): add
+  directories only with `path_add [-p] DIR` (defined by the root `loader`, skips
+  what is present or missing). Interactive-only parts (`bind`, prompts,
+  `ssh-agent`) are guarded and return early in non-interactive shells, which
+  print nothing and start no agent. `task check` tests this at depth 1, 2, 3.
 - `scripts/` and `tasks/` hold no `install*` or `loader`. `make install` builds
   its list only from directories holding an `install*.sh`, so they are never
   installed.

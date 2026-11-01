@@ -189,6 +189,30 @@ for os in mac ubuntu; do
   rm -rf "$vs_home"
 done
 
+# PATH must not grow with nested shells; a non-interactive shell prints nothing
+# and starts no agent.
+rc_home=$(mktemp -d /tmp/rc-home.XXXXXX)
+rc_bin=$(mktemp -d /tmp/rc-bin.XXXXXX)
+printf '#!/bin/sh\ntouch "%s/agent-started"\n' "$rc_home" >"$rc_bin/ssh-agent"
+chmod +x "$rc_bin/ssh-agent"
+printf 'export GURUBASH=/repo\n. ${GURUBASH}/loader\n' >"$rc_home/.gurubashrc"
+printf '. "${HOME}/.gurubashrc"\n' >"$rc_home/.bashrc"
+cp "$rc_home/.bashrc" "$rc_home/.profile"
+mkdir -p "$rc_home/.personal"   # empty: must not source a literal '*'
+rc_run() { env -i HOME="$rc_home" TERM=xterm PATH="$rc_bin:/usr/bin:/bin" "$@"; }
+printf '#!/bin/sh\necho "$PATH" | tr : "\\n" | wc -l\n' >"$rc_bin/count"
+chmod +x "$rc_bin/count"
+d1=$(rc_run bash -lic 'count' 2>&1 | tail -n1)
+d2=$(rc_run bash -lic 'bash -ic count' 2>&1 | tail -n1)
+d3=$(rc_run bash -lic 'bash -ic "bash -ic count"' 2>&1 | tail -n1)
+[ "$d1" = "$d2" ] && [ "$d2" = "$d3" ] ||
+  bad "PATH grows with nested shells: depth 1/2/3 = $d1/$d2/$d3 entries"
+rm -f "$rc_home/agent-started"
+ni_out=$(rc_run bash -c '. "$HOME/.gurubashrc"' 2>&1)
+[ -z "$ni_out" ] || bad "non-interactive shell printed: $ni_out"
+[ ! -e "$rc_home/agent-started" ] || bad "non-interactive shell started ssh-agent"
+rm -rf "$rc_home" "$rc_bin"
+
 # make -n install
 make -n install >/dev/null || bad "make -n install"
 
