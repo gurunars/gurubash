@@ -1,30 +1,32 @@
 #!/bin/bash
-cred_file=${HOME}/.personal/credentials
+cred_file="${HOME}/.personal/credentials"
 
-username=$(eval whoami)
-if [ "${username}" == "root" ];then
+username=$(id -un)
+if [ "${username}" == "root" ]; then
     exit 0
 fi
 
-if [ -f ${cred_file} ]; then
+if [ -f "${cred_file}" ]; then
     exit 0
 fi
-cp ${GURUBASH}/credentials/credentials ${cred_file}
+mkdir -p "$(dirname "${cred_file}")"
+cp "${GURUBASH}/credentials/credentials" "${cred_file}"
 
-# Configure the email and name (only once)
+# Configure the email and name (only once). The values go through the
+# environment, so perl never interpolates them: an `@` or a space is data.
 
-if grep __NAME ${cred_file} 1> /dev/null; then
-    echo "Type your first name and last named delimited with space."
-    read name
-    perl -pi -e s/__NAME/${name}/g ${cred_file}
+if grep -q __NAME "${cred_file}"; then
+    echo "Type your first name and last name, delimited with space."
+    read -r name
+    NAME="${name}" perl -pi -e 's/__NAME/$ENV{NAME}/g' "${cred_file}"
 else
     echo "NAME is already set"
 fi
 
-if grep __EMAIL ${cred_file} 1> /dev/null; then
+if grep -q __EMAIL "${cred_file}"; then
     echo "Type your email"
-    read email
-    perl -pi -e s/__EMAIL/${email}/g ${cred_file}
+    read -r email
+    EMAIL="${email}" perl -pi -e 's/__EMAIL/$ENV{EMAIL}/g' "${cred_file}"
 else
     echo "EMAIL is already set"
 fi

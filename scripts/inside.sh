@@ -88,6 +88,19 @@ loop=$(printf '%s\n' "$files" | grep -Ev '^(AGENTS\.md|scripts/inside\.sh|tasks/
     -- "$f" | sed "s|^|$f:|"; done)
 if [ -n "$loop" ]; then echo "$loop" >&2; bad "loopback: bind-any or non-loopback address"; fi
 
+# credentials: a first run with a full name and an email, in a throwaway HOME.
+# `id` is faked so the installer does not take its root exit.
+cred_home=$(mktemp -d /tmp/cred-home.XXXXXX)
+cred_bin=$(mktemp -d /tmp/cred-bin.XXXXXX)
+printf '#!/bin/sh\necho jane\n' >"$cred_bin/id" && chmod +x "$cred_bin/id"
+printf 'Jane Doe\na@example.com\n' |
+  env HOME="$cred_home" GURUBASH=/repo PATH="$cred_bin:$PATH" \
+    bash /repo/credentials/install.sh >/dev/null 2>&1 || bad "credentials/install.sh failed on a first run"
+cred_got=$(env -i HOME="$cred_home" bash -c '. "$HOME/.personal/credentials" && printf "%s|%s" "$NAME" "$EMAIL"' 2>&1)
+[ "$cred_got" = "Jane Doe|a@example.com" ] ||
+  bad "credentials: sourced NAME|EMAIL is '$cred_got', want 'Jane Doe|a@example.com'"
+rm -rf "$cred_home" "$cred_bin"
+
 # make -n install
 make -n install >/dev/null || bad "make -n install"
 
