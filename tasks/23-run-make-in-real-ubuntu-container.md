@@ -10,14 +10,14 @@ depends_on: [10]
 Task 10's agent has no network or podman of its own, so `task check` only covers the Ubuntu path with stubs: real apt, the real Chrome and VS Code repositories and their packages have not run.
 
 ## Steps
+From a clone rather than a worktree (git refuses a worktree's `.git` here):
 ```
 podman run --rm -it -v "$PWD:/repo:ro" -e HOME=/tmp/home mirror.gcr.io/library/ubuntu:latest bash -c '
   apt update && apt install -y make sudo && mkdir -p "$HOME" &&
-  printf "#!/bin/sh\necho NAME\n" >/usr/local/bin/ollama &&
-  printf "#!/bin/sh\n" >/usr/local/bin/curl-stub &&
+  printf "#!/bin/sh\necho NAME\n" >/usr/local/bin/ollama && chmod +x /usr/local/bin/ollama &&
   cd /repo && make install && apt update'
 ```
-Run it from a clone rather than a worktree (git refuses a worktree's `.git` here). `ollama` is stubbed because no service runs in a container; drop the stub on a real machine. VS Code refuses some commands as root, so `code --list-extensions` may need a stub too.
+`ollama` is stubbed because no service runs in a container; drop the stub on a real machine. VS Code refuses some commands as root, so `code --list-extensions` may need a stub too.
 
 ## Check
 - `make install` ends with `DONE`.
