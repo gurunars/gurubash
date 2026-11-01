@@ -1,0 +1,11 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "at": "2026-11-01T09:33:05Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landing refused: `d94f6f7` conflicts with master `bcfb882` (5, 7, 9 landed). Executor rebasing; landing on its next head."
+    }
+  ]
+}
