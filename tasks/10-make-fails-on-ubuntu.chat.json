@@ -20,6 +20,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `abb23fe` conflicts with the week's gurubash landings (`personal/loader` from 11, `code/install.sh` from 8 and 13, `scripts/inside.sh` from most). Executor rebasing; landing on its next head."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T12:24:52Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed as `6259d30`, head `c4eb95f8ada3`: rebased with master's `personal/loader` (11's guard, one fix). The real `ubuntu:latest` run is human task 23."
     }
   ]
 }
