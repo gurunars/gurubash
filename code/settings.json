@@ -12,7 +12,6 @@
     ],
     "workbench.startupEditor": "none",
     "update.showReleaseNotes": false,
-    "python.showStartPage": false,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "editor.mouseWheelZoom": true,
     "explorer.confirmDelete": false,
@@ -25,9 +24,14 @@
     "jest.enableInlineErrorMessages": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "extensions.ignoreRecommendations": true,
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
-    },
     "update.mode": "manual",
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    // Carried over from the settings VS Code wrote on the Mac itself.
+    "dev.containers.dockerPath": "podman",
+    "dev.containers.dockerComposePath": "podman-compose",
+    "js/ts.experimental.useTsgo": true,
+    "intellij.region": "EU",
+    "intellij.dataSharing": false,
+    "git.ignoreMissingGitWarning": true,
+    "makefile.configureOnOpen": true
 }

@@ -2,52 +2,58 @@
 
 set -e
 
-VS_PATH=${HOME}/.config/Code/User
+OS=${OS:-$("${GURUBASH}/pkg-manager/get-os.sh")}
+
+# Where VS Code reads its user config differs per OS.
+if [ "${OS}" = "mac" ]; then
+    VS_PATH="${HOME}/Library/Application Support/Code/User"
+else
+    VS_PATH="${HOME}/.config/Code/User"
+fi
 
 mkdir -p "${VS_PATH}"
 
-ln -f -s "${GURUBASH}/code/keybindings.json" "${VS_PATH}/keybindings.json"
-ln -f -s "${GURUBASH}/code/settings.json" "${VS_PATH}/settings.json"
+# Link a repo file into VS Code's config dir. A regular file that is already
+# there is moved to <name>.bak first, and an existing .bak is never replaced.
+function link_config {
+    local target="${VS_PATH}/$1"
+    if [ -e "${target}" ] && [ ! -L "${target}" ]; then
+        if [ -e "${target}.bak" ]; then
+            echo "code: ${target}.bak exists; leaving ${target} alone" >&2
+            return 0
+        fi
+        mv "${target}" "${target}.bak"
+    fi
+    ln -f -s "${GURUBASH}/code/$1" "${target}"
+}
+
+link_config keybindings.json
+link_config settings.json
 
 # extensions: only the ones missing are fetched
 
-INSTALLED=$(code --list-extensions | tr '[:upper:]' '[:lower:]')
+EXTENSIONS="
+ms-vscode.makefile-tools
+tamasfe.even-better-toml
+lextudio.restructuredtext
+ms-azuretools.vscode-docker
+dbaeumer.vscode-eslint
+ryuta46.multi-command
+ms-python.python
+tomoki1207.pdf
+docsmsft.docs-markdown
+orta.vscode-jest
+davidanson.vscode-markdownlint
+stylelint.vscode-stylelint
+"
 
-function ext {
-    if echo "${INSTALLED}" | grep -qxF "$(echo "$1" | tr '[:upper:]' '[:lower:]')"; then
-        echo "$1 is already installed"
-    else
-        code --install-extension "$1"
-    fi
-}
-
-# Makefile
-ext ms-vscode.makefile-tools
-# TOML
-ext tamasfe.even-better-toml
-# restuctured text
-ext lextudio.restructuredtext
-# Docker
-ext ms-azuretools.vscode-docker
-# Eslint
-ext dbaeumer.vscode-eslint
-# Typescript
-ext ms-vscode.vscode-typescript-next
-# For multi-keybindings
-ext ryuta46.multi-command
-# Pyright
-ext ms-pyright.pyright
-# Python
-ext ms-python.python
-# React native
-ext msjsdiag.vscode-react-native
-# PDF preview
-ext tomoki1207.pdf
-# Markdown support
-ext docsmsft.docs-markdown
-# Jest
-ext orta.vscode-jest
-# Markdown lint
-ext davidanson.vscode-markdownlint
-# Style lint
-ext stylelint.vscode-stylelint
+if command -v code >/dev/null 2>&1; then
+    INSTALLED=$(code --list-extensions | tr '[:upper:]' '[:lower:]')
+    for extension in ${EXTENSIONS}; do
+        if echo "${INSTALLED}" | grep -qxF "$(echo "${extension}" | tr '[:upper:]' '[:lower:]')"; then
+            echo "${extension} is already installed"
+        else
+            code --install-extension "${extension}"
+        fi
+    done
+fi

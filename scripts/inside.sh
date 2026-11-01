@@ -169,6 +169,26 @@ env -i HOME="$ar_dir/home" PATH="$ar_bin:/usr/bin:/bin" AR_ARGS="$ar_dir/args" S
 grep -qx -- '--external-id' "$ar_dir/args" 2>/dev/null && bad "assume-role: --external-id passed without an external id"
 rm -rf "$ar_dir"
 
+# code/install.sh: on both OS branches the links point at the repo, an existing
+# regular file survives as .bak, and a second run leaves that .bak intact.
+for os in mac ubuntu; do
+  if [ "$os" = mac ]; then rel="Library/Application Support/Code/User"; else rel=".config/Code/User"; fi
+  vs_home=$(mktemp -d /tmp/vscode-home.XXXXXX)
+  vs_dir="$vs_home/$rel"
+  mkdir -p "$vs_dir"
+  printf 'live\n' >"$vs_dir/settings.json"
+  run_vs() { env HOME="$vs_home" GURUBASH=/repo OS="$os" bash /repo/code/install.sh >/dev/null 2>&1; }
+  run_vs || bad "code/install.sh ($os) failed on a first run"
+  for f in settings.json keybindings.json; do
+    [ "$(readlink "$vs_dir/$f")" = "/repo/code/$f" ] || bad "code ($os): $f is not linked to the repo"
+  done
+  [ "$(cat "$vs_dir/settings.json.bak" 2>/dev/null)" = live ] || bad "code ($os): existing settings.json did not survive as .bak"
+  run_vs || bad "code/install.sh ($os) failed on a second run"
+  [ "$(cat "$vs_dir/settings.json.bak" 2>/dev/null)" = live ] || bad "code ($os): second run changed settings.json.bak"
+  [ "$(readlink "$vs_dir/settings.json")" = "/repo/code/settings.json" ] || bad "code ($os): second run broke the settings.json link"
+  rm -rf "$vs_home"
+done
+
 # make -n install
 make -n install >/dev/null || bad "make -n install"
 
