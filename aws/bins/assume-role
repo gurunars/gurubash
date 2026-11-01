@@ -35,30 +35,27 @@ def _aws_role(value):
 def get_creds_from_role_and_external_id(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument("aws_role", type=_aws_role, metavar=ROLE_REGEX.pattern)
-    parser.add_argument("external_id", nargs='*', type=str)
+    parser.add_argument("external_id", nargs="?", type=str)
     args = parser.parse_args(argv)
 
-    aws_role, external_id = args.aws_role, args.external_id
+    query = "[{}]".format(",".join("Credentials.{}".format(it) for it in QUERY_PARAMS))
 
-    query = ",".join(["Credentials.{}".format(it) for it in QUERY_PARAMS])
-
+    # An argv list, not a shell string: no quoting is needed and no value is
+    # ever interpreted by a shell.
     params = [
         "aws", "sts", "assume-role",
-        "--role-arn", aws_role,
+        "--role-arn", args.aws_role,
         "--role-session-name",
-        "Personal-assumed-{}-role".format(os.environ.get("USER", "anonymours")),
-        "--query", "'[{}]'".format(query),
-        "--output", "text"
+        "Personal-assumed-{}-role".format(os.environ.get("USER", "anonymous")),
+        "--query", query,
+        "--output", "text",
     ]
 
-    if external_id:
-        params.extend([
-            "--external-id", external_id
-        ])
+    if args.external_id:
+        params.extend(["--external-id", args.external_id])
 
-    return aws_role, subprocess.check_output(
-        " ".join(params), stderr=subprocess.STDOUT, shell=True
-    ).decode("utf-8").replace("\n", "").split("\t")
+    output = subprocess.check_output(params).decode("utf-8")
+    return args.aws_role, output.replace("\n", "").split("\t")
 
 
 def _pt(path):
@@ -68,7 +65,7 @@ def _pt(path):
 def main():
     args = sys.argv[1:]
     if not args:
-        exit(1)
+        sys.exit(1)
     if len(args) == 1 and os.path.exists(_pt(args[0])):
         title, results = get_creds_from_csv(_pt(args[0]))
     else:

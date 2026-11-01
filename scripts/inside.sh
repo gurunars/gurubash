@@ -130,6 +130,37 @@ printf 'x\n' >"$pkg_dir/demo/tests.py"
 [ "$(cat "$pkg_dir/demo/tests.py")" = "x" ] || bad "pkg demo: second run truncated demo/tests.py"
 rm -rf "$pkg_dir"
 
+# assume-role: an external id reaches `aws sts assume-role` as --external-id, and an
+# absent USER gives the anonymous session name. A stub aws on PATH records its argv
+# and prints fake credentials; SHELL is /bin/true so the spawned shell exits at once.
+ar_dir=$(mktemp -d /tmp/assume-role.XXXXXX)
+ar_bin="$ar_dir/bin"
+mkdir -p "$ar_bin"
+cat >"$ar_bin/aws" <<'STUB'
+#!/bin/sh
+printf '%s\n' "$@" >"$AR_ARGS"
+printf 'AK\tSK\tST\n'
+STUB
+chmod +x "$ar_bin/aws"
+ar_role='arn:aws:iam::123456789012:role/x'
+ar_true=$(command -v true)
+ar_want=$(printf '%s\n' sts assume-role --role-arn "$ar_role" --role-session-name \
+  Personal-assumed-anonymous-role --query \
+  '[Credentials.AccessKeyId,Credentials.SecretAccessKey,Credentials.SessionToken]' \
+  --output text --external-id ext)
+env -i HOME="$ar_dir/home" PATH="$ar_bin:/usr/bin:/bin" AR_ARGS="$ar_dir/args" SHELL="$ar_true" \
+  python3 -B /repo/aws/bins/assume-role "$ar_role" ext >/dev/null 2>&1 ||
+  bad "assume-role crashes when given an external id"
+ar_got=$(cat "$ar_dir/args" 2>/dev/null || true)
+[ "$ar_got" = "$ar_want" ] || bad "assume-role: aws argv is [$(echo $ar_got)], want [$(echo $ar_want)]"
+# Without an external id, no --external-id is passed.
+rm -f "$ar_dir/args"
+env -i HOME="$ar_dir/home" PATH="$ar_bin:/usr/bin:/bin" AR_ARGS="$ar_dir/args" SHELL="$ar_true" \
+  python3 -B /repo/aws/bins/assume-role "$ar_role" >/dev/null 2>&1 ||
+  bad "assume-role crashes without an external id"
+grep -qx -- '--external-id' "$ar_dir/args" 2>/dev/null && bad "assume-role: --external-id passed without an external id"
+rm -rf "$ar_dir"
+
 # make -n install
 make -n install >/dev/null || bad "make -n install"
 
