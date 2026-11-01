@@ -20,6 +20,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `d02dbef`, check green (because the Done when is met in the container on both OS branches: links to the repo, an existing file kept as `.bak`, a second run leaving the `.bak`; the deprecated extensions and stale settings removed; the seven live keys present as guesses for task 16 to confirm against the Mac's real file before applying)."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T09:39:21Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landing refused: `d02dbef` conflicts with master `5ffe4bf` (3, 4, 5, 7, 9 landed, all in `scripts/inside.sh`). Executor briefed to rebase; landing on its next head."
     }
   ]
 }
