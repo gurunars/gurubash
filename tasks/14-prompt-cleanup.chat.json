@@ -6,6 +6,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: landing `c5dd049`, check green (because the prompt's forks are gone as asked: `git symbolic-ref --short -q HEAD` with a short-hash fallback when detached, `\\A` for the time, `$EUID` for root, the dead `theming/theming` deleted; five before/after `PS1` renders differ only where the task asks). Accepted: the short hash when detached; `AWS:` with the old spacing. The `PS1` comparison ran in the sandbox's bash, not the check container."
+    },
+    {
+      "id": 2,
+      "at": "2026-11-01T12:23:37Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed by the queue as `ec3ed62` before my own call."
     }
   ]
 }
