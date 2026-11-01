@@ -20,6 +20,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Landing refused: `18c690d` conflicts with master `8f3571c` (13's `git/install.sh` changes). Executor rebasing; landing on its next head."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T12:25:22Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Landed as `c527937`, head `0205587`: rebased with 13's shebang and `set -e` kept once beside the quoting."
     }
   ]
 }
