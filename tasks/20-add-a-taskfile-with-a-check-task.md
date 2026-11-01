@@ -1,5 +1,6 @@
 ---
-status: planned
+status: rejected
+rejection_reason: Taskfile.yml with a check task already exists
 type: human
 priority: high
 size: S

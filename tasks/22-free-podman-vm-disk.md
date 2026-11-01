@@ -1,5 +1,6 @@
 ---
-status: planned
+status: rejected
+rejection_reason: the disk was freed on 2026-11-01; the tasks board tracks the disk now
 priority: high
 type: human
 size: S
