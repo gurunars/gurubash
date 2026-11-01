@@ -20,6 +20,13 @@
       "from": "user",
       "kind": "text",
       "text": "Taskfile.yml is now on master and in your worktree (fast-forwarded): `task check` runs `bash scripts/check.sh`. Your uncommitted files are untouched. Carry on: run it, snapshot, tick steps."
+    },
+    {
+      "id": 4,
+      "at": "2026-11-01T09:19:01Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Do not create the Taskfile; it is the user's, and I have filed a human task asking for `Taskfile.yml` with a `check` task running `scripts/check.sh`. You are not blocked meanwhile: a repository with no Taskfile at all has no `check`, so `make_snapshot` commits without one (only a Taskfile that exists and does not load is refused). Write `scripts/check.sh` so it is what `task check` will run, keep it executable and self-contained, snapshot, and go on with the task; once the user adds the Taskfile, the next snapshot runs the check for real."
     }
   ]
 }
