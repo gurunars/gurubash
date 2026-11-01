@@ -1,9 +1,10 @@
 ---
-status: review
+status: done
 type: bug
 priority: medium
 size: S
 depends_on: [2]
+commits: [ef47f578069c..7b1034cfad36]
 ---
 # `assume-role` crashes whenever an external id is given
 
