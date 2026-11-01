@@ -221,24 +221,36 @@ ni_out=$(rc_run bash -c '. "$HOME/.gurubashrc"' 2>&1)
 [ ! -e "$rc_home/agent-started" ] || bad "non-interactive shell started ssh-agent"
 
 # A shell loads core only, plus what default-extensions names.
-mkdir -p "$rc_home/go/bin" "$rc_home/.dotnet"
+mkdir -p "$rc_home/go/bin" "$rc_home/Library/Android/sdk/platform-tools"
 rc_path() { rc_run bash -c '. "$HOME/.gurubashrc"; echo ":$PATH:"' 2>/dev/null; }
 ext_list="$rc_home/.config/gurubash/default-extensions"
 plain=$(rc_path)
-for e in "$rc_home/go/bin" "$rc_home/.dotnet" /repo/extensions/; do
+for e in "$rc_home/go/bin" "$rc_home/Library/Android/sdk/platform-tools" /repo/extensions/; do
   case "$plain" in *":$e"*) bad "a new shell has $e on PATH with no default-extensions" ;; esac
 done
-rc_run bash -c '. "$HOME/.gurubashrc"; command -v aws conda dotnet pkg assume-role' >/dev/null 2>&1 &&
+rc_run bash -c '. "$HOME/.gurubashrc"; command -v aws pkg assume-role' >/dev/null 2>&1 &&
   bad "a new shell has an extension's command on PATH"
+# android, ai and java set variables when loaded; none is set in a new shell.
+plain_env=$(rc_run bash -c '. "$HOME/.gurubashrc"; echo "${ANDROID_HOME:-}|${AI_MODEL:-}|${JAVA_HOME:-}"' 2>/dev/null)
+[ "$plain_env" = "||" ] || bad "a new shell has android, ai or java loaded: ANDROID_HOME|AI_MODEL|JAVA_HOME is [$plain_env]"
 mkdir -p "$(dirname "$ext_list")"
 printf 'go\n\npython' >"$ext_list"
 named=$(rc_path)
 case "$named" in *":$rc_home/go/bin:"*) ;; *) bad "default-extensions naming go does not add ~/go/bin: $named" ;; esac
 case "$named" in *":/repo/extensions/python/bins:"*) ;; *) bad "default-extensions naming python does not add its bins: $named" ;; esac
-case "$named" in *":$rc_home/.dotnet:"*) bad "dotnet is on PATH though default-extensions does not name it" ;; esac
+case "$named" in *":$rc_home/Library/Android/sdk/platform-tools:"*) bad "android is on PATH though default-extensions does not name it" ;; esac
 d1=$(rc_run bash -lic 'count' 2>&1 | tail -n1)
 d2=$(rc_run bash -lic 'bash -ic count' 2>&1 | tail -n1)
 [ "$d1" = "$d2" ] || bad "PATH grows with nested shells and extensions: depth 1/2 = $d1/$d2 entries"
+# android and ai load when named, and set their variables; a nested shell adds nothing again.
+printf 'android\nai\n' >"$ext_list"
+loaded_env=$(rc_run bash -c '. "$HOME/.gurubashrc"; echo "$ANDROID_HOME|$AI_MODEL"' 2>/dev/null)
+[ "$loaded_env" = "$rc_home/Library/Android/sdk|gemma4:26b" ] ||
+  bad "default-extensions naming android and ai: ANDROID_HOME|AI_MODEL is [$loaded_env]"
+case "$(rc_path)" in *":$rc_home/Library/Android/sdk/platform-tools:"*) ;; *) bad "default-extensions naming android does not add its platform-tools" ;; esac
+d1=$(rc_run bash -lic 'count' 2>&1 | tail -n1)
+d2=$(rc_run bash -lic 'bash -ic count' 2>&1 | tail -n1)
+[ "$d1" = "$d2" ] || bad "PATH grows with nested shells and android: depth 1/2 = $d1/$d2 entries"
 # An unknown name, or one climbing out of extensions/: one line each on stderr, and the shell starts.
 printf 'nosuch\n../core/vim\ngo\n' >"$ext_list"
 unk_err=$(rc_run bash -c '. "$HOME/.gurubashrc"; echo started >&2' 2>&1 >/dev/null)

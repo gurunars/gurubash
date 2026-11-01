@@ -1,3 +1,0 @@
-export DOTNET_ROOT=$HOME/.dotnet
-path_add "$HOME/.dotnet"
-path_add "$HOME/.dotnet/tools"
