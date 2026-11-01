@@ -13,6 +13,13 @@
       "from": "orchestrator",
       "kind": "text",
       "text": "Decided while you were away: the seven live settings keys take the executor's best-guess values, marked to be confirmed against the Mac's real file in task 16 before anything is applied (because the live file is unreadable from a worktree and task 16 is the apply step). `install.sh` branches on `$OS` with the `get-os.sh` fallback and skips extensions when `code` is absent."
+    },
+    {
+      "id": 3,
+      "at": "2026-11-01T09:39:09Z",
+      "from": "orchestrator",
+      "kind": "text",
+      "text": "Decided while you were away: landing `d02dbef`, check green (because the Done when is met in the container on both OS branches: links to the repo, an existing file kept as `.bak`, a second run leaving the `.bak`; the deprecated extensions and stale settings removed; the seven live keys present as guesses for task 16 to confirm against the Mac's real file before applying)."
     }
   ]
 }
