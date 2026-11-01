@@ -1,8 +1,9 @@
 ---
-status: review
+status: done
 type: bug
 priority: medium
 size: S
+commits: [93fc8c59e2e6..b99df07e9383]
 ---
 # `On_IPurple` is not a background colour: `\033[10;95m` sets the font and a foreground
 
